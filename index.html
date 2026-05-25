@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,157 @@
     </script>
     <style>
         *{font-family:'Inter',sans-serif}
+
+        /* ===== DARK MODE ===== */
+        [data-theme="dark"] {
+            --bg-primary: #0a0f1e;
+            --bg-secondary: #111827;
+            --bg-card: #1a2235;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #1e3a5f;
+            --surface-50: #111827;
+        }
+        [data-theme="dark"] body { background: #0a0f1e; color: #e2e8f0; }
+        [data-theme="dark"] nav { background: #0d1525 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] nav a, [data-theme="dark"] nav button { color: #94a3b8 !important; }
+        [data-theme="dark"] #tienda, [data-theme="dark"] #planes, [data-theme="dark"] #resenas { background: #0d1525 !important; }
+        [data-theme="dark"] #video { background: #0a0f1e !important; }
+        [data-theme="dark"] .product-card, [data-theme="dark"] .review-card { background: #1a2235 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] .product-card h3, [data-theme="dark"] .review-card p { color: #e2e8f0 !important; }
+        [data-theme="dark"] .bg-white { background-color: #1a2235 !important; }
+        [data-theme="dark"] .bg-surface-50, [data-theme="dark"] .bg-surface-100 { background-color: #111827 !important; }
+        [data-theme="dark"] .border-brand-100 { border-color: #1e3a5f !important; }
+        [data-theme="dark"] .text-brand-900 { color: #e2e8f0 !important; }
+        [data-theme="dark"] .text-brand-800 { color: #cbd5e1 !important; }
+        [data-theme="dark"] .text-brand-700 { color: #94a3b8 !important; }
+        [data-theme="dark"] .text-brand-600 { color: #60a5fa !important; }
+        [data-theme="dark"] input, [data-theme="dark"] textarea { background: #0d1525 !important; color: #e2e8f0 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] .filter-btn { background: #1a2235 !important; color: #94a3b8 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] .filter-btn.active-filter { background: #2B7DE9 !important; color: #fff !important; }
+        [data-theme="dark"] .stat-card { background: #1a2235 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] #chatWindow { background: #0d1525 !important; }
+        [data-theme="dark"] #chatMessages { background: #0a0f1e !important; }
+        [data-theme="dark"] .chat-bubble-user { background: #1a2235 !important; color: #e2e8f0 !important; }
+        [data-theme="dark"] #menuButtons { background: #0d1525 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] .menu-btn { background: #1a2235 !important; color: #94a3b8 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] #cartPanel { background: #0d1525 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] #cartItems { background: #0d1525 !important; }
+        [data-theme="dark"] #cartFooter { background: #0a0f1e !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] .bg-brand-50 { background: #0d1525 !important; }
+        [data-theme="dark"] .bg-brand-100 { background: #1e3a5f !important; }
+        [data-theme="dark"] footer { background: #050a14 !important; }
+        [data-theme="dark"] #faq-section { background: #0a0f1e !important; }
+        [data-theme="dark"] .faq-item { background: #1a2235 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] #servicios-section { background: #0d1525 !important; }
+        [data-theme="dark"] .servicio-card { background: #1a2235 !important; border-color: #1e3a5f !important; }
+        [data-theme="dark"] #stats-section { background: #0d1525 !important; }
+
+        /* ===== LOADING SCREEN ===== */
+        #loadingScreen {
+            position: fixed; inset: 0; z-index: 9999;
+            background: linear-gradient(160deg, #0A264F, #1A5BB5);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loadingScreen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-logo { animation: loadPulse 1.5s ease-in-out infinite; }
+        @keyframes loadPulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.08);opacity:.8} }
+        .loading-bar-bg { width:220px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:28px;overflow:hidden; }
+        .loading-bar { height:100%;background:linear-gradient(90deg,#3399FF,#00C853);border-radius:2px;width:0%;transition:width .3s ease; }
+
+        /* ===== SCROLL PROGRESS ===== */
+        #scrollProgress {
+            position: fixed; top: 0; left: 0; height: 3px; z-index: 9998;
+            background: linear-gradient(90deg, #3399FF, #00C853);
+            width: 0%; transition: width .1s linear;
+        }
+
+        /* ===== CURSOR GLOW ===== */
+        #cursorGlow {
+            position: fixed; width: 400px; height: 400px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(51,153,255,.08) 0%, transparent 70%);
+            pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
+            transition: left .15s ease, top .15s ease;
+        }
+
+        /* ===== TOAST NOTIFICATIONS ===== */
+        #toastContainer {
+            position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+            z-index: 9990; display: flex; flex-direction: column; gap: 8px; align-items: center;
+        }
+        .toast {
+            background: #0F3D7A; color: #fff; padding: 12px 20px; border-radius: 50px;
+            font-size: 13px; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+            animation: toastIn .3s cubic-bezier(.4,0,.2,1);
+            display: flex; align-items: center; gap-8px; white-space: nowrap;
+        }
+        [data-theme="dark"] .toast { background: #2B7DE9; }
+        @keyframes toastIn { from{opacity:0;transform:translateY(20px) scale(.9)} to{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes toastOut { to{opacity:0;transform:translateY(-10px) scale(.9)} }
+
+        /* ===== BACK TO TOP ===== */
+        #backToTop {
+            position: fixed; bottom: 88px; right: 6px; z-index: 48;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #2B7DE9; color: white;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 16px rgba(43,125,233,.4);
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all .3s ease; cursor: pointer; border: none;
+        }
+        #backToTop.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+
+        /* ===== RIPPLE ===== */
+        .ripple-effect { position: relative; overflow: hidden; }
+        .ripple-effect .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,.35); transform: scale(0); animation: rippleAnim .6s linear; pointer-events: none; }
+        @keyframes rippleAnim { to{transform:scale(4);opacity:0} }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.revealed { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal-left.revealed { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal-right.revealed { opacity: 1; transform: translateX(0); }
+
+        /* ===== TYPEWRITER ===== */
+        .typewriter-cursor::after { content: '|'; animation: blink .7s step-end infinite; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        /* ===== COUNTER ===== */
+        .stat-counter { font-variant-numeric: tabular-nums; }
+
+        /* ===== MARQUEE ===== */
+        .marquee-track { display: flex; animation: marqueeScroll 22s linear infinite; width: max-content; }
+        .marquee-track:hover { animation-play-state: paused; }
+        @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        .marquee-container { overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); }
+
+        /* ===== PARTICLES ===== */
+        #heroCanvas { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+
+        /* ===== HAMBURGER ===== */
+        #mobileMenu {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(10,38,79,.97); flex-direction: column;
+            align-items: center; justify-content: center; gap: 24px;
+        }
+        #mobileMenu.open { display: flex; }
+        .mobile-link { color: white; font-size: 22px; font-weight: 700; text-decoration: none; transition: color .2s; }
+        .mobile-link:hover { color: #3399FF; }
+
+        /* ===== FAQ ===== */
+        .faq-item { border: 1px solid #D6EBFF; border-radius: 16px; overflow: hidden; margin-bottom: 12px; }
+        .faq-question { padding: 18px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 15px; transition: background .2s; }
+        .faq-question:hover { background: #EBF5FF; }
+        [data-theme="dark"] .faq-question:hover { background: #0d1525 !important; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s ease; padding: 0 20px; font-size: 14px; line-height: 1.7; color: #3D6E9F; }
+        .faq-answer.open { max-height: 200px; padding: 0 20px 16px; }
+        .faq-icon { transition: transform .3s ease; }
+        .faq-icon.open { transform: rotate(180deg); }
+
+        /* ===== EXISTING STYLES ===== */
         .chat-bubble-bot{background:linear-gradient(135deg,#2B7DE9,#3399FF);color:#fff;border-radius:18px 18px 18px 4px}
         .chat-bubble-user{background:#F0F6FF;color:#0A264F;border-radius:18px 18px 4px 18px}
         @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -58,9 +210,62 @@
         .star-btn:hover{transform:scale(1.2);filter:drop-shadow(0 0 4px rgba(43,125,233,.4))}
         .review-card{transition:all .3s ease}
         .review-card:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(43,125,233,.1)}
+
+        /* Services section */
+        .servicio-card { background: white; border: 1px solid #D6EBFF; border-radius: 20px; padding: 28px; transition: all .3s ease; }
+        .servicio-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(43,125,233,.15); border-color: #3399FF; }
+        .servicio-icon { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, #EBF5FF, #D6EBFF); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+
+        /* Search bar */
+        #searchInput { border: 2px solid #D6EBFF; border-radius: 50px; padding: 12px 20px 12px 44px; font-size: 14px; outline: none; transition: border .2s, box-shadow .2s; width: 100%; max-width: 400px; }
+        #searchInput:focus { border-color: #2B7DE9; box-shadow: 0 0 0 4px rgba(43,125,233,.1); }
+        [data-theme="dark"] #searchInput { background: #1a2235; color: #e2e8f0; border-color: #1e3a5f; }
+        .search-wrapper { position: relative; }
+        .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #5CADFF; pointer-events: none; }
+
+        /* Stats */
+        .stat-number { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #2B7DE9, #3399FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     </style>
 </head>
 <body class="bg-white text-brand-900">
+
+    <!-- LOADING SCREEN -->
+    <div id="loadingScreen">
+        <img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Ramazzini" class="loading-logo h-20 w-auto">
+        <p class="text-white/80 mt-4 text-sm font-medium tracking-wider uppercase">Cargando...</p>
+        <div class="loading-bar-bg"><div class="loading-bar" id="loadingBar"></div></div>
+        <p class="text-white/50 mt-3 text-xs" id="loadingText">Iniciando sistema...</p>
+    </div>
+
+    <!-- SCROLL PROGRESS -->
+    <div id="scrollProgress"></div>
+
+    <!-- CURSOR GLOW -->
+    <div id="cursorGlow"></div>
+
+    <!-- BACK TO TOP -->
+    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+    </button>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer"></div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobileMenu">
+        <button onclick="closeMobileMenu()" class="absolute top-5 right-5 text-white/60 hover:text-white">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <a href="#inicio" onclick="closeMobileMenu()" class="mobile-link">Inicio</a>
+        <a href="#servicios-section" onclick="closeMobileMenu()" class="mobile-link">Servicios</a>
+        <a href="#tienda" onclick="closeMobileMenu()" class="mobile-link">Tienda</a>
+        <a href="#video" onclick="closeMobileMenu()" class="mobile-link">Cómo trabajamos</a>
+        <a href="#planes" onclick="closeMobileMenu()" class="mobile-link">Planes</a>
+        <a href="#resenas" onclick="closeMobileMenu()" class="mobile-link">Reseñas</a>
+        <a href="#faq-section" onclick="closeMobileMenu()" class="mobile-link">FAQ</a>
+        <a href="#contacto" onclick="closeMobileMenu()" class="mobile-link">Contacto</a>
+        <a href="https://wa.me/50258415734" target="_blank" class="mobile-link" style="color:#4ade80">WhatsApp</a>
+    </div>
 
     <!-- NAVBAR -->
     <nav class="sticky top-0 z-50 bg-white border-b border-brand-100 shadow-sm">
@@ -70,44 +275,176 @@
             </a>
             <div class="hidden lg:flex items-center gap-7">
                 <a href="#inicio" class="text-sm font-medium text-brand-800 hover:text-brand-600">Inicio</a>
+                <a href="#servicios-section" class="text-sm font-medium text-brand-800 hover:text-brand-600">Servicios</a>
                 <a href="#tienda" class="text-sm font-medium text-brand-800 hover:text-brand-600 flex items-center gap-1"><i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>Tienda</a>
                 <a href="#video" class="text-sm font-medium text-brand-800 hover:text-brand-600 flex items-center gap-1"><i data-lucide="play-circle" class="w-3.5 h-3.5"></i>Cómo trabajamos</a>
                 <a href="#planes" class="text-sm font-medium text-brand-800 hover:text-brand-600">Planes</a>
                 <a href="#resenas" class="text-sm font-medium text-brand-800 hover:text-brand-600 flex items-center gap-1"><i data-lucide="star" class="w-3.5 h-3.5"></i>Reseñas</a>
+                <a href="#faq-section" class="text-sm font-medium text-brand-800 hover:text-brand-600">FAQ</a>
                 <a href="#contacto" class="text-sm font-medium text-brand-800 hover:text-brand-600">Contacto</a>
                 <button onclick="toggleAdmin()" class="text-sm font-medium text-brand-400 hover:text-brand-600 flex items-center gap-1"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>Admin</button>
             </div>
             <div class="flex items-center gap-2">
+                <!-- Dark mode toggle -->
+                <button onclick="toggleDark()" id="darkToggle" title="Modo oscuro" class="p-2.5 rounded-full hover:bg-brand-50 transition-colors">
+                    <i data-lucide="moon" class="w-5 h-5 text-brand-800" id="darkIcon"></i>
+                </button>
                 <button onclick="toggleCart()" class="relative p-2.5 rounded-full hover:bg-brand-50 transition-colors">
                     <i data-lucide="shopping-cart" class="w-5 h-5 text-brand-800"></i>
                     <span id="cartBadge" class="hidden absolute -top-0.5 -right-0.5 w-5 h-5 bg-red-500 rounded-full border-2 border-white items-center justify-center badge-cart"><span class="text-[10px] text-white font-bold" id="cartCount">0</span></span>
                 </button>
-                <a href="https://wa.me/50258415734" target="_blank" class="hidden md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition-all">
+                <a href="https://wa.me/50258415734" target="_blank" class="hidden md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition-all ripple-effect">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                     WhatsApp
                 </a>
+                <!-- Hamburger -->
+                <button onclick="openMobileMenu()" class="lg:hidden p-2.5 rounded-full hover:bg-brand-50 transition-colors">
+                    <svg class="w-5 h-5 text-brand-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- HERO -->
     <section id="inicio" class="hero-bg min-h-[90vh] flex items-center relative overflow-hidden">
+        <canvas id="heroCanvas"></canvas>
         <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-3xl"></div>
         <div class="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10 py-20">
-            <div>
-                <h1 class="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight text-white leading-[1.1] mb-6">Reparación y Mantenimiento de Computadoras</h1>
+            <div class="reveal-left">
+                <h1 class="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight text-white leading-[1.1] mb-6">
+                    Reparación y Mantenimiento de <br>
+                    <span id="typewriterText" class="typewriter-cursor text-brand-300"></span>
+                </h1>
                 <p class="text-lg text-brand-200 leading-relaxed mb-8 max-w-xl"><strong class="text-white">Confianza · Lógica · Solución · Eficacia</strong></p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="https://wa.me/50258415734" target="_blank" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-7 py-3.5 rounded-full transition-all">Solicitar servicio</a>
-                    <a href="#tienda" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-7 py-3.5 rounded-full transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i>Ver tienda</a>
+                    <a href="https://wa.me/50258415734" target="_blank" class="ripple-effect inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-7 py-3.5 rounded-full transition-all">Solicitar servicio</a>
+                    <a href="#tienda" class="ripple-effect inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-7 py-3.5 rounded-full transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i>Ver tienda de Componenetes</a>
                 </div>
             </div>
-            <div class="flex justify-center lg:justify-end"><div class="relative"><div class="absolute inset-0 bg-brand-400/20 rounded-full blur-3xl scale-75"></div><img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Asistente" class="w-72 md:w-80 relative z-10 animate-float drop-shadow-2xl"></div></div>
+            <div class="flex justify-center lg:justify-end reveal-right">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-brand-400/20 rounded-full blur-3xl scale-75"></div>
+                    <img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Asistente" class="w-72 md:w-80 relative z-10 animate-float drop-shadow-2xl">
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- MARQUEE DE MARCAS -->
+    <section class="py-8 bg-white border-y border-brand-100 overflow-hidden">
+        <p class="text-center text-xs font-semibold uppercase tracking-widest text-brand-400 mb-4">Marcas con las que trabajamos</p>
+        <div class="marquee-container">
+            <div class="marquee-track">
+                <div class="flex items-center gap-12 px-6">
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ASUS</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">HP</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">DELL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">LENOVO</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ACER</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SAMSUNG</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">KINGSTON</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SEAGATE</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">WESTERN DIGITAL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">INTEL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">AMD</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">NVIDIA</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">MSI</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CORSAIR</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CRUCIAL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">EVGA</span>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="flex items-center gap-12 px-6">
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ASUS</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">HP</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">DELL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">LENOVO</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ACER</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SAMSUNG</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">KINGSTON</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SEAGATE</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">WESTERN DIGITAL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">INTEL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">AMD</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">NVIDIA</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">MSI</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CORSAIR</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CRUCIAL</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">EVGA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section id="stats-section" class="py-20 bg-surface-50">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-12"><p class="text-white mt-3 max-w-2xl mx-auto">Calidad, confianza y soporte técnico profesional en cada servicio.</p></div>
-            <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-brand-200/30 border-4 border-brand-100 aspect-video bg-brand-900">
-                <video controls class="absolute inset-0 w-full h-full object-contain bg-brand-900"><source src="Servicio Tecnico presentacion .mp4" type="video/mp4">Tu navegador no soporta el elemento de video.</video>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center reveal" data-delay="0">
+                    <div class="stat-number" data-target="850" data-suffix="+">0</div>
+                    <p class="text-sm font-medium text-brand-600 mt-1">Equipos reparados</p>
+                </div>
+                <div class="text-center reveal" data-delay="100">
+                    <div class="stat-number" data-target="98" data-suffix="%">0</div>
+                    <p class="text-sm font-medium text-brand-600 mt-1">Satisfacción</p>
+                </div>
+                <div class="text-center reveal" data-delay="200">
+                    <div class="stat-number" data-target="5" data-suffix=" años">0</div>
+                    <p class="text-sm font-medium text-brand-600 mt-1">De experiencia</p>
+                </div>
+                <div class="text-center reveal" data-delay="300">
+                    <div class="stat-number" data-target="24" data-suffix="/7">0</div>
+                    <p class="text-sm font-medium text-brand-600 mt-1">Soporte disponible</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios-section" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Lo que ofrecemos</span>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Nuestros Servicios</h2>
+                <p class="text-brand-600 mt-3 max-w-xl mx-auto">Soluciones completas para mantener tu equipo funcionando al máximo.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="servicio-card reveal" data-delay="0">
+                    <div class="servicio-icon"><i data-lucide="monitor" class="w-6 h-6 text-brand-600"></i></div>
+                    <h3 class="text-lg font-bold text-brand-900 mb-2">Reparación Hardware</h3>
+                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Pantallas, teclados, baterías, puertos USB, discos duros, memoria RAM, placa madre y más.</p>
+                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q350</span>
+                </div>
+                <div class="servicio-card reveal" data-delay="100">
+                    <div class="servicio-icon"><i data-lucide="shield-check" class="w-6 h-6 text-brand-600"></i></div>
+                    <h3 class="text-lg font-bold text-brand-900 mb-2">Eliminación de Virus</h3>
+                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Limpieza de malware, ransomware, spyware. Instalación y configuración de antivirus profesional.</p>
+                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q150</span>
+                </div>
+                <div class="servicio-card reveal" data-delay="200">
+                    <div class="servicio-icon"><i data-lucide="settings" class="w-6 h-6 text-brand-600"></i></div>
+                    <h3 class="text-lg font-bold text-brand-900 mb-2">Mantenimiento Preventivo</h3>
+                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Limpieza interna, cambio de pasta térmica, optimización del sistema operativo y actualización de drivers.</p>
+                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q150</span>
+                </div>
+                <div class="servicio-card reveal" data-delay="0">
+                    <div class="servicio-icon"><i data-lucide="hard-drive" class="w-6 h-6 text-brand-600"></i></div>
+                    <h3 class="text-lg font-bold text-brand-900 mb-2">Recuperación de Datos</h3>
+                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Recuperamos archivos de discos dañados, formateados por accidente o con sectores defectuosos.</p>
+                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Cotización gratis</span>
+                </div>
+                <div class="servicio-card reveal" data-delay="100">
+                    <div class="servicio-icon"><i data-lucide="wifi" class="w-6 h-6 text-brand-600"></i></div>
+                    <h3 class="text-lg font-bold text-brand-900 mb-2">Redes y Conectividad</h3>
+                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Configuración de redes WiFi, cableado estructurado, diagnóstico de conectividad y VPN.</p>
+                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q200</span>
+                </div>
+                <div class="servicio-card reveal" data-delay="200">
+                    <div class="servicio-icon"><i data-lucide="package" class="w-6 h-6 text-brand-600"></i></div>
+                    <h3 class="text-lg font-bold text-brand-900 mb-2">Actualización de Equipos</h3>
+                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Upgrade de RAM, cambio de HDD a SSD, instalación de tarjetas gráficas y mejoras de rendimiento.</p>
+                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Cotización gratis</span>
+                </div>
             </div>
         </div>
     </section>
@@ -115,8 +452,17 @@
     <!-- TIENDA -->
     <section id="tienda" class="py-24 bg-surface-50">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-6"><span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Tienda online</span><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Repuestos y componentes</h2></div>
-            <div class="flex flex-wrap justify-center gap-2 mb-12">
+            <div class="text-center mb-6 reveal"><span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Tienda online</span><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Repuestos y componentes</h2></div>
+
+            <!-- Search bar -->
+            <div class="flex justify-center mb-6 reveal">
+                <div class="search-wrapper w-full max-w-md">
+                    <svg class="search-icon w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" id="searchInput" placeholder="Buscar producto..." oninput="searchProducts(this.value)">
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 mb-12 reveal">
                 <button onclick="filterProducts('all')" class="filter-btn active-filter px-5 py-2 rounded-full text-sm font-medium transition-all" data-cat="all">Todos</button>
                 <button onclick="filterProducts('ram')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all" data-cat="ram">Memoria RAM</button>
                 <button onclick="filterProducts('disco')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all" data-cat="disco">Discos</button>
@@ -132,70 +478,57 @@
     <!-- VIDEO PRESENTACIÓN -->
     <section id="video" class="py-24 bg-white">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-12"><span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Conócenos</span><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Mira cómo trabajamos</h2><p class="text-brand-600 mt-3 max-w-2xl mx-auto">Calidad, confianza y soporte técnico profesional en cada servicio.</p></div>
-            <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-brand-200/30 border-4 border-brand-100 aspect-video bg-brand-900"><video controls class="absolute inset-0 w-full h-full object-contain bg-brand-900"><source src="Servicio Técnico de Computadoras.mp4" type="video/mp4">Tu navegador no soporta el elemento de video.</video></div>
-            <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-brand-200/30 border-4 border-brand-100 aspect-video bg-brand-900 mt-8"><video controls class="absolute inset-0 w-full h-full object-contain bg-brand-900"><source src="Servicio Técnico de Computadoras 1.mp4" type="video/mp4">Tu navegador no soporta el elemento de video.</video></div>
+            <div class="text-center mb-12 reveal"><span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Conócenos</span><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Mira cómo trabajamos</h2><p class="text-brand-600 mt-3 max-w-2xl mx-auto">Calidad, confianza y soporte técnico profesional en cada servicio.</p></div>
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-brand-200/30 border-4 border-brand-100 aspect-video bg-brand-900 reveal"><video controls class="absolute inset-0 w-full h-full object-contain bg-brand-900"><source src="Servicio Técnico de Computadoras.mp4" type="video/mp4">Tu navegador no soporta el elemento de video.</video></div>
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-brand-200/30 border-4 border-brand-100 aspect-video bg-brand-900 mt-8 reveal"><video controls class="absolute inset-0 w-full h-full object-contain bg-brand-900"><source src="Servicio Técnico de Computadoras 1.mp4" type="video/mp4">Tu navegador no soporta el elemento de video.</video></div>
         </div>
     </section>
 
     <!-- PLANES -->
     <section id="planes" class="py-24 bg-surface-50">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-16"><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900">Nuestros planes</h2></div>
+            <div class="text-center mb-16 reveal"><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900">Nuestros planes</h2></div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white"><h3 class="text-lg font-semibold text-brand-900">Básico</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q150</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Limpieza física</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Pasta térmica</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Optimización</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*B%C3%A1sico%20(Q150)*" target="_blank" class="block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a></div>
-                <div class="card-hover border-2 border-brand-600 rounded-2xl p-8 bg-white relative shadow-xl shadow-brand-200/30"><div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-semibold px-4 py-1 rounded-full">Popular</div><h3 class="text-lg font-semibold text-brand-900">Completo</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q350</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo básico</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Reparación hardware</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Garantía 30 días</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Completo%20(Q350)*" target="_blank" class="block text-center py-3 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-full">Solicitar</a></div>
-                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white"><h3 class="text-lg font-semibold text-brand-900">Empresarial</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q800</span><span class="text-brand-500 text-sm">/mes</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo completo</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Hasta 5 equipos</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Soporte prioritario</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Empresarial%20(Q800%2Fmes)*" target="_blank" class="block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a></div>
+                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white reveal" data-delay="0"><h3 class="text-lg font-semibold text-brand-900">Básico</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q150</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Limpieza física</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Pasta térmica</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Optimización</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*B%C3%A1sico%20(Q150)*" target="_blank" class="ripple-effect block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a></div>
+                <div class="card-hover border-2 border-brand-600 rounded-2xl p-8 bg-white relative shadow-xl shadow-brand-200/30 reveal" data-delay="100"><div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-semibold px-4 py-1 rounded-full">Popular</div><h3 class="text-lg font-semibold text-brand-900">Completo</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q350</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo básico</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Reparación hardware</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Garantía 30 días</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Completo%20(Q350)*" target="_blank" class="ripple-effect block text-center py-3 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-full">Solicitar</a></div>
+                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white reveal" data-delay="200"><h3 class="text-lg font-semibold text-brand-900">Empresarial</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q800</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo completo</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Hasta 5 equipos</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Soporte prioritario</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Empresarial%20(Q800%2Fmes)*" target="_blank" class="ripple-effect block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== RESEÑAS ===== -->
+    <!-- RESEÑAS -->
     <section id="resenas" class="py-24 bg-white">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-12">
+            <div class="text-center mb-12 reveal">
                 <span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Testimonios</span>
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Lo que dicen nuestros clientes</h2>
                 <p class="text-brand-600 mt-3 max-w-2xl mx-auto">Tu opinión importa. Comparte tu experiencia con Ramazzini.</p>
             </div>
-
-            <!-- Formulario de reseña -->
-            <div class="bg-surface-50 border border-brand-100 rounded-2xl p-6 md:p-8 mb-12">
+            <div class="bg-surface-50 border border-brand-100 rounded-2xl p-6 md:p-8 mb-12 reveal">
                 <h3 class="text-lg font-bold text-brand-900 mb-4 flex items-center gap-2"><i data-lucide="message-square-plus" class="w-5 h-5 text-brand-600"></i>Deja tu reseña</h3>
                 <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-brand-900 mb-1">Tu nombre *</label>
-                        <input type="text" id="resenaNombre" placeholder="Ej: Carlos Pérez" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-brand-900 mb-2">Calificación *</label>
-                        <div class="flex items-center gap-1" id="starInput">
-                            <button onclick="setStars(1)" class="star-btn text-brand-200" data-star="1"><i data-lucide="star" class="w-7 h-7"></i></button>
-                            <button onclick="setStars(2)" class="star-btn text-brand-200" data-star="2"><i data-lucide="star" class="w-7 h-7"></i></button>
-                            <button onclick="setStars(3)" class="star-btn text-brand-200" data-star="3"><i data-lucide="star" class="w-7 h-7"></i></button>
-                            <button onclick="setStars(4)" class="star-btn text-brand-200" data-star="4"><i data-lucide="star" class="w-7 h-7"></i></button>
-                            <button onclick="setStars(5)" class="star-btn text-brand-200" data-star="5"><i data-lucide="star" class="w-7 h-7"></i></button>
-                            <span class="ml-3 text-sm font-medium text-brand-500" id="starLabel">Selecciona</span>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-brand-900 mb-1">Tu comentario *</label>
-                        <textarea id="resenaComentario" rows="3" placeholder="Cuéntanos tu experiencia..." class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 resize-none"></textarea>
-                    </div>
+                    <div><label class="block text-sm font-medium text-brand-900 mb-1">Tu nombre *</label><input type="text" id="resenaNombre" placeholder="Ej: Carlos Pérez" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div>
+                    <div><label class="block text-sm font-medium text-brand-900 mb-2">Calificación *</label><div class="flex items-center gap-1" id="starInput"><button onclick="setStars(1)" class="star-btn text-brand-200" data-star="1"><i data-lucide="star" class="w-7 h-7"></i></button><button onclick="setStars(2)" class="star-btn text-brand-200" data-star="2"><i data-lucide="star" class="w-7 h-7"></i></button><button onclick="setStars(3)" class="star-btn text-brand-200" data-star="3"><i data-lucide="star" class="w-7 h-7"></i></button><button onclick="setStars(4)" class="star-btn text-brand-200" data-star="4"><i data-lucide="star" class="w-7 h-7"></i></button><button onclick="setStars(5)" class="star-btn text-brand-200" data-star="5"><i data-lucide="star" class="w-7 h-7"></i></button><span class="ml-3 text-sm font-medium text-brand-500" id="starLabel">Selecciona</span></div></div>
+                    <div><label class="block text-sm font-medium text-brand-900 mb-1">Tu comentario *</label><textarea id="resenaComentario" rows="3" placeholder="Cuéntanos tu experiencia..." class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 resize-none"></textarea></div>
                     <div id="resenaError" class="hidden text-red-500 text-sm font-medium"></div>
                     <div id="resenaSuccess" class="hidden text-green-600 text-sm font-medium flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i>¡Reseña enviada exitosamente!</div>
-                    <button onclick="submitResena()" id="resenaBtn" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3 rounded-full transition-all flex items-center gap-2">
-                        <i data-lucide="send" class="w-4 h-4"></i>Publicar reseña
-                    </button>
+                    <button onclick="submitResena()" id="resenaBtn" class="ripple-effect bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3 rounded-full transition-all flex items-center gap-2"><i data-lucide="send" class="w-4 h-4"></i>Publicar reseña</button>
                 </div>
             </div>
+            <div id="resenasGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><div class="col-span-full text-center py-8"><div class="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-3"></div><p class="text-brand-400 text-sm">Cargando reseñas...</p></div></div>
+        </div>
+    </section>
 
-            <!-- Lista de reseñas -->
-            <div id="resenasGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-8">
-                    <div class="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-3"></div>
-                    <p class="text-brand-400 text-sm">Cargando reseñas...</p>
-                </div>
+    <!-- FAQ -->
+    <section id="faq-section" class="py-24 bg-surface-50">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Dudas frecuentes</span>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Preguntas Frecuentes</h2>
+                <p class="text-brand-600 mt-3">Todo lo que necesitas saber sobre nuestros servicios.</p>
+            </div>
+            <div id="faqContainer" class="reveal">
+                <!-- FAQ items rendered by JS -->
             </div>
         </div>
     </section>
@@ -203,19 +536,75 @@
     <!-- CTA -->
     <section id="contacto" class="py-24 bg-gradient-to-br from-brand-600 via-brand-700 to-brand-800 relative overflow-hidden">
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">¿Tu computadora tiene problemas?</h2>
-            <p class="text-brand-200 text-lg mb-10">Contáctanos ahora y recibe atención inmediata.</p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="https://wa.me/50258415734" target="_blank" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-full transition-all hover:scale-105">WhatsApp</a>
-                <button onclick="toggleChat()" class="inline-flex items-center gap-2 bg-white text-brand-700 font-semibold px-8 py-4 rounded-full hover:shadow-xl transition-all hover:scale-105"><i data-lucide="message-circle" class="w-5 h-5"></i>Chat en vivo</button>
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 reveal">¿Tu computadora tiene problemas?</h2>
+            <p class="text-brand-200 text-lg mb-10 reveal">Contáctanos ahora y recibe atención inmediata.</p>
+            <div class="flex flex-wrap justify-center gap-4 reveal">
+                <a href="https://wa.me/50258415734" target="_blank" class="ripple-effect inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-full transition-all hover:scale-105">WhatsApp</a>
+                <button onclick="toggleChat()" class="ripple-effect inline-flex items-center gap-2 bg-white text-brand-700 font-semibold px-8 py-4 rounded-full hover:shadow-xl transition-all hover:scale-105"><i data-lucide="message-circle" class="w-5 h-5"></i>Chat en vivo</button>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-brand-900 py-12"><div class="max-w-7xl mx-auto px-6 text-center"><img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Ramazzini" class="h-14 w-auto mx-auto mb-4 brightness-200"><p class="text-brand-400 text-sm">© 2025 Ramazzini Soporte Técnico</p></div></footer>
+    <!-- FOOTER MEJORADO -->
+    <footer class="bg-brand-900 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-1">
+                    <img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Ramazzini" class="h-12 w-auto brightness-200 mb-4">
+                    <p class="text-brand-400 text-sm leading-relaxed">Servicio técnico profesional. Confianza, lógica, solución y eficacia en cada reparación.</p>
+                    <a href="https://wa.me/50258415734" target="_blank" class="inline-flex items-center gap-2 mt-4 bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-4 py-2 rounded-full transition-all">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        +502 5841-5734
+                    </a>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-widest">Servicios</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Reparación Hardware</a></li>
+                        <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Eliminación Virus</a></li>
+                        <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Mantenimiento</a></li>
+                        <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Recuperación de Datos</a></li>
+                        <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Redes y WiFi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-widest">Tienda</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Memoria RAM</a></li>
+                        <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Discos SSD / HDD</a></li>
+                        <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Fuentes de Poder</a></li>
+                        <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Ventilación y Coolers</a></li>
+                        <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Cables y Tarjetas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-widest">Empresa</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#planes" class="text-brand-400 hover:text-white text-sm transition-colors">Nuestros Planes</a></li>
+                        <li><a href="#resenas" class="text-brand-400 hover:text-white text-sm transition-colors">Reseñas</a></li>
+                        <li><a href="#faq-section" class="text-brand-400 hover:text-white text-sm transition-colors">Preguntas Frecuentes</a></li>
+                        <li><a href="#video" class="text-brand-400 hover:text-white text-sm transition-colors">Cómo Trabajamos</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <h4 class="text-white font-semibold text-sm mb-3 uppercase tracking-widest">Horarios</h4>
+                        <p class="text-brand-400 text-xs leading-relaxed">Lunes a Viernes: 8am - 7pm<br>Sábado: 9am - 5pm<br>Emergencias: 24/7 por WhatsApp</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-brand-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-brand-500 text-sm">© 2025 Ramazzini Soporte Técnico · Guatemala</p>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleDark()" class="text-brand-400 hover:text-white text-xs transition-colors flex items-center gap-1.5">
+                        <i data-lucide="moon" class="w-3.5 h-3.5"></i>Modo oscuro
+                    </button>
+                    <span class="text-brand-700">·</span>
+                    <span class="text-brand-500 text-xs">Confianza · Lógica · Solución</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    <!-- WHATSAPP -->
+    <!-- WHATSAPP FLOAT -->
     <a href="https://wa.me/50258415734" target="_blank" class="whatsapp-float fixed bottom-6 left-6 z-40 w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 shadow-xl flex items-center justify-center transition-all hover:scale-110"><svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
 
     <!-- CART PANEL -->
@@ -223,7 +612,7 @@
     <div id="cartPanel" class="cart-panel hidden-cart fixed top-20 right-6 z-[56] w-[400px] max-w-[calc(100vw-48px)] bg-white rounded-2xl shadow-2xl border border-brand-100 overflow-hidden">
         <div class="bg-gradient-to-r from-brand-600 to-brand-500 px-5 py-4 flex items-center justify-between"><div class="flex items-center gap-2"><i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i><h3 class="text-sm font-semibold text-white">Mi Carrito</h3><span id="cartPanelCount" class="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span></div><button onclick="toggleCart()" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center"><i data-lucide="x" class="w-4 h-4 text-white"></i></button></div>
         <div id="cartItems" class="max-h-[350px] overflow-y-auto p-4 space-y-3"></div>
-        <div id="cartFooter" class="hidden border-t border-brand-100 p-5 bg-surface-50"><div class="flex items-center justify-between mb-4"><span class="text-sm text-brand-600">Subtotal</span><span class="text-lg font-bold text-brand-900" id="cartTotal">Q0.00</span></div><button onclick="openCheckoutModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-full transition-colors flex items-center justify-center gap-2"><i data-lucide="credit-card" class="w-4 h-4"></i>Proceder al pago</button></div>
+        <div id="cartFooter" class="hidden border-t border-brand-100 p-5 bg-surface-50"><div class="flex items-center justify-between mb-4"><span class="text-sm text-brand-600">Subtotal</span><span class="text-lg font-bold text-brand-900" id="cartTotal">Q0.00</span></div><button onclick="openCheckoutModal()" class="ripple-effect w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-full transition-colors flex items-center justify-center gap-2"><i data-lucide="credit-card" class="w-4 h-4"></i>Proceder al pago</button></div>
     </div>
 
     <!-- CHECKOUT MODAL -->
@@ -234,27 +623,19 @@
                 <div><label class="block text-sm font-medium text-brand-900 mb-1">Nombre completo *</label><input type="text" id="custName" oninput="validateCheckout()" required class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div>
                 <div class="grid grid-cols-2 gap-4"><div><label class="block text-sm font-medium text-brand-900 mb-1">Teléfono *</label><input type="tel" id="custPhone" oninput="validateCheckout()" required class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div><div><label class="block text-sm font-medium text-brand-900 mb-1">Correo</label><input type="email" id="custEmail" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div></div>
                 <div><label class="block text-sm font-medium text-brand-900 mb-1">Dirección de envío *</label><textarea id="custAddress" oninput="validateCheckout()" required rows="2" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 resize-none"></textarea></div>
-                <div class="bg-surface-50 rounded-2xl p-5 border border-brand-200">
-                    <div class="flex items-center gap-2 mb-4"><div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center"><i data-lucide="credit-card" class="w-4 h-4 text-white"></i></div><h4 class="text-sm font-bold text-brand-900">Datos de la Tarjeta</h4><span class="ml-auto text-[10px] font-bold uppercase tracking-wider bg-brand-600 text-white px-2 py-0.5 rounded-full">Obligatorio</span></div>
-                    <div class="space-y-3">
-                        <div><label class="block text-xs font-medium text-brand-700 mb-1">Nombre del titular *</label><input type="text" id="cardName" oninput="validateCheckout()" placeholder="Como aparece en la tarjeta" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div>
-                        <div><label class="block text-xs font-medium text-brand-700 mb-1">Número de tarjeta *</label><input type="text" id="cardNumber" oninput="formatCardNumber(this);validateCheckout()" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div>
-                        <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-medium text-brand-700 mb-1">Vencimiento *</label><input type="text" id="cardExpiry" oninput="formatExpiry(this);validateCheckout()" placeholder="MM/AA" maxlength="5" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div><div><label class="block text-xs font-medium text-brand-700 mb-1">CVV *</label><input type="password" id="cardCVV" oninput="validateCheckout()" placeholder="•••" maxlength="4" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div></div>
-                    </div>
-                    <p class="mt-3 text-[10px] text-brand-400 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3"></i>Pago seguro — Tus datos están protegidos</p>
-                </div>
+                <div class="bg-surface-50 rounded-2xl p-5 border border-brand-200"><div class="flex items-center gap-2 mb-4"><div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center"><i data-lucide="credit-card" class="w-4 h-4 text-white"></i></div><h4 class="text-sm font-bold text-brand-900">Datos de la Tarjeta</h4><span class="ml-auto text-[10px] font-bold uppercase tracking-wider bg-brand-600 text-white px-2 py-0.5 rounded-full">Obligatorio</span></div><div class="space-y-3"><div><label class="block text-xs font-medium text-brand-700 mb-1">Nombre del titular *</label><input type="text" id="cardName" oninput="validateCheckout()" placeholder="Como aparece en la tarjeta" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div><div><label class="block text-xs font-medium text-brand-700 mb-1">Número de tarjeta *</label><input type="text" id="cardNumber" oninput="formatCardNumber(this);validateCheckout()" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div><div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-medium text-brand-700 mb-1">Vencimiento *</label><input type="text" id="cardExpiry" oninput="formatExpiry(this);validateCheckout()" placeholder="MM/AA" maxlength="5" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div><div><label class="block text-xs font-medium text-brand-700 mb-1">CVV *</label><input type="password" id="cardCVV" oninput="validateCheckout()" placeholder="•••" maxlength="4" class="w-full border border-brand-200 rounded-xl px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></div></div></div><p class="mt-3 text-[10px] text-brand-400 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3"></i>Pago seguro — Tus datos están protegidos</p></div>
                 <div class="bg-surface-50 rounded-xl p-4 border border-brand-100"><h4 class="text-sm font-semibold text-brand-900 mb-2">Resumen</h4><div id="checkoutSummary" class="space-y-1 text-sm"></div></div>
                 <div id="checkoutError" class="hidden text-red-600 text-sm text-center font-medium"></div>
-                <div class="flex gap-3 pt-2"><button type="button" onclick="closeCheckoutModal()" class="flex-1 py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Cancelar</button><button type="button" onclick="submitOrder()" id="submitBtn" class="flex-1 py-3 text-white font-semibold rounded-full flex items-center justify-center gap-2 btn-confirm-disabled"><i data-lucide="lock" class="w-4 h-4"></i><span id="submitBtnText">Confirmar Pedido</span></button></div>
+                <div class="flex gap-3 pt-2"><button type="button" onclick="closeCheckoutModal()" class="flex-1 py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Cancelar</button><button type="button" onclick="submitOrder()" id="submitBtn" class="ripple-effect flex-1 py-3 text-white font-semibold rounded-full flex items-center justify-center gap-2 btn-confirm-disabled"><i data-lucide="lock" class="w-4 h-4"></i><span id="submitBtnText">Confirmar Pedido</span></button></div>
             </div>
         </div>
     </div>
 
     <!-- SUCCESS MODAL -->
-    <div id="successModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/50"><div class="bg-white rounded-3xl shadow-2xl max-w-md w-full mx-4 animate-slide-up text-center p-8"><div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4"><i data-lucide="check-circle" class="w-8 h-8 text-green-600"></i></div><h3 class="text-xl font-bold text-brand-900 mb-2">¡Pedido confirmado!</h3><p class="text-brand-600 text-sm mb-6">Tu pedido fue pagado y registrado exitosamente. Te contactaremos pronto.</p><button onclick="closeSuccessModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-full">Entendido</button></div></div>
+    <div id="successModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/50"><div class="bg-white rounded-3xl shadow-2xl max-w-md w-full mx-4 animate-slide-up text-center p-8"><div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4"><i data-lucide="check-circle" class="w-8 h-8 text-green-600"></i></div><h3 class="text-xl font-bold text-brand-900 mb-2">¡Pedido confirmado!</h3><p class="text-brand-600 text-sm mb-6">Tu pedido fue pagado y registrado exitosamente. Te contactaremos pronto.</p><button onclick="closeSuccessModal()" class="ripple-effect w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-full">Entendido</button></div></div>
 
     <!-- LOGIN ADMIN MODAL -->
-    <div id="loginAdminModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4"><div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 animate-slide-up text-center"><div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="lock" class="w-8 h-8 text-brand-600"></i></div><h3 class="text-xl font-bold text-brand-900 mb-1">Acceso Restringido</h3><p class="text-brand-500 text-sm mb-6">Ingresa tus credenciales de administrador</p><div class="space-y-4"><input type="text" id="adminUser" placeholder="Usuario" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"><input type="password" id="adminPass" placeholder="Contraseña" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" onkeydown="if(event.key==='Enter')checkAdminLogin()"><button onclick="checkAdminLogin()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all">Entrar al Panel</button><button onclick="closeAdminLogin()" class="text-brand-400 text-xs hover:text-brand-600 underline">Cancelar</button></div><div id="loginError" class="hidden mt-4 text-red-500 text-xs font-bold">Credenciales incorrectas</div></div></div>
+    <div id="loginAdminModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4"><div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 animate-slide-up text-center"><div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="lock" class="w-8 h-8 text-brand-600"></i></div><h3 class="text-xl font-bold text-brand-900 mb-1">Acceso Restringido</h3><p class="text-brand-500 text-sm mb-6">Ingresa tus credenciales de administrador</p><div class="space-y-4"><input type="text" id="adminUser" placeholder="Usuario" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"><input type="password" id="adminPass" placeholder="Contraseña" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" onkeydown="if(event.key==='Enter')checkAdminLogin()"><button onclick="checkAdminLogin()" class="ripple-effect w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all">Entrar al Panel</button><button onclick="closeAdminLogin()" class="text-brand-400 text-xs hover:text-brand-600 underline">Cancelar</button></div><div id="loginError" class="hidden mt-4 text-red-500 text-xs font-bold">Credenciales incorrectas</div></div></div>
 
     <!-- PANEL ADMIN -->
     <div id="adminModal" class="fixed inset-0 z-[80] hidden items-center justify-center bg-black/60 p-4 overflow-y-auto">
@@ -280,6 +661,219 @@
     lucide.createIcons();
     const L='https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8';
 
+    // ===== LOADING SCREEN =====
+    const loadingTexts = ['Iniciando sistema...','Cargando productos...','Conectando base de datos...','¡Listo!'];
+    let loadProgress = 0;
+    function advanceLoading(pct, textIdx) {
+        document.getElementById('loadingBar').style.width = pct + '%';
+        document.getElementById('loadingText').textContent = loadingTexts[textIdx] || '';
+    }
+    advanceLoading(20, 0);
+    setTimeout(() => advanceLoading(55, 1), 400);
+    setTimeout(() => advanceLoading(80, 2), 900);
+    setTimeout(() => advanceLoading(100, 3), 1400);
+    setTimeout(() => {
+        document.getElementById('loadingScreen').classList.add('fade-out');
+    }, 1900);
+
+    // ===== SCROLL PROGRESS BAR =====
+    window.addEventListener('scroll', () => {
+        const scrollEl = document.documentElement;
+        const pct = (scrollEl.scrollTop / (scrollEl.scrollHeight - scrollEl.clientHeight)) * 100;
+        document.getElementById('scrollProgress').style.width = pct + '%';
+        // Back to top visibility
+        document.getElementById('backToTop').classList.toggle('visible', scrollEl.scrollTop > 400);
+    });
+
+    // ===== CURSOR GLOW =====
+    document.addEventListener('mousemove', e => {
+        const g = document.getElementById('cursorGlow');
+        g.style.left = e.clientX + 'px';
+        g.style.top = e.clientY + 'px';
+    });
+
+    // ===== DARK MODE =====
+    let darkMode = false;
+    function toggleDark() {
+        darkMode = !darkMode;
+        document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+        const icon = document.getElementById('darkIcon');
+        icon.setAttribute('data-lucide', darkMode ? 'sun' : 'moon');
+        lucide.createIcons();
+    }
+
+    // ===== MOBILE MENU =====
+    function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+    function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+    // ===== RIPPLE EFFECT =====
+    document.addEventListener('click', e => {
+        const btn = e.target.closest('.ripple-effect');
+        if (!btn) return;
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size/2;
+        const y = e.clientY - rect.top - size/2;
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px`;
+        btn.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+    });
+
+    // ===== SCROLL REVEAL =====
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const delay = parseInt(entry.target.dataset.delay || 0);
+                setTimeout(() => entry.target.classList.add('revealed'), delay);
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    function initReveal() {
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+    }
+
+    // ===== TYPEWRITER =====
+    const typewriterPhrases = ['Computadoras', 'Laptops & PCs', 'Servidores', 'Componentes'];
+    let twIndex = 0, twChar = 0, twDeleting = false;
+    function typewrite() {
+        const el = document.getElementById('typewriterText');
+        if (!el) return;
+        const phrase = typewriterPhrases[twIndex];
+        if (!twDeleting) {
+            el.textContent = phrase.substring(0, twChar + 1);
+            twChar++;
+            if (twChar === phrase.length) { twDeleting = true; setTimeout(typewrite, 1800); return; }
+        } else {
+            el.textContent = phrase.substring(0, twChar - 1);
+            twChar--;
+            if (twChar === 0) { twDeleting = false; twIndex = (twIndex + 1) % typewriterPhrases.length; }
+        }
+        setTimeout(typewrite, twDeleting ? 60 : 110);
+    }
+
+    // ===== COUNTER ANIMATION =====
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1800;
+        const start = performance.now();
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(ease * target) + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    // ===== HERO CANVAS PARTICLES =====
+    function initParticles() {
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [];
+        function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+        for (let i = 0; i < 55; i++) {
+            particles.push({
+                x: Math.random() * 1920, y: Math.random() * 900,
+                vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4,
+                r: Math.random() * 2 + .5, a: Math.random() * .5 + .1
+            });
+        }
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > W) p.vx *= -1;
+                if (p.y < 0 || p.y > H) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(147,197,253,${p.a})`;
+                ctx.fill();
+            });
+            particles.forEach((p, i) => {
+                particles.slice(i+1).forEach(q => {
+                    const d = Math.hypot(p.x-q.x, p.y-q.y);
+                    if (d < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+                        ctx.strokeStyle = `rgba(147,197,253,${.15 * (1 - d/120)})`;
+                        ctx.lineWidth = .6;
+                        ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    }
+
+    // ===== TOAST NOTIFICATIONS =====
+    function showToast(msg, icon = '🛒') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<span style="margin-right:8px">${icon}</span>${msg}`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.animation = 'toastOut .3s ease forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 2800);
+    }
+
+    // ===== FAQ =====
+    const faqs = [
+        {q:'¿Cuánto tiempo tarda una reparación?', a:'La mayoría de reparaciones se completan en 1-3 días hábiles. Para equipos con daños severos puede tomar hasta 5 días. Te mantenemos informado por WhatsApp en todo momento.'},
+        {q:'¿Ofrecen garantía en sus reparaciones?', a:'Sí, todas nuestras reparaciones incluyen garantía. El plan Básico tiene 15 días, el Completo 30 días y el Empresarial 60 días. La garantía cubre el mismo problema reparado.'},
+        {q:'¿Hacen diagnóstico gratuito?', a:'¡Sí! El diagnóstico inicial es completamente gratuito. Solo pagas si decides proceder con la reparación o adquirir algún componente.'},
+        {q:'¿Reparan todas las marcas?', a:'Trabajamos con todas las marcas principales: HP, Dell, Lenovo, Asus, Acer, Samsung, Apple y más. Nuestros técnicos tienen experiencia con una amplia variedad de modelos.'},
+        {q:'¿Puedo llevar mi equipo o hacen servicio a domicilio?', a:'Ambas opciones están disponibles. Puedes traer tu equipo a nuestro taller o solicitar visita a domicilio. Contáctanos por WhatsApp para coordinar.'},
+        {q:'¿Los productos de la tienda tienen garantía?', a:'Todos los componentes vendidos en nuestra tienda incluyen garantía del fabricante. La garantía varía por producto, generalmente entre 1 y 3 años.'},
+        {q:'¿Cuáles son los métodos de pago?', a:'Aceptamos tarjetas de crédito/débito (Visa, Mastercard), efectivo en el taller, y transferencias bancarias. Para pedidos online usamos pago seguro con tarjeta.'},
+        {q:'¿Atienden emergencias fuera del horario?', a:'Sí, para situaciones urgentes puedes contactarnos por WhatsApp las 24 horas. Evaluamos cada caso y coordinamos la atención lo antes posible.'},
+    ];
+
+    function renderFAQ() {
+        const container = document.getElementById('faqContainer');
+        container.innerHTML = faqs.map((faq, i) => `
+            <div class="faq-item">
+                <div class="faq-question text-brand-900" onclick="toggleFAQ(${i})">
+                    <span>${faq.q}</span>
+                    <svg id="faq-icon-${i}" class="faq-icon w-5 h-5 text-brand-400 shrink-0 ml-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+                <div class="faq-answer text-brand-600" id="faq-answer-${i}">${faq.a}</div>
+            </div>
+        `).join('');
+    }
+
+    function toggleFAQ(i) {
+        const answer = document.getElementById('faq-answer-' + i);
+        const icon = document.getElementById('faq-icon-' + i);
+        const isOpen = answer.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+        document.querySelectorAll('.faq-icon').forEach(ic => ic.classList.remove('open'));
+        if (!isOpen) {
+            answer.classList.add('open');
+            icon.classList.add('open');
+        }
+    }
+
     // ===== PRODUCTOS =====
     const products=[
         {id:1,name:'Memoria RAM DDR4 8GB 2666MHz',category:'ram',price:275,oldPrice:350,image:'https://cdn.kemik.gt/2023/03/CT8G4SFRA266-MEMORIA-RAM-DDR4-1200X1200-1-1-526x526.-500x500.jpg',badge:'Popular',stock:25},
@@ -301,29 +895,56 @@
         {id:17,name:'Kit Ventiladores RGB 3x 120mm',category:'ventilador',price:345,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/B0C64WLQSK.jpg',badge:'Popular',stock:20},
         {id:18,name:'Ventilador CPU Cooler 92mm',category:'ventilador',price:115,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr9uKafFRorTiymJqeGZ3zZBZdEBB-MDdpYw&s',badge:null,stock:30},
         {id:19,name:'Disipador Líquido AIO 240mm RGB',category:'ventilador',price:695,oldPrice:850,image:'https://www.macrosistemas.com/wp-content/uploads/1298-1-1.jpg',badge:'Nuevo',stock:7},
-        {id:20,name:'Cable HDMI 2.1 Ultra High Speed 2m',category:'cable',price:75,oldPrice:null,image:'',badge:null,stock:50},
-        {id:21,name:'Cable SATA III 6Gbps Pack x3',category:'cable',price:55,oldPrice:85,image:'',badge:'Oferta',stock:60},
-        {id:22,name:'Cable DisplayPort 1.4 8K 2m',category:'cable',price:95,oldPrice:null,image:'',badge:null,stock:45},
-        {id:23,name:'Cable USB-C a USB-C 100W 1m',category:'cable',price:65,oldPrice:null,image:'',badge:null,stock:55},
-        {id:24,name:'Cable de Poder AC 1.5m',category:'cable',price:45,oldPrice:null,image:'',badge:null,stock:70},
-        {id:25,name:'Cable VGA HD15 1.8m',category:'cable',price:55,oldPrice:75,image:'',badge:'Económico',stock:40},
-        {id:26,name:'Tarjeta de Video RX 6600 8GB',category:'tarjeta',price:2195,oldPrice:2495,image:'',badge:'Oferta',stock:5},
-        {id:27,name:'Tarjeta de Red WiFi 6 PCIe',category:'tarjeta',price:235,oldPrice:null,image:'',badge:'Nuevo',stock:35},
-        {id:28,name:'Tarjeta de Sonido 7.1 PCIe',category:'tarjeta',price:275,oldPrice:350,image:'',badge:null,stock:15},
-        {id:29,name:'Tarjeta de Video GTX 1650 4GB',category:'tarjeta',price:1495,oldPrice:null,image:'',badge:null,stock:8},
-        {id:30,name:'Tarjeta de Red Ethernet PCIe Gigabit',category:'tarjeta',price:125,oldPrice:null,image:'',badge:null,stock:30}
+        {id:20,name:'Cable HDMI 2.1 Ultra High Speed 2m',category:'cable',price:75,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9DDEzrIh32kbK5-FuW_4531tKa86gnuiIZg&s',badge:null,stock:50},
+        {id:21,name:'Cable SATA III 6Gbps Pack x3',category:'cable',price:55,oldPrice:85,image:'https://m.media-amazon.com/images/I/71i09gfheyL.jpg',badge:'Oferta',stock:60},
+        {id:22,name:'Cable DisplayPort 1.4 8K 2m',category:'cable',price:95,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/B08CZ8JXKV.jpg',badge:null,stock:45},
+        {id:23,name:'Cable USB-C a USB-C 100W 1m',category:'cable',price:65,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1VwikhUqTKH448tGCMHeonkk-ddN8ro0aUQ&s',badge:null,stock:55},
+        {id:24,name:'Cable de Poder AC 1.5m',category:'cable',price:45,oldPrice:null,image:'https://tecno-center.minegocio-go.com/web/image/product.template/15719/image',badge:null,stock:70},
+        {id:25,name:'Cable VGA HD15 1.8m',category:'cable',price:55,oldPrice:75,image:'https://cdn.kemik.gt/2026/04/230750-etouch-1200x1200-1.-500x500.jpg',badge:'Económico',stock:40},
+        {id:26,name:'Tarjeta de Video RX 6600 8GB',category:'tarjeta',price:2195,oldPrice:2495,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjpD50L0FmOEwVu4CUGytJpZQtUypuHMvxUQ&s',badge:'Oferta',stock:5},
+        {id:27,name:'Tarjeta de Red WiFi 6 PCIe',category:'tarjeta',price:235,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/B0B1NRGDQ4.jpg',badge:'Nuevo',stock:35},
+        {id:28,name:'Tarjeta de Sonido 7.1 PCIe',category:'tarjeta',price:275,oldPrice:350,image:'https://cdn.kemik.gt/2021/03/PEXSOUND7CH-STARTECH.COM-1200x1200-1-1-526x526.jpg',badge:null,stock:15},
+        {id:29,name:'Tarjeta de Video RTX 5090 32GB',category:'tarjeta',price:43789,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/OTEwYjI0Zj.jpg',badge:null,stock:8},
+        {id:30,name:'Tarjeta de Red Ethernet PCIe Gigabit',category:'tarjeta',price:125,oldPrice:null,image:'https://cdn.kemik.gt/2023/04/image_33_-526x526.-500x500.jpg',badge:null,stock:30}
     ];
 
     function getProductImage(p){if(p.image)return p.image;return`https://placehold.co/400x300/EBF5FF/2B7DE9?text=${encodeURIComponent(p.name.split(' ').slice(0,3).join(' '))}`}
 
-    let cart=[];let currentFilter='all';
+    let cart=[];let currentFilter='all';let currentSearch='';
 
-    function renderProducts(filter='all'){const grid=document.getElementById('productsGrid');const filtered=filter==='all'?products:products.filter(p=>p.category===filter);grid.innerHTML=filtered.map(p=>{const inCart=cart.find(c=>c.id===p.id);const qty=inCart?inCart.qty:0;return`<div class="product-card bg-white border border-brand-100 rounded-2xl overflow-hidden" id="product-${p.id}"><div class="relative bg-surface-50 overflow-hidden h-48 flex items-center justify-center p-3"><img src="${getProductImage(p)}" alt="${p.name}" class="max-w-full max-h-full object-contain">${p.badge?`<span class="absolute top-4 left-4 z-10 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${p.badge==='Oferta'?'bg-red-500 text-white':p.badge==='Nuevo'?'bg-emerald-500 text-white':p.badge==='Premium'||p.badge==='Pro'?'bg-yellow-500 text-white':p.badge==='Económico'?'bg-teal-500 text-white':'bg-brand-600 text-white'}">${p.badge}</span>`:''}${qty>0?`<span class="absolute top-4 right-4 z-10 w-7 h-7 bg-brand-600 text-white text-xs font-bold rounded-full flex items-center justify-center">${qty}</span>`:''}</div><div class="p-4"><h3 class="text-sm font-semibold text-brand-900 mb-2 leading-snug min-h-[2.5rem]">${p.name}</h3><div class="flex items-center gap-2 mb-3"><span class="text-lg font-bold text-brand-900">Q${p.price.toFixed(2)}</span>${p.oldPrice?`<span class="text-sm text-brand-400 line-through">Q${p.oldPrice.toFixed(2)}</span>`:''}</div><div class="flex items-center justify-between"><span class="text-xs ${p.stock>10?'text-green-600':p.stock>0?'text-yellow-600':'text-red-500'}">${p.stock>10?'En stock':p.stock>0?'¡Solo '+p.stock+'!':'Agotado'}</span><button onclick="addToCart(${p.id})" class="flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-full transition-all ${p.stock===0?'opacity-50 pointer-events-none':''}">Agregar</button></div></div></div>`}).join('')}
-    function filterProducts(cat){currentFilter=cat;document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('active-filter');if(b.dataset.cat===cat)b.classList.add('active-filter')});renderProducts(cat)}
+    function renderProducts(filter='all', search=''){
+        const grid=document.getElementById('productsGrid');
+        let filtered = filter==='all' ? products : products.filter(p=>p.category===filter);
+        if(search.trim()) {
+            const q = search.toLowerCase();
+            filtered = filtered.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q));
+        }
+        if(filtered.length === 0) {
+            grid.innerHTML = `<div class="col-span-full text-center py-16"><p class="text-brand-400 text-lg">No se encontraron productos para "<strong>${search}</strong>"</p></div>`;
+            return;
+        }
+        grid.innerHTML=filtered.map(p=>{const inCart=cart.find(c=>c.id===p.id);const qty=inCart?inCart.qty:0;return`<div class="product-card bg-white border border-brand-100 rounded-2xl overflow-hidden" id="product-${p.id}"><div class="relative bg-surface-50 overflow-hidden h-48 flex items-center justify-center p-3"><img src="${getProductImage(p)}" alt="${p.name}" class="max-w-full max-h-full object-contain">${p.badge?`<span class="absolute top-4 left-4 z-10 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${p.badge==='Oferta'?'bg-red-500 text-white':p.badge==='Nuevo'?'bg-emerald-500 text-white':p.badge==='Premium'||p.badge==='Pro'?'bg-yellow-500 text-white':p.badge==='Económico'?'bg-teal-500 text-white':'bg-brand-600 text-white'}">${p.badge}</span>`:''}${qty>0?`<span class="absolute top-4 right-4 z-10 w-7 h-7 bg-brand-600 text-white text-xs font-bold rounded-full flex items-center justify-center">${qty}</span>`:''}</div><div class="p-4"><h3 class="text-sm font-semibold text-brand-900 mb-2 leading-snug min-h-[2.5rem]">${p.name}</h3><div class="flex items-center gap-2 mb-3"><span class="text-lg font-bold text-brand-900">Q${p.price.toFixed(2)}</span>${p.oldPrice?`<span class="text-sm text-brand-400 line-through">Q${p.oldPrice.toFixed(2)}</span>`:''}</div><div class="flex items-center justify-between"><span class="text-xs ${p.stock>10?'text-green-600':p.stock>0?'text-yellow-600':'text-red-500'}">${p.stock>10?'En stock':p.stock>0?'¡Solo '+p.stock+'!':'Agotado'}</span><button onclick="addToCart(${p.id})" class="ripple-effect flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-full transition-all ${p.stock===0?'opacity-50 pointer-events-none':''}">Agregar</button></div></div></div>`}).join('')
+    }
 
-    function addToCart(id){const p=products.find(x=>x.id===id);const e=cart.find(x=>x.id===id);if(e){if(e.qty<p.stock)e.qty++}else{cart.push({id,qty:1})}updateCartUI();renderProducts(currentFilter);const el=document.getElementById('product-'+id);if(el){el.classList.add('added-flash');setTimeout(()=>el.classList.remove('added-flash'),600)}}
-    function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCartUI();renderProducts(currentFilter)}
-    function changeQty(id,d){const i=cart.find(c=>c.id===id);const p=products.find(x=>x.id===id);if(!i)return;i.qty+=d;if(i.qty<=0){removeFromCart(id);return}if(i.qty>p.stock)i.qty=p.stock;updateCartUI();renderProducts(currentFilter)}
+    function filterProducts(cat){currentFilter=cat;currentSearch='';document.getElementById('searchInput').value='';document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('active-filter');if(b.dataset.cat===cat)b.classList.add('active-filter')});renderProducts(cat)}
+
+    function searchProducts(val) {
+        currentSearch = val;
+        renderProducts(currentFilter, val);
+    }
+
+    function addToCart(id){
+        const p=products.find(x=>x.id===id);
+        const e=cart.find(x=>x.id===id);
+        if(e){if(e.qty<p.stock)e.qty++}else{cart.push({id,qty:1})}
+        updateCartUI();
+        renderProducts(currentFilter, currentSearch);
+        const el=document.getElementById('product-'+id);
+        if(el){el.classList.add('added-flash');setTimeout(()=>el.classList.remove('added-flash'),600)}
+        showToast(`${p.name.split(' ').slice(0,3).join(' ')} agregado`, '✅');
+    }
+    function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCartUI();renderProducts(currentFilter, currentSearch)}
+    function changeQty(id,d){const i=cart.find(c=>c.id===id);const p=products.find(x=>x.id===id);if(!i)return;i.qty+=d;if(i.qty<=0){removeFromCart(id);return}if(i.qty>p.stock)i.qty=p.stock;updateCartUI();renderProducts(currentFilter, currentSearch)}
 
     function updateCartUI(){const badge=document.getElementById('cartBadge'),count=document.getElementById('cartCount'),pCount=document.getElementById('cartPanelCount'),items=document.getElementById('cartItems'),footer=document.getElementById('cartFooter'),total=document.getElementById('cartTotal');const tI=cart.reduce((s,c)=>s+c.qty,0),tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);if(tI>0){badge.classList.remove('hidden');badge.classList.add('flex')}else{badge.classList.add('hidden');badge.classList.remove('flex')}count.textContent=tI;pCount.textContent=tI;total.textContent=`Q${tP.toFixed(2)}`;if(cart.length===0){items.innerHTML='<div class="text-center py-10"><p class="text-brand-400 text-sm">Tu carrito está vacío</p></div>';footer.classList.add('hidden')}else{items.innerHTML=cart.map(c=>{const p=products.find(x=>x.id===c.id);return`<div class="flex items-center gap-3 bg-surface-50 rounded-xl p-3"><img src="${getProductImage(p)}" alt="${p.name}" class="w-14 h-14 rounded-lg object-contain shrink-0 bg-white p-1"><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-brand-900 truncate">${p.name}</p><p class="text-sm font-bold text-brand-600">Q${(p.price*c.qty).toFixed(2)}</p></div><div class="flex items-center gap-1 shrink-0"><button onclick="changeQty(${p.id},-1)" class="w-7 h-7 rounded-full bg-brand-100 hover:bg-brand-200 flex items-center justify-center text-brand-700 font-bold text-sm">-</button><span class="w-7 text-center text-sm font-bold">${c.qty}</span><button onclick="changeQty(${p.id},1)" class="w-7 h-7 rounded-full bg-brand-100 hover:bg-brand-200 flex items-center justify-center text-brand-700 font-bold text-sm">+</button></div><button onclick="removeFromCart(${p.id})" class="text-red-400 hover:text-red-600 shrink-0 text-lg leading-none">&times;</button></div>`}).join('');footer.classList.remove('hidden')}}
 
@@ -338,128 +959,19 @@
     function openCheckoutModal(){if(!cart.length)return;toggleCart();const tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);document.getElementById('checkoutSummary').innerHTML=cart.map(c=>{const p=products.find(x=>x.id===c.id);return`<div class="flex justify-between"><span class="text-brand-600">${p.name} x${c.qty}</span><span class="font-semibold">Q${(p.price*c.qty).toFixed(2)}</span></div>`}).join('')+`<div class="border-t border-brand-200 mt-2 pt-2 flex justify-between font-bold text-brand-900"><span>Total</span><span>Q${tP.toFixed(2)}</span></div>`;const m=document.getElementById('checkoutModal');m.classList.remove('hidden');m.classList.add('flex');document.getElementById('cardName').value='';document.getElementById('cardNumber').value='';document.getElementById('cardExpiry').value='';document.getElementById('cardCVV').value='';validateCheckout();lucide.createIcons()}
     function closeCheckoutModal(){document.getElementById('checkoutModal').classList.add('hidden');document.getElementById('checkoutModal').classList.remove('flex');document.getElementById('checkoutError').classList.add('hidden')}
 
-    async function submitOrder(){const errEl=document.getElementById('checkoutError');const nombre=document.getElementById('custName').value.trim();const telefono=document.getElementById('custPhone').value.trim();const email=document.getElementById('custEmail').value.trim();const direccion=document.getElementById('custAddress').value.trim();const cardName=document.getElementById('cardName').value.trim();const cardNumber=document.getElementById('cardNumber').value.replace(/\s/g,'');const cardExpiry=document.getElementById('cardExpiry').value.trim();const cardCVV=document.getElementById('cardCVV').value.trim();if(!nombre||!telefono||!direccion){errEl.textContent='Completa los campos obligatorios.';errEl.classList.remove('hidden');return}if(!cardName||cardNumber.length<13||cardExpiry.length<5||cardCVV.length<3){errEl.textContent='Completa todos los datos de la tarjeta.';errEl.classList.remove('hidden');return}errEl.classList.add('hidden');const submitBtn=document.getElementById('submitBtn');const submitBtnText=document.getElementById('submitBtnText');submitBtn.disabled=true;submitBtnText.textContent='Procesando pago...';const pedidoId='PED-'+Date.now();const tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);const last4=cardNumber.slice(-4);try{const pedidoData={pedido_id:pedidoId,nombre:nombre,telefono:telefono,direccion:direccion,metodo_pago:'Tarjeta',tarjeta_nombre:cardName,tarjeta_last4:last4,total:tP,estado:'pagado'};if(email)pedidoData.email=email;const{error:pedidoError}=await db.from('pedidos').insert(pedidoData);if(pedidoError)throw pedidoError;const items=cart.map(c=>{const p=products.find(x=>x.id===c.id);return{pedido_id:pedidoId,producto:p.name,categoria:p.category,cantidad:c.qty,precio:p.price,subtotal:p.price*c.qty}});const{error:itemsError}=await db.from('pedido_items').insert(items);if(itemsError)throw itemsError;const formData=new FormData();formData.append('_subject',`🛒 Nuevo Pedido ${pedidoId} — Ramazzini`);formData.append('pedido_id',pedidoId);formData.append('nombre',nombre);formData.append('telefono',telefono);formData.append('email',email);formData.append('direccion',direccion);formData.append('metodo_pago','Tarjeta ****'+last4+' — '+cardName);formData.append('total','Q'+tP.toFixed(2));formData.append('productos',cart.map(c=>{const p=products.find(x=>x.id===c.id);return`• ${p.name} x${c.qty} = Q${(p.price*c.qty).toFixed(2)}`}).join('\n'));fetch('https://formspree.io/f/xjglqkdw',{method:'POST',body:formData,headers:{'Accept':'application/json'}}).catch(()=>{});closeCheckoutModal();cart=[];updateCartUI();renderProducts(currentFilter);const s=document.getElementById('successModal');s.classList.remove('hidden');s.classList.add('flex');lucide.createIcons()}catch(err){console.error('Error Supabase:',err);errEl.textContent='Error: '+err.message;errEl.classList.remove('hidden')}finally{submitBtn.disabled=false;submitBtnText.textContent='Confirmar Pedido'}}
+    async function submitOrder(){const errEl=document.getElementById('checkoutError');const nombre=document.getElementById('custName').value.trim();const telefono=document.getElementById('custPhone').value.trim();const email=document.getElementById('custEmail').value.trim();const direccion=document.getElementById('custAddress').value.trim();const cardName=document.getElementById('cardName').value.trim();const cardNumber=document.getElementById('cardNumber').value.replace(/\s/g,'');const cardExpiry=document.getElementById('cardExpiry').value.trim();const cardCVV=document.getElementById('cardCVV').value.trim();if(!nombre||!telefono||!direccion){errEl.textContent='Completa los campos obligatorios.';errEl.classList.remove('hidden');return}if(!cardName||cardNumber.length<13||cardExpiry.length<5||cardCVV.length<3){errEl.textContent='Completa todos los datos de la tarjeta.';errEl.classList.remove('hidden');return}errEl.classList.add('hidden');const submitBtn=document.getElementById('submitBtn');const submitBtnText=document.getElementById('submitBtnText');submitBtn.disabled=true;submitBtnText.textContent='Procesando pago...';const pedidoId='PED-'+Date.now();const tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);const last4=cardNumber.slice(-4);try{const pedidoData={pedido_id:pedidoId,nombre:nombre,telefono:telefono,direccion:direccion,metodo_pago:'Tarjeta',tarjeta_nombre:cardName,tarjeta_last4:last4,total:tP,estado:'pagado'};if(email)pedidoData.email=email;const{error:pedidoError}=await db.from('pedidos').insert(pedidoData);if(pedidoError)throw pedidoError;const items=cart.map(c=>{const p=products.find(x=>x.id===c.id);return{pedido_id:pedidoId,producto:p.name,categoria:p.category,cantidad:c.qty,precio:p.price,subtotal:p.price*c.qty}});const{error:itemsError}=await db.from('pedido_items').insert(items);if(itemsError)throw itemsError;const formData=new FormData();formData.append('_subject',`🛒 Nuevo Pedido ${pedidoId} — Ramazzini`);formData.append('pedido_id',pedidoId);formData.append('nombre',nombre);formData.append('telefono',telefono);formData.append('email',email);formData.append('direccion',direccion);formData.append('metodo_pago','Tarjeta ****'+last4+' — '+cardName);formData.append('total','Q'+tP.toFixed(2));formData.append('productos',cart.map(c=>{const p=products.find(x=>x.id===c.id);return`• ${p.name} x${c.qty} = Q${(p.price*c.qty).toFixed(2)}`}).join('\n'));fetch('https://formspree.io/f/xjglqkdw',{method:'POST',body:formData,headers:{'Accept':'application/json'}}).catch(()=>{});closeCheckoutModal();cart=[];updateCartUI();renderProducts(currentFilter, currentSearch);const s=document.getElementById('successModal');s.classList.remove('hidden');s.classList.add('flex');lucide.createIcons()}catch(err){console.error('Error Supabase:',err);errEl.textContent='Error: '+err.message;errEl.classList.remove('hidden')}finally{submitBtn.disabled=false;submitBtnText.textContent='Confirmar Pedido'}}
 
     function closeSuccessModal(){document.getElementById('successModal').classList.add('hidden');document.getElementById('successModal').classList.remove('flex')}
 
     // ===== RESEÑAS =====
     let selectedStars = 0;
+    function setStars(n){selectedStars=n;document.querySelectorAll('#starInput .star-btn').forEach(btn=>{const s=parseInt(btn.dataset.star);if(s<=n){btn.classList.remove('text-brand-200');btn.classList.add('text-yellow-400')}else{btn.classList.remove('text-yellow-400');btn.classList.add('text-brand-200')}});const labels=['','Malo','Regular','Bueno','Muy bueno','Excelente'];document.getElementById('starLabel').textContent=labels[n]||''}
 
-    function setStars(n){
-        selectedStars = n;
-        document.querySelectorAll('#starInput .star-btn').forEach(btn => {
-            const s = parseInt(btn.dataset.star);
-            if(s <= n){
-                btn.classList.remove('text-brand-200');
-                btn.classList.add('text-yellow-400');
-            } else {
-                btn.classList.remove('text-yellow-400');
-                btn.classList.add('text-brand-200');
-            }
-        });
-        const labels = ['','Malo','Regular','Bueno','Muy bueno','Excelente'];
-        document.getElementById('starLabel').textContent = labels[n] || '';
-    }
+    async function submitResena(){const errEl=document.getElementById('resenaError');const successEl=document.getElementById('resenaSuccess');const nombre=document.getElementById('resenaNombre').value.trim();const comentario=document.getElementById('resenaComentario').value.trim();errEl.classList.add('hidden');successEl.classList.add('hidden');if(!nombre){errEl.textContent='Ingresa tu nombre.';errEl.classList.remove('hidden');return}if(selectedStars===0){errEl.textContent='Selecciona una calificación.';errEl.classList.remove('hidden');return}if(!comentario){errEl.textContent='Escribe un comentario.';errEl.classList.remove('hidden');return}const btn=document.getElementById('resenaBtn');btn.disabled=true;btn.textContent='Enviando...';try{const{error}=await db.from('resenas').insert({nombre:nombre,comentario:comentario,estrellas:selectedStars});if(error)throw error;successEl.classList.remove('hidden');document.getElementById('resenaNombre').value='';document.getElementById('resenaComentario').value='';setStars(0);document.getElementById('starLabel').textContent='Selecciona';loadResenas();setTimeout(()=>successEl.classList.add('hidden'),4000)}catch(err){console.error('Error reseña:',err);errEl.textContent='Error al enviar: '+err.message;errEl.classList.remove('hidden')}finally{btn.disabled=false;btn.innerHTML='<i data-lucide="send" class="w-4 h-4"></i>Publicar reseña';lucide.createIcons()}}
 
-    async function submitResena(){
-        const errEl = document.getElementById('resenaError');
-        const successEl = document.getElementById('resenaSuccess');
-        const nombre = document.getElementById('resenaNombre').value.trim();
-        const comentario = document.getElementById('resenaComentario').value.trim();
+    async function loadResenas(){const grid=document.getElementById('resenasGrid');try{const{data,error}=await db.from('resenas').select('*').order('fecha',{ascending:false});if(error)throw error;if(!data||data.length===0){grid.innerHTML='<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">Sé el primero en dejar una reseña ⭐</p></div>';return}const promedio=data.reduce((s,r)=>s+(r.estrellas||0),0)/data.length;grid.innerHTML=`<div class="col-span-full flex items-center gap-4 mb-4 bg-brand-50 border border-brand-100 rounded-2xl p-5"><div class="text-center"><p class="text-4xl font-bold text-brand-900">${promedio.toFixed(1)}</p><div class="flex items-center gap-0.5 justify-center mt-1">${renderStarsHTML(Math.round(promedio))}</div><p class="text-xs text-brand-500 mt-1">${data.length} reseña${data.length!==1?'s':''}</p></div><div class="flex-1 space-y-1">${[5,4,3,2,1].map(n=>{const count=data.filter(r=>(r.estrellas||0)===n).length;const pct=data.length>0?(count/data.length*100):0;return`<div class="flex items-center gap-2"><span class="text-xs text-brand-600 w-6">${n}★</span><div class="flex-1 bg-brand-100 rounded-full h-2"><div class="bg-yellow-400 h-2 rounded-full" style="width:${pct}%"></div></div><span class="text-xs text-brand-400 w-6">${count}</span></div>`}).join('')}</div></div>`+data.map(r=>{const inicial=(r.nombre||'A').charAt(0).toUpperCase();const fecha=r.fecha?new Date(r.fecha).toLocaleDateString('es-GT',{year:'numeric',month:'short',day:'numeric'}):'';return`<div class="review-card bg-white border border-brand-100 rounded-2xl p-5"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-sm">${inicial}</div><div class="flex-1"><p class="text-sm font-semibold text-brand-900">${r.nombre}</p><p class="text-xs text-brand-400">${fecha}</p></div></div><div class="flex items-center gap-0.5 mb-2">${renderStarsHTML(r.estrellas||0)}</div><p class="text-sm text-brand-700 leading-relaxed">${r.comentario}</p></div>`}).join('')}catch(err){console.error('Error cargando reseñas:',err);grid.innerHTML=`<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">No se pudieron cargar las reseñas.</p></div>`}}
 
-        errEl.classList.add('hidden');
-        successEl.classList.add('hidden');
-
-        if(!nombre){errEl.textContent='Ingresa tu nombre.';errEl.classList.remove('hidden');return}
-        if(selectedStars===0){errEl.textContent='Selecciona una calificación.';errEl.classList.remove('hidden');return}
-        if(!comentario){errEl.textContent='Escribe un comentario.';errEl.classList.remove('hidden');return}
-
-        const btn = document.getElementById('resenaBtn');
-        btn.disabled = true;
-        btn.textContent = 'Enviando...';
-
-        try {
-            const {error} = await db.from('resenas').insert({
-                nombre: nombre,
-                comentario: comentario,
-                estrellas: selectedStars
-            });
-            if(error) throw error;
-
-            successEl.classList.remove('hidden');
-            document.getElementById('resenaNombre').value = '';
-            document.getElementById('resenaComentario').value = '';
-            setStars(0);
-            document.getElementById('starLabel').textContent = 'Selecciona';
-
-            loadResenas();
-
-            setTimeout(() => successEl.classList.add('hidden'), 4000);
-        } catch(err) {
-            console.error('Error reseña:', err);
-            errEl.textContent = 'Error al enviar: ' + err.message;
-            errEl.classList.remove('hidden');
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i>Publicar reseña';
-            lucide.createIcons();
-        }
-    }
-
-    async function loadResenas(){
-        const grid = document.getElementById('resenasGrid');
-        try {
-            const {data, error} = await db.from('resenas').select('*').order('fecha', {ascending: false});
-            if(error) throw error;
-
-            if(!data || data.length === 0){
-                grid.innerHTML = '<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">Sé el primero en dejar una reseña ⭐</p></div>';
-                return;
-            }
-
-            const promedio = data.reduce((s, r) => s + (r.estrellas || 0), 0) / data.length;
-
-            grid.innerHTML = `
-                <div class="col-span-full flex items-center gap-4 mb-4 bg-brand-50 border border-brand-100 rounded-2xl p-5">
-                    <div class="text-center">
-                        <p class="text-4xl font-bold text-brand-900">${promedio.toFixed(1)}</p>
-                        <div class="flex items-center gap-0.5 justify-center mt-1">${renderStarsHTML(Math.round(promedio))}</div>
-                        <p class="text-xs text-brand-500 mt-1">${data.length} reseña${data.length!==1?'s':''}</p>
-                    </div>
-                    <div class="flex-1 space-y-1">
-                        ${[5,4,3,2,1].map(n => {
-                            const count = data.filter(r => (r.estrellas||0) === n).length;
-                            const pct = data.length > 0 ? (count / data.length * 100) : 0;
-                            return `<div class="flex items-center gap-2"><span class="text-xs text-brand-600 w-6">${n}★</span><div class="flex-1 bg-brand-100 rounded-full h-2"><div class="bg-yellow-400 h-2 rounded-full" style="width:${pct}%"></div></div><span class="text-xs text-brand-400 w-6">${count}</span></div>`;
-                        }).join('')}
-                    </div>
-                </div>
-            ` + data.map(r => {
-                const inicial = (r.nombre || 'A').charAt(0).toUpperCase();
-                const fecha = r.fecha ? new Date(r.fecha).toLocaleDateString('es-GT', {year:'numeric',month:'short',day:'numeric'}) : '';
-                return `<div class="review-card bg-white border border-brand-100 rounded-2xl p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-sm">${inicial}</div>
-                        <div class="flex-1"><p class="text-sm font-semibold text-brand-900">${r.nombre}</p><p class="text-xs text-brand-400">${fecha}</p></div>
-                    </div>
-                    <div class="flex items-center gap-0.5 mb-2">${renderStarsHTML(r.estrellas||0)}</div>
-                    <p class="text-sm text-brand-700 leading-relaxed">${r.comentario}</p>
-                </div>`;
-            }).join('');
-
-        } catch(err) {
-            console.error('Error cargando reseñas:', err);
-            grid.innerHTML = `<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">No se pudieron cargar las reseñas.</p><p class="text-xs text-brand-300 mt-1">${err.message}</p></div>`;
-        }
-    }
-
-    function renderStarsHTML(n){
-        let html = '';
-        for(let i = 1; i <= 5; i++){
-            html += `<svg class="w-4 h-4 ${i<=n?'text-yellow-400':'text-brand-200'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
-        }
-        return html;
-    }
+    function renderStarsHTML(n){let html='';for(let i=1;i<=5;i++){html+=`<svg class="w-4 h-4 ${i<=n?'text-yellow-400':'text-brand-200'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`}return html}
 
     // ===== LOGIN ADMIN =====
     function toggleAdmin(){const m=document.getElementById('loginAdminModal');m.classList.remove('hidden');m.classList.add('flex');lucide.createIcons()}
@@ -469,27 +981,19 @@
     // ===== PANEL ADMIN =====
     let adminTabActive='orders';let allOrders=[];let allItems=[];
     function closeAdmin(){document.getElementById('adminModal').classList.add('hidden');document.getElementById('adminModal').classList.remove('flex')}
-
-    async function loadAdminData(){document.getElementById('adminContent').innerHTML=`<div class="flex items-center justify-center h-40"><div class="text-center"><div class="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-3"></div><p class="text-brand-400 text-sm">Conectando con Supabase...</p></div></div>`;try{const{data:orders,error:e1}=await db.from('pedidos').select('*').order('fecha',{ascending:false});if(e1)throw e1;allOrders=orders||[];const{data:items,error:e2}=await db.from('pedido_items').select('*');if(e2)throw e2;allItems=items||[];const totalRev=allOrders.reduce((s,o)=>s+parseFloat(o.total||0),0);const totalUnits=allItems.reduce((s,i)=>s+parseInt(i.cantidad||0),0);const avgTicket=allOrders.length>0?totalRev/allOrders.length:0;document.getElementById('adminTotalOrders').textContent=allOrders.length;document.getElementById('adminRevenue').textContent='Q'+totalRev.toFixed(0);document.getElementById('adminUnits').textContent=totalUnits;document.getElementById('adminAvg').textContent='Q'+avgTicket.toFixed(0);renderAdminTab(adminTabActive)}catch(err){document.getElementById('adminContent').innerHTML=`<div class="text-center py-12"><div class="text-red-400 text-4xl mb-3">⚠️</div><p class="text-red-600 font-semibold">Error al conectar con Supabase</p><p class="text-brand-400 text-sm mt-1">${err.message}</p></div>`}}
-
+    async function loadAdminData(){document.getElementById('adminContent').innerHTML=`<div class="flex items-center justify-center h-40"><div class="text-center"><div class="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-3"></div><p class="text-brand-400 text-sm">Conectando con Supabase...</p></div></div>`;try{const{data:orders,error:e1}=await db.from('pedidos').select('*').order('fecha',{ascending:false});if(e1)throw e1;allOrders=orders||[];const{data:items,error:e2}=await db.from('pedido_items').select('*');if(e2)throw e2;allItems=items||[];const totalRev=allOrders.reduce((s,o)=>s+parseFloat(o.total||0),0);const totalUnits=allItems.reduce((s,i)=>s+parseInt(i.cantidad||0),0);const avgTicket=allOrders.length>0?totalRev/allOrders.length:0;document.getElementById('adminTotalOrders').textContent=allOrders.length;document.getElementById('adminRevenue').textContent='Q'+totalRev.toFixed(0);document.getElementById('adminUnits').textContent=totalUnits;document.getElementById('adminAvg').textContent='Q'+avgTicket.toFixed(0);renderAdminTab(adminTabActive)}catch(err){document.getElementById('adminContent').innerHTML=`<div class="text-center py-12"><p class="text-red-600 font-semibold">Error al conectar</p><p class="text-brand-400 text-sm mt-1">${err.message}</p></div>`}}
     function switchAdminTab(tab){adminTabActive=tab;document.querySelectorAll('.admin-tab').forEach((t,i)=>{const tabs=['orders','products','sql'];t.classList.remove('active','text-brand-500');if(tabs[i]===tab){t.classList.add('active')}else{t.classList.add('text-brand-500')}});renderAdminTab(tab)}
     function renderAdminTab(tab){const c=document.getElementById('adminContent');if(tab==='orders')renderOrdersTab(c);else if(tab==='products')renderProductsTab(c);else renderSQLTab(c)}
-
     function renderOrdersTab(c){if(allOrders.length===0){c.innerHTML='<p class="text-center text-brand-400 py-12">No hay pedidos aún.</p>';return}c.innerHTML=`<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left border-b border-brand-100"><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Pedido</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Cliente</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Teléfono</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Tarjeta</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Total</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Estado</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Fecha</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Acción</th></tr></thead><tbody>${allOrders.map(o=>{const estado=o.estado||'pagado';let badgeClass='bg-blue-100 text-blue-700';let badgeIcon='💳';if(estado==='entregado'){badgeClass='bg-green-100 text-green-700';badgeIcon='✅'}const isDelivered=estado==='entregado';const cardInfo=o.tarjeta_nombre||o.tarjeta_last4?`<span class="font-medium">${o.tarjeta_nombre||'—'}</span><br><span class="text-xs font-mono text-brand-400">****${o.tarjeta_last4||'—'}</span>`:'—';return`<tr class="border-b border-brand-50 hover:bg-surface-50"><td class="py-3 pr-3 font-mono text-xs text-brand-500">${o.pedido_id}</td><td class="py-3 pr-3 font-medium">${o.nombre||'—'}</td><td class="py-3 pr-3 text-brand-600">${o.telefono||'—'}</td><td class="py-3 pr-3 text-xs leading-snug">${cardInfo}</td><td class="py-3 pr-3 font-bold text-brand-900">Q${parseFloat(o.total||0).toFixed(2)}</td><td class="py-3 pr-3"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${badgeIcon} ${estado}</span></td><td class="py-3 text-xs text-brand-400 pr-3">${o.fecha?new Date(o.fecha).toLocaleString('es-GT'):'—'}</td><td class="py-3">${isDelivered?`<span class="text-xs text-green-600 font-medium">✓ Entregado</span>`:`<button onclick="markDelivered('${o.pedido_id}')" class="text-xs font-semibold bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-full transition-all flex items-center gap-1"><i data-lucide="truck" class="w-3 h-3"></i>Entregado</button>`}</td></tr>`}).join('')}</tbody></table></div>`;lucide.createIcons()}
-
     async function markDelivered(pedidoId){try{const{error}=await db.from('pedidos').update({estado:'entregado'}).eq('pedido_id',pedidoId);if(error)throw error;const order=allOrders.find(o=>o.pedido_id===pedidoId);if(order)order.estado='entregado';renderOrdersTab(document.getElementById('adminContent'))}catch(err){alert('Error al actualizar: '+err.message)}}
-
     function renderProductsTab(c){const productMap={};allItems.forEach(i=>{if(!productMap[i.producto])productMap[i.producto]={producto:i.producto,categoria:i.categoria,cantidad:0,subtotal:0};productMap[i.producto].cantidad+=parseInt(i.cantidad||0);productMap[i.producto].subtotal+=parseFloat(i.subtotal||0)});const sorted=Object.values(productMap).sort((a,b)=>b.cantidad-a.cantidad);if(sorted.length===0){c.innerHTML='<p class="text-center text-brand-400 py-12">No hay items vendidos aún.</p>';return}const maxQ=sorted[0].cantidad;const catColors={ram:'bg-blue-100 text-blue-700',disco:'bg-green-100 text-green-700',fuente:'bg-yellow-100 text-yellow-700',ventilador:'bg-purple-100 text-purple-700',cable:'bg-teal-100 text-teal-700',tarjeta:'bg-pink-100 text-pink-700'};c.innerHTML=`<table class="w-full text-sm"><thead><tr class="text-left border-b border-brand-100"><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">#</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Producto</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Categoría</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Unidades</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Ingresos</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold w-40">Popularidad</th></tr></thead><tbody>${sorted.map((p,i)=>`<tr class="border-b border-brand-50 hover:bg-surface-50"><td class="py-3 text-brand-300 text-xs w-8">${i+1}</td><td class="py-3 font-medium text-brand-900 max-w-[200px] truncate">${p.producto}</td><td class="py-3"><span class="px-2 py-1 rounded-full text-xs font-medium ${catColors[p.categoria]||'bg-gray-100 text-gray-600'}">${p.categoria||'—'}</span></td><td class="py-3 font-bold">${p.cantidad}</td><td class="py-3 font-bold text-brand-700">Q${p.subtotal.toFixed(2)}</td><td class="py-3"><div class="bg-brand-100 rounded-full h-2"><div class="bg-brand-600 h-2 rounded-full" style="width:${Math.round((p.cantidad/maxQ)*100)}%"></div></div></td></tr>`).join('')}</tbody></table>`}
-
-    function renderSQLTab(c){c.innerHTML=`<div><p class="text-sm text-brand-500 mb-3">Ejecuta consultas SQL directamente sobre tu base de datos:</p><div class="flex gap-2 flex-wrap mb-3">${[["Top productos","SELECT producto, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY producto ORDER BY unidades DESC LIMIT 10"],["Ventas por categoría","SELECT categoria, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY categoria ORDER BY ingresos DESC"],["Pedidos pagados","SELECT pedido_id, nombre, telefono, tarjeta_nombre, tarjeta_last4, total FROM pedidos WHERE estado = 'pagado' ORDER BY fecha DESC"],["Reseñas recientes","SELECT nombre, estrellas, comentario, fecha FROM resenas ORDER BY fecha DESC LIMIT 20"],["Ingresos del mes","SELECT DATE(fecha) as dia, COUNT(*) as pedidos, SUM(total) as ingresos FROM pedidos WHERE fecha >= date_trunc('month', now()) GROUP BY dia ORDER BY dia"]].map(([label,q])=>`<button onclick="setQuery(${JSON.stringify(q)})" class="text-xs bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 px-3 py-1.5 rounded-full transition-all">${label}</button>`).join('')}</div><textarea id="sqlInput" rows="3" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 resize-none mb-3" placeholder="SELECT * FROM pedidos ORDER BY fecha DESC LIMIT 10"></textarea><button onclick="runSQL()" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-2.5 rounded-full mb-4 transition-all">▶ Ejecutar</button><div id="sqlResult"></div></div>`}
-
+    function renderSQLTab(c){c.innerHTML=`<div><p class="text-sm text-brand-500 mb-3">Ejecuta consultas SQL directamente:</p><div class="flex gap-2 flex-wrap mb-3">${[["Top productos","SELECT producto, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY producto ORDER BY unidades DESC LIMIT 10"],["Ventas por categoría","SELECT categoria, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY categoria ORDER BY ingresos DESC"],["Pedidos pagados","SELECT pedido_id, nombre, telefono, total FROM pedidos WHERE estado = 'pagado' ORDER BY fecha DESC"],["Reseñas","SELECT nombre, estrellas, comentario FROM resenas ORDER BY fecha DESC LIMIT 20"]].map(([label,q])=>`<button onclick="setQuery(${JSON.stringify(q)})" class="text-xs bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 px-3 py-1.5 rounded-full transition-all">${label}</button>`).join('')}</div><textarea id="sqlInput" rows="3" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 resize-none mb-3" placeholder="SELECT * FROM pedidos ORDER BY fecha DESC LIMIT 10"></textarea><button onclick="runSQL()" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-2.5 rounded-full mb-4 transition-all">▶ Ejecutar</button><div id="sqlResult"></div></div>`}
     function setQuery(q){const el=document.getElementById('sqlInput');if(el)el.value=q}
-    async function runSQL(){const q=document.getElementById('sqlInput').value.trim();if(!q)return;const res=document.getElementById('sqlResult');res.innerHTML='<p class="text-brand-400 text-sm animate-pulse">Ejecutando...</p>';try{const{data,error}=await db.rpc('run_query',{query_text:q}).catch(()=>({data:null,error:{message:'La función run_query no existe. Usa el SQL Editor de Supabase.'}}));if(error)throw error;if(!data||data.length===0){res.innerHTML='<p class="text-brand-400 text-sm">Sin resultados.</p>';return}const cols=Object.keys(data[0]);res.innerHTML=`<div class="overflow-x-auto"><table class="w-full text-xs border border-brand-100 rounded-xl overflow-hidden"><thead class="bg-brand-50"><tr>${cols.map(c=>`<th class="px-3 py-2 text-left text-brand-600 font-semibold">${c}</th>`).join('')}</tr></thead><tbody>${data.map(row=>`<tr class="border-t border-brand-50 hover:bg-surface-50">${cols.map(c=>`<td class="px-3 py-2">${row[c]??'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}catch(err){res.innerHTML=`<div class="bg-brand-50 border border-brand-200 rounded-xl p-4"><p class="text-sm text-brand-700 font-medium mb-1">Nota:</p><p class="text-sm text-brand-600">${err.message}</p></div>`}}
-
+    async function runSQL(){const q=document.getElementById('sqlInput').value.trim();if(!q)return;const res=document.getElementById('sqlResult');res.innerHTML='<p class="text-brand-400 text-sm animate-pulse">Ejecutando...</p>';try{const{data,error}=await db.rpc('run_query',{query_text:q}).catch(()=>({data:null,error:{message:'La función run_query no existe. Usa el SQL Editor de Supabase.'}}));if(error)throw error;if(!data||data.length===0){res.innerHTML='<p class="text-brand-400 text-sm">Sin resultados.</p>';return}const cols=Object.keys(data[0]);res.innerHTML=`<div class="overflow-x-auto"><table class="w-full text-xs border border-brand-100 rounded-xl overflow-hidden"><thead class="bg-brand-50"><tr>${cols.map(c=>`<th class="px-3 py-2 text-left text-brand-600 font-semibold">${c}</th>`).join('')}</tr></thead><tbody>${data.map(row=>`<tr class="border-t border-brand-50 hover:bg-surface-50">${cols.map(c=>`<td class="px-3 py-2">${row[c]??'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}catch(err){res.innerHTML=`<div class="bg-brand-50 border border-brand-200 rounded-xl p-4"><p class="text-sm text-brand-600">${err.message}</p></div>`}}
     async function exportCSV(){const{data:orders}=await db.from('pedidos').select('*').order('fecha',{ascending:false});const{data:items}=await db.from('pedido_items').select('*');if(!orders||orders.length===0){alert('No hay datos para exportar.');return}const rows=[['Pedido ID','Fecha','Cliente','Teléfono','Email','Dirección','Tarjeta Nombre','Tarjeta Last4','Estado','Producto','Categoría','Cantidad','Precio','Subtotal','Total Pedido']];orders.forEach(o=>{const oi=(items||[]).filter(i=>i.pedido_id===o.pedido_id);if(oi.length===0){rows.push([o.pedido_id,o.fecha,o.nombre,o.telefono,o.email,o.direccion,o.tarjeta_nombre||'',o.tarjeta_last4||'',o.estado,'','','','','',o.total])}else oi.forEach(i=>rows.push([o.pedido_id,o.fecha,o.nombre,o.telefono,o.email,o.direccion,o.tarjeta_nombre||'',o.tarjeta_last4||'',o.estado,i.producto,i.categoria,i.cantidad,i.precio,i.subtotal,o.total]))});const csv=rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='ramazzini_ventas_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
 
     // ===== CHATBOT =====
-    const menus={main:{msg:'¡Bienvenido a Ramazzini! 👋\n\nSelecciona una opción:',options:[{id:'servicios',label:'🔧 Servicios'},{id:'tienda_info',label:'🛒 Tienda'},{id:'precios',label:'💰 Precios'},{id:'problema',label:'⚠️ Tengo un problema'}]},servicios:{msg:'🔧 Servicios:',options:[{id:'srv_hardware',label:'🔩 Reparación Hardware'},{id:'srv_virus',label:'🛡️ Eliminación Virus'},{id:'srv_mantenimiento',label:'⚙️ Mantenimiento'},{id:'main',label:'⬅️ Volver'}]},srv_hardware:{msg:'🔩 Reparación Hardware\n• Pantallas • Teclados • Baterías\n• Discos • RAM • Placas\n⏱ 1-3 días | 💰 Desde Q350',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},srv_virus:{msg:'🛡️ Eliminación Virus\n• Malware y ransomware\n• Instalación antivirus\n⏱ 2-4 horas | 💰 Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},srv_mantenimiento:{msg:'⚙️ Mantenimiento\n• Limpieza interna\n• Pasta térmica • Optimización\n⏱ 2-3 horas | 💰 Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},tienda_info:{msg:'🛒 ¿Qué categoría buscas?',options:[{id:'tienda_ram',label:'📦 Memoria RAM'},{id:'tienda_discos',label:'💾 Discos'},{id:'tienda_fuentes',label:'⚡ Fuentes de Poder'},{id:'tienda_ventiladores',label:'🌀 Ventilación'},{id:'tienda_cables',label:'🔌 Cables'},{id:'tienda_tarjetas',label:'🖥️ Tarjetas'},{id:'tienda_ir',label:'🛍️ Ir a la tienda'},{id:'main',label:'⬅️ Volver'}]},tienda_ram:{msg:'📦 Memoria RAM disponible:\n\n• DDR4 4GB 2400MHz — Q145\n• DDR4 8GB 2666MHz — Q275 ⭐\n• DDR4 16GB 3200MHz — Q475\n• DDR5 16GB 5600MHz — Q675 🔥\n• DDR5 32GB 4800MHz — Q875 🆕',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_discos:{msg:'💾 Discos disponibles:\n\n• SSD SATA 240GB — Q175\n• SSD SATA 480GB — Q295\n• NVMe M.2 512GB — Q425\n• NVMe M.2 1TB — Q595 🔥\n• HDD WD Blue 1TB — Q225\n• HDD Seagate 2TB — Q395',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_fuentes:{msg:'⚡ Fuentes de Poder:\n\n• 500W 80+ White — Q395\n• 600W 80+ — Q525\n• 800W Modular — Q795 ⭐\n• 1000W 80+ Gold — Q1,195 🏆',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_ventiladores:{msg:'🌀 Ventilación:\n\n• Cooler 92mm — Q115\n• Cooler 120mm — Q155\n• Kit RGB 3x120mm — Q345 ⭐\n• AIO Líquido 240mm — Q695 🆕',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_cables:{msg:'🔌 Cables disponibles:\n\n• Cable Poder AC 1.5m — Q45\n• SATA III Pack x3 — Q55 🔥\n• VGA HD15 1.8m — Q55\n• USB-C a USB-C — Q65\n• HDMI 2.1 2m — Q75\n• DisplayPort 1.4 — Q95',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_tarjetas:{msg:'🖥️ Tarjetas disponibles:\n\n• Red Ethernet Gigabit — Q125\n• Red WiFi 6 PCIe — Q235 🆕\n• Sonido 7.1 PCIe — Q275\n• Video GTX 1650 4GB — Q1,495\n• Video RX 6600 8GB — Q2,195 🔥',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_ir:{msg:'🛍️ Ve a la tienda para agregar al carrito.',options:[{id:'goto_tienda',label:'🛍️ Ir ahora'},{id:'main',label:'⬅️ Volver'}]},precios:{msg:'💰 Precios:\n🔹 Básico — Q150\n🔹 Completo — Q350\n🔹 Empresarial — Q800/mes\n✅ Diagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Solicitar'},{id:'main',label:'⬅️ Volver'}]},problema:{msg:'⚠️ ¿Cuál es el problema?',options:[{id:'prob_lento',label:'🐢 PC lenta'},{id:'prob_virus',label:'🦠 Virus'},{id:'prob_no',label:'🔌 No enciende'},{id:'prob_bsod',label:'💀 Pantalla azul'},{id:'main',label:'⬅️ Volver'}]},prob_lento:{msg:'🐢 PC lenta:\n1️⃣ Mantenimiento — Q150\n2️⃣ Más RAM — desde Q145\n3️⃣ Cambiar a SSD — desde Q175\nRecomendado: mant. + SSD',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_virus:{msg:'🦠 Virus:\n• No abras archivos raros\n• Desconéctate de internet\nLimpieza: Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_no:{msg:'🔌 No enciende:\n• Verificar cables\n• Probar otro enchufe\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_bsod:{msg:'💀 Pantalla azul:\n• Drivers, RAM o disco\n• Anota el código\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]}};
+    const menus={main:{msg:'¡Bienvenido a Ramazzini! 👋\n\nSelecciona una opción:',options:[{id:'servicios',label:'🔧 Servicios'},{id:'tienda_info',label:'🛒 Tienda'},{id:'precios',label:'💰 Precios'},{id:'problema',label:'⚠️ Tengo un problema'}]},servicios:{msg:'🔧 Servicios:',options:[{id:'srv_hardware',label:'🔩 Reparación Hardware'},{id:'srv_virus',label:'🛡️ Eliminación Virus'},{id:'srv_mantenimiento',label:'⚙️ Mantenimiento'},{id:'main',label:'⬅️ Volver'}]},srv_hardware:{msg:'🔩 Reparación Hardware\n• Pantallas • Teclados • Baterías\n• Discos • RAM • Placas\n⏱ 1-3 días | 💰 Desde Q350',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},srv_virus:{msg:'🛡️ Eliminación Virus\n• Malware y ransomware\n• Instalación antivirus\n⏱ 2-4 horas | 💰 Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},srv_mantenimiento:{msg:'⚙️ Mantenimiento\n• Limpieza interna\n• Pasta térmica • Optimización\n⏱ 2-3 horas | 💰 Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},tienda_info:{msg:'🛒 ¿Qué categoría buscas?',options:[{id:'tienda_ram',label:'📦 Memoria RAM'},{id:'tienda_discos',label:'💾 Discos'},{id:'tienda_fuentes',label:'⚡ Fuentes de Poder'},{id:'tienda_ventiladores',label:'🌀 Ventilación'},{id:'tienda_cables',label:'🔌 Cables'},{id:'tienda_tarjetas',label:'🖥️ Tarjetas'},{id:'tienda_ir',label:'🛍️ Ir a la tienda'},{id:'main',label:'⬅️ Volver'}]},tienda_ram:{msg:'📦 Memoria RAM disponible:\n\n• DDR4 4GB 2400MHz — Q145\n• DDR4 8GB 2666MHz — Q275 ⭐\n• DDR4 16GB 3200MHz — Q475\n• DDR5 16GB 5600MHz — Q675 🔥\n• DDR5 32GB 4800MHz — Q875 🆕',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_discos:{msg:'💾 Discos disponibles:\n\n• SSD SATA 240GB — Q175\n• SSD SATA 480GB — Q295\n• NVMe M.2 512GB — Q425\n• NVMe M.2 1TB — Q595 🔥\n• HDD WD Blue 1TB — Q225\n• HDD Seagate 2TB — Q395',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_fuentes:{msg:'⚡ Fuentes de Poder:\n\n• 500W 80+ White — Q395\n• 600W 80+ — Q525\n• 800W Modular — Q795 ⭐\n• 1000W 80+ Gold — Q1,195 🏆',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_ventiladores:{msg:'🌀 Ventilación:\n\n• Cooler 92mm — Q115\n• Cooler 120mm — Q155\n• Kit RGB 3x120mm — Q345 ⭐\n• AIO Líquido 240mm — Q695 🆕',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_cables:{msg:'🔌 Cables disponibles:\n\n• Cable Poder AC 1.5m — Q45\n• SATA III Pack x3 — Q55 🔥\n• VGA HD15 1.8m — Q55\n• USB-C a USB-C — Q65\n• HDMI 2.1 2m — Q75\n• DisplayPort 1.4 — Q95',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_tarjetas:{msg:'🖥️ Tarjetas disponibles:\n\n• Red Ethernet Gigabit — Q125\n• Red WiFi 6 PCIe — Q235 🆕\n• Sonido 7.1 PCIe — Q275\n• Video GTX 1650 4GB — Q1,495\n• Video RX 6600 8GB — Q2,195 🔥',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_ir:{msg:'🛍️ Ve a la tienda para agregar al carrito.',options:[{id:'goto_tienda',label:'🛍️ Ir ahora'},{id:'main',label:'⬅️ Volver'}]},precios:{msg:'💰 Precios:\n🔹 Básico — Q150\n🔹 Completo — Q350\n🔹 Empresarial — Q800/mes\n✅ Diagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Solicitar'},{id:'main',label:'⬅️ Volver'}]},problema:{msg:'⚠️ ¿Cuál es el problema?',options:[{id:'prob_lento',label:'🐢 PC lenta'},{id:'prob_virus',label:'🦠 Virus'},{id:'prob_no',label:'🔌 No enciende'},{id:'prob_bsod',label:'💀 Pantalla azul'},{id:'main',label:'⬅️ Volver'}]},prob_lento:{msg:'🐢 PC lenta:\n1️⃣ Mantenimiento — Q150\n2️⃣ Más RAM — desde Q145\n3️⃣ Cambiar a SSD — desde Q175',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_virus:{msg:'🦠 Virus:\n• No abras archivos raros\n• Desconéctate de internet\nLimpieza: Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_no:{msg:'🔌 No enciende:\n• Verificar cables\n• Probar otro enchufe\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_bsod:{msg:'💀 Pantalla azul:\n• Drivers, RAM o disco\n• Anota el código\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]}};
 
     function addBot(t){const c=document.getElementById('chatMessages');const d=document.createElement('div');d.className='flex justify-start animate-slide-up';let f=t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');d.innerHTML=`<div class="flex gap-2 max-w-[90%]"><img src="${L}" class="w-7 h-7 rounded-full bg-brand-100 shrink-0 mt-1 object-contain p-0.5"><div class="chat-bubble-bot px-4 py-3"><p class="text-sm leading-relaxed">${f}</p></div></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight}
     function addUser(t){const c=document.getElementById('chatMessages');const d=document.createElement('div');d.className='flex justify-end animate-slide-up';d.innerHTML=`<div class="chat-bubble-user px-4 py-3 max-w-[80%]"><p class="text-sm leading-relaxed">${t}</p></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight}
@@ -499,8 +1003,22 @@
     let chatOpen=false;
     function toggleChat(){chatOpen=!chatOpen;const w=document.getElementById('chatWindow'),o=document.getElementById('chatIconOpen'),c=document.getElementById('chatIconClose'),n=document.getElementById('chatNotification');if(chatOpen){w.classList.remove('hidden-chat');w.classList.add('visible-chat');o.classList.add('hidden');c.classList.remove('hidden');n.classList.add('hidden')}else{w.classList.add('hidden-chat');w.classList.remove('visible-chat');o.classList.remove('hidden');c.classList.add('hidden')}lucide.createIcons()}
 
-    window.addEventListener('load',()=>{renderProducts();loadResenas();setTimeout(()=>renderMenu('main'),600)});
+    // ===== SMOOTH SCROLL =====
     document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+
+    // ===== INIT =====
+    window.addEventListener('load', () => {
+        renderProducts();
+        loadResenas();
+        renderFAQ();
+        initParticles();
+        initReveal();
+        setTimeout(() => typewrite(), 2000);
+        setTimeout(() => renderMenu('main'), 600);
+
+        // Init counters
+        document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+    });
     </script>
 </body>
 </html>
