@@ -15,6 +15,87 @@
     <style>
         *{font-family:'Inter',sans-serif}
 
+        /* ===== CURRENCY SELECTOR ===== */
+        .currency-selector {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .currency-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 50px;
+            border: 1.5px solid #ADD6FF;
+            background: #EBF5FF;
+            color: #0F3D7A;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+        }
+        .currency-btn:hover { background: #D6EBFF; border-color: #2B7DE9; }
+        [data-theme="dark"] .currency-btn { background: #1a2235; border-color: #1e3a5f; color: #e2e8f0; }
+        [data-theme="dark"] .currency-btn:hover { background: #2B7DE9; color: #fff; }
+        .currency-flag { font-size: 16px; line-height: 1; }
+        .currency-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #fff;
+            border: 1px solid #D6EBFF;
+            border-radius: 16px;
+            box-shadow: 0 12px 32px rgba(43,125,233,.18);
+            min-width: 200px;
+            z-index: 200;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-8px) scale(.97);
+            pointer-events: none;
+            transition: all .2s cubic-bezier(.4,0,.2,1);
+        }
+        .currency-dropdown.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+        [data-theme="dark"] .currency-dropdown { background: #1a2235; border-color: #1e3a5f; }
+        .currency-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #0F3D7A;
+            transition: background .15s;
+        }
+        .currency-option:hover { background: #EBF5FF; }
+        .currency-option.selected { background: #EBF5FF; color: #2B7DE9; font-weight: 700; }
+        [data-theme="dark"] .currency-option { color: #e2e8f0; }
+        [data-theme="dark"] .currency-option:hover, [data-theme="dark"] .currency-option.selected { background: #0d1525; color: #60a5fa; }
+        .currency-option-symbol { font-size: 12px; color: #5CADFF; margin-left: auto; font-weight: 600; }
+        .currency-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: linear-gradient(135deg, #0F3D7A, #2B7DE9);
+            color: #fff;
+            font-size: 11px; font-weight: 700;
+            padding: 2px 8px; border-radius: 50px;
+            letter-spacing: .5px;
+        }
+        [data-theme="dark"] .currency-badge { background: linear-gradient(135deg,#1A5BB5,#3399FF); }
+        .rate-info {
+            padding: 10px 16px;
+            border-top: 1px solid #D6EBFF;
+            font-size: 11px;
+            color: #5CADFF;
+            text-align: center;
+        }
+        [data-theme="dark"] .rate-info { border-color: #1e3a5f; }
+
         /* ===== DARK MODE ===== */
         [data-theme="dark"] {
             --bg-primary: #0a0f1e;
@@ -97,7 +178,7 @@
             background: #0F3D7A; color: #fff; padding: 12px 20px; border-radius: 50px;
             font-size: 13px; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25);
             animation: toastIn .3s cubic-bezier(.4,0,.2,1);
-            display: flex; align-items: center; gap-8px; white-space: nowrap;
+            display: flex; align-items: center; white-space: nowrap;
         }
         [data-theme="dark"] .toast { background: #2B7DE9; }
         @keyframes toastIn { from{opacity:0;transform:translateY(20px) scale(.9)} to{opacity:1;transform:translateY(0) scale(1)} }
@@ -131,9 +212,6 @@
         /* ===== TYPEWRITER ===== */
         .typewriter-cursor::after { content: '|'; animation: blink .7s step-end infinite; }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-        /* ===== COUNTER ===== */
-        .stat-counter { font-variant-numeric: tabular-nums; }
 
         /* ===== MARQUEE ===== */
         .marquee-track { display: flex; animation: marqueeScroll 22s linear infinite; width: max-content; }
@@ -210,20 +288,14 @@
         .star-btn:hover{transform:scale(1.2);filter:drop-shadow(0 0 4px rgba(43,125,233,.4))}
         .review-card{transition:all .3s ease}
         .review-card:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(43,125,233,.1)}
-
-        /* Services section */
         .servicio-card { background: white; border: 1px solid #D6EBFF; border-radius: 20px; padding: 28px; transition: all .3s ease; }
         .servicio-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(43,125,233,.15); border-color: #3399FF; }
         .servicio-icon { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, #EBF5FF, #D6EBFF); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-
-        /* Search bar */
         #searchInput { border: 2px solid #D6EBFF; border-radius: 50px; padding: 12px 20px 12px 44px; font-size: 14px; outline: none; transition: border .2s, box-shadow .2s; width: 100%; max-width: 400px; }
         #searchInput:focus { border-color: #2B7DE9; box-shadow: 0 0 0 4px rgba(43,125,233,.1); }
         [data-theme="dark"] #searchInput { background: #1a2235; color: #e2e8f0; border-color: #1e3a5f; }
         .search-wrapper { position: relative; }
         .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #5CADFF; pointer-events: none; }
-
-        /* Stats */
         .stat-number { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #2B7DE9, #3399FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     </style>
 </head>
@@ -237,18 +309,11 @@
         <p class="text-white/50 mt-3 text-xs" id="loadingText">Iniciando sistema...</p>
     </div>
 
-    <!-- SCROLL PROGRESS -->
     <div id="scrollProgress"></div>
-
-    <!-- CURSOR GLOW -->
     <div id="cursorGlow"></div>
-
-    <!-- BACK TO TOP -->
     <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
     </button>
-
-    <!-- TOAST CONTAINER -->
     <div id="toastContainer"></div>
 
     <!-- MOBILE MENU -->
@@ -273,7 +338,7 @@
             <a href="#" class="flex items-center gap-2.5">
                 <img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Ramazzini" class="h-11 w-auto">
             </a>
-            <div class="hidden lg:flex items-center gap-7">
+            <div class="hidden lg:flex items-center gap-6">
                 <a href="#inicio" class="text-sm font-medium text-brand-800 hover:text-brand-600">Inicio</a>
                 <a href="#servicios-section" class="text-sm font-medium text-brand-800 hover:text-brand-600">Servicios</a>
                 <a href="#tienda" class="text-sm font-medium text-brand-800 hover:text-brand-600 flex items-center gap-1"><i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>Tienda</a>
@@ -285,7 +350,33 @@
                 <button onclick="toggleAdmin()" class="text-sm font-medium text-brand-400 hover:text-brand-600 flex items-center gap-1"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>Admin</button>
             </div>
             <div class="flex items-center gap-2">
-                <!-- Dark mode toggle -->
+                <!-- CURRENCY SELECTOR -->
+                <div class="currency-selector" id="currencySelector">
+                    <button class="currency-btn" onclick="toggleCurrencyDropdown(event)" id="currencyBtnMain">
+                        <span class="currency-flag" id="currencyFlagMain">🇬🇹</span>
+                        <span id="currencyLabelMain">GTQ</span>
+                        <svg class="w-3 h-3 opacity-60" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="currency-dropdown" id="currencyDropdown">
+                        <div class="currency-option selected" onclick="setCurrency('GTQ')" data-currency="GTQ">
+                            <span style="font-size:18px">🇬🇹</span>
+                            <span>Quetzal guatemalteco</span>
+                            <span class="currency-option-symbol">Q</span>
+                        </div>
+                        <div class="currency-option" onclick="setCurrency('USD')" data-currency="USD">
+                            <span style="font-size:18px">🇺🇸</span>
+                            <span>Dólar estadounidense</span>
+                            <span class="currency-option-symbol">$</span>
+                        </div>
+                        <div class="currency-option" onclick="setCurrency('MXN')" data-currency="MXN">
+                            <span style="font-size:18px">🇲🇽</span>
+                            <span>Peso mexicano</span>
+                            <span class="currency-option-symbol">MX$</span>
+                        </div>
+                        <div class="rate-info" id="rateInfoText">1 GTQ = referencia base</div>
+                    </div>
+                </div>
+
                 <button onclick="toggleDark()" id="darkToggle" title="Modo oscuro" class="p-2.5 rounded-full hover:bg-brand-50 transition-colors">
                     <i data-lucide="moon" class="w-5 h-5 text-brand-800" id="darkIcon"></i>
                 </button>
@@ -297,7 +388,6 @@
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                     WhatsApp
                 </a>
-                <!-- Hamburger -->
                 <button onclick="openMobileMenu()" class="lg:hidden p-2.5 rounded-full hover:bg-brand-50 transition-colors">
                     <svg class="w-5 h-5 text-brand-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
@@ -318,7 +408,7 @@
                 <p class="text-lg text-brand-200 leading-relaxed mb-8 max-w-xl"><strong class="text-white">Confianza · Lógica · Solución · Eficacia</strong></p>
                 <div class="flex flex-wrap gap-4">
                     <a href="https://wa.me/50258415734" target="_blank" class="ripple-effect inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-7 py-3.5 rounded-full transition-all">Solicitar servicio</a>
-                    <a href="#tienda" class="ripple-effect inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-7 py-3.5 rounded-full transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i>Ver tienda de Componenetes</a>
+                    <a href="#tienda" class="ripple-effect inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-7 py-3.5 rounded-full transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i>Ver tienda</a>
                 </div>
             </div>
             <div class="flex justify-center lg:justify-end reveal-right">
@@ -330,47 +420,16 @@
         </div>
     </section>
 
-    <!-- MARQUEE DE MARCAS -->
+    <!-- MARQUEE -->
     <section class="py-8 bg-white border-y border-brand-100 overflow-hidden">
         <p class="text-center text-xs font-semibold uppercase tracking-widest text-brand-400 mb-4">Marcas con las que trabajamos</p>
         <div class="marquee-container">
             <div class="marquee-track">
                 <div class="flex items-center gap-12 px-6">
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ASUS</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">HP</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">DELL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">LENOVO</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ACER</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SAMSUNG</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">KINGSTON</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SEAGATE</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">WESTERN DIGITAL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">INTEL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">AMD</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">NVIDIA</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">MSI</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CORSAIR</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CRUCIAL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">EVGA</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ASUS</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">HP</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">DELL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">LENOVO</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">ACER</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">SAMSUNG</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">KINGSTON</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">SEAGATE</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">WESTERN DIGITAL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">INTEL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">AMD</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">NVIDIA</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">MSI</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">CORSAIR</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">CRUCIAL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">EVGA</span>
                 </div>
-                <!-- Duplicate for seamless loop -->
                 <div class="flex items-center gap-12 px-6">
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ASUS</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">HP</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">DELL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">LENOVO</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ACER</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SAMSUNG</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">KINGSTON</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">SEAGATE</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">WESTERN DIGITAL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">INTEL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">AMD</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">NVIDIA</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">MSI</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CORSAIR</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">CRUCIAL</span>
-                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">EVGA</span>
+                    <span class="text-2xl font-black text-brand-200 whitespace-nowrap">ASUS</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">HP</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">DELL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">LENOVO</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">ACER</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">SAMSUNG</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">KINGSTON</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">SEAGATE</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">WESTERN DIGITAL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">INTEL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">AMD</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">NVIDIA</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">MSI</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">CORSAIR</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">CRUCIAL</span><span class="text-2xl font-black text-brand-200 whitespace-nowrap">EVGA</span>
                 </div>
             </div>
         </div>
@@ -380,22 +439,10 @@
     <section id="stats-section" class="py-20 bg-surface-50">
         <div class="max-w-5xl mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="text-center reveal" data-delay="0">
-                    <div class="stat-number" data-target="850" data-suffix="+">0</div>
-                    <p class="text-sm font-medium text-brand-600 mt-1">Equipos reparados</p>
-                </div>
-                <div class="text-center reveal" data-delay="100">
-                    <div class="stat-number" data-target="98" data-suffix="%">0</div>
-                    <p class="text-sm font-medium text-brand-600 mt-1">Satisfacción</p>
-                </div>
-                <div class="text-center reveal" data-delay="200">
-                    <div class="stat-number" data-target="5" data-suffix=" años">0</div>
-                    <p class="text-sm font-medium text-brand-600 mt-1">De experiencia</p>
-                </div>
-                <div class="text-center reveal" data-delay="300">
-                    <div class="stat-number" data-target="24" data-suffix="/7">0</div>
-                    <p class="text-sm font-medium text-brand-600 mt-1">Soporte disponible</p>
-                </div>
+                <div class="text-center reveal" data-delay="0"><div class="stat-number" data-target="850" data-suffix="+">0</div><p class="text-sm font-medium text-brand-600 mt-1">Equipos reparados</p></div>
+                <div class="text-center reveal" data-delay="100"><div class="stat-number" data-target="98" data-suffix="%">0</div><p class="text-sm font-medium text-brand-600 mt-1">Satisfacción</p></div>
+                <div class="text-center reveal" data-delay="200"><div class="stat-number" data-target="5" data-suffix=" años">0</div><p class="text-sm font-medium text-brand-600 mt-1">De experiencia</p></div>
+                <div class="text-center reveal" data-delay="300"><div class="stat-number" data-target="24" data-suffix="/7">0</div><p class="text-sm font-medium text-brand-600 mt-1">Soporte disponible</p></div>
             </div>
         </div>
     </section>
@@ -409,42 +456,12 @@
                 <p class="text-brand-600 mt-3 max-w-xl mx-auto">Soluciones completas para mantener tu equipo funcionando al máximo.</p>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="servicio-card reveal" data-delay="0">
-                    <div class="servicio-icon"><i data-lucide="monitor" class="w-6 h-6 text-brand-600"></i></div>
-                    <h3 class="text-lg font-bold text-brand-900 mb-2">Reparación Hardware</h3>
-                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Pantallas, teclados, baterías, puertos USB, discos duros, memoria RAM, placa madre y más.</p>
-                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q350</span>
-                </div>
-                <div class="servicio-card reveal" data-delay="100">
-                    <div class="servicio-icon"><i data-lucide="shield-check" class="w-6 h-6 text-brand-600"></i></div>
-                    <h3 class="text-lg font-bold text-brand-900 mb-2">Eliminación de Virus</h3>
-                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Limpieza de malware, ransomware, spyware. Instalación y configuración de antivirus profesional.</p>
-                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q150</span>
-                </div>
-                <div class="servicio-card reveal" data-delay="200">
-                    <div class="servicio-icon"><i data-lucide="settings" class="w-6 h-6 text-brand-600"></i></div>
-                    <h3 class="text-lg font-bold text-brand-900 mb-2">Mantenimiento Preventivo</h3>
-                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Limpieza interna, cambio de pasta térmica, optimización del sistema operativo y actualización de drivers.</p>
-                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q150</span>
-                </div>
-                <div class="servicio-card reveal" data-delay="0">
-                    <div class="servicio-icon"><i data-lucide="hard-drive" class="w-6 h-6 text-brand-600"></i></div>
-                    <h3 class="text-lg font-bold text-brand-900 mb-2">Recuperación de Datos</h3>
-                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Recuperamos archivos de discos dañados, formateados por accidente o con sectores defectuosos.</p>
-                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Cotización gratis</span>
-                </div>
-                <div class="servicio-card reveal" data-delay="100">
-                    <div class="servicio-icon"><i data-lucide="wifi" class="w-6 h-6 text-brand-600"></i></div>
-                    <h3 class="text-lg font-bold text-brand-900 mb-2">Redes y Conectividad</h3>
-                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Configuración de redes WiFi, cableado estructurado, diagnóstico de conectividad y VPN.</p>
-                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde Q200</span>
-                </div>
-                <div class="servicio-card reveal" data-delay="200">
-                    <div class="servicio-icon"><i data-lucide="package" class="w-6 h-6 text-brand-600"></i></div>
-                    <h3 class="text-lg font-bold text-brand-900 mb-2">Actualización de Equipos</h3>
-                    <p class="text-sm text-brand-600 leading-relaxed mb-4">Upgrade de RAM, cambio de HDD a SSD, instalación de tarjetas gráficas y mejoras de rendimiento.</p>
-                    <span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Cotización gratis</span>
-                </div>
+                <div class="servicio-card reveal" data-delay="0"><div class="servicio-icon"><i data-lucide="monitor" class="w-6 h-6 text-brand-600"></i></div><h3 class="text-lg font-bold text-brand-900 mb-2">Reparación Hardware</h3><p class="text-sm text-brand-600 leading-relaxed mb-4">Pantallas, teclados, baterías, puertos USB, discos duros, memoria RAM, placa madre y más.</p><span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde <span class="srv-price" data-gtq="350"></span></span></div>
+                <div class="servicio-card reveal" data-delay="100"><div class="servicio-icon"><i data-lucide="shield-check" class="w-6 h-6 text-brand-600"></i></div><h3 class="text-lg font-bold text-brand-900 mb-2">Eliminación de Virus</h3><p class="text-sm text-brand-600 leading-relaxed mb-4">Limpieza de malware, ransomware, spyware. Instalación y configuración de antivirus profesional.</p><span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde <span class="srv-price" data-gtq="150"></span></span></div>
+                <div class="servicio-card reveal" data-delay="200"><div class="servicio-icon"><i data-lucide="settings" class="w-6 h-6 text-brand-600"></i></div><h3 class="text-lg font-bold text-brand-900 mb-2">Mantenimiento Preventivo</h3><p class="text-sm text-brand-600 leading-relaxed mb-4">Limpieza interna, cambio de pasta térmica, optimización del sistema operativo y actualización de drivers.</p><span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde <span class="srv-price" data-gtq="150"></span></span></div>
+                <div class="servicio-card reveal" data-delay="0"><div class="servicio-icon"><i data-lucide="hard-drive" class="w-6 h-6 text-brand-600"></i></div><h3 class="text-lg font-bold text-brand-900 mb-2">Recuperación de Datos</h3><p class="text-sm text-brand-600 leading-relaxed mb-4">Recuperamos archivos de discos dañados, formateados por accidente o con sectores defectuosos.</p><span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Cotización gratis</span></div>
+                <div class="servicio-card reveal" data-delay="100"><div class="servicio-icon"><i data-lucide="wifi" class="w-6 h-6 text-brand-600"></i></div><h3 class="text-lg font-bold text-brand-900 mb-2">Redes y Conectividad</h3><p class="text-sm text-brand-600 leading-relaxed mb-4">Configuración de redes WiFi, cableado estructurado, diagnóstico de conectividad y VPN.</p><span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Desde <span class="srv-price" data-gtq="200"></span></span></div>
+                <div class="servicio-card reveal" data-delay="200"><div class="servicio-icon"><i data-lucide="package" class="w-6 h-6 text-brand-600"></i></div><h3 class="text-lg font-bold text-brand-900 mb-2">Actualización de Equipos</h3><p class="text-sm text-brand-600 leading-relaxed mb-4">Upgrade de RAM, cambio de HDD a SSD, instalación de tarjetas gráficas y mejoras de rendimiento.</p><span class="text-xs font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full">Cotización gratis</span></div>
             </div>
         </div>
     </section>
@@ -453,15 +470,12 @@
     <section id="tienda" class="py-24 bg-surface-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-6 reveal"><span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Tienda online</span><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Repuestos y componentes</h2></div>
-
-            <!-- Search bar -->
             <div class="flex justify-center mb-6 reveal">
                 <div class="search-wrapper w-full max-w-md">
                     <svg class="search-icon w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     <input type="text" id="searchInput" placeholder="Buscar producto..." oninput="searchProducts(this.value)">
                 </div>
             </div>
-
             <div class="flex flex-wrap justify-center gap-2 mb-12 reveal">
                 <button onclick="filterProducts('all')" class="filter-btn active-filter px-5 py-2 rounded-full text-sm font-medium transition-all" data-cat="all">Todos</button>
                 <button onclick="filterProducts('ram')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all" data-cat="ram">Memoria RAM</button>
@@ -475,7 +489,7 @@
         </div>
     </section>
 
-    <!-- VIDEO PRESENTACIÓN -->
+    <!-- VIDEO -->
     <section id="video" class="py-24 bg-white">
         <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-12 reveal"><span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Conócenos</span><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Mira cómo trabajamos</h2><p class="text-brand-600 mt-3 max-w-2xl mx-auto">Calidad, confianza y soporte técnico profesional en cada servicio.</p></div>
@@ -489,9 +503,25 @@
         <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-16 reveal"><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900">Nuestros planes</h2></div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white reveal" data-delay="0"><h3 class="text-lg font-semibold text-brand-900">Básico</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q150</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Limpieza física</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Pasta térmica</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Optimización</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*B%C3%A1sico%20(Q150)*" target="_blank" class="ripple-effect block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a></div>
-                <div class="card-hover border-2 border-brand-600 rounded-2xl p-8 bg-white relative shadow-xl shadow-brand-200/30 reveal" data-delay="100"><div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-semibold px-4 py-1 rounded-full">Popular</div><h3 class="text-lg font-semibold text-brand-900">Completo</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q350</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo básico</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Reparación hardware</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Garantía 30 días</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Completo%20(Q350)*" target="_blank" class="ripple-effect block text-center py-3 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-full">Solicitar</a></div>
-                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white reveal" data-delay="200"><h3 class="text-lg font-semibold text-brand-900">Empresarial</h3><div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900">Q800</span></div><ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo completo</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Hasta 5 equipos</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Soporte prioritario</li></ul><a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Empresarial%20(Q800%2F)*" target="_blank" class="ripple-effect block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a></div>
+                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white reveal" data-delay="0">
+                    <h3 class="text-lg font-semibold text-brand-900">Básico</h3>
+                    <div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900 plan-price" data-gtq="150"></span></div>
+                    <ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Limpieza física</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Pasta térmica</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Optimización</li></ul>
+                    <a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*B%C3%A1sico*" target="_blank" class="ripple-effect block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a>
+                </div>
+                <div class="card-hover border-2 border-brand-600 rounded-2xl p-8 bg-white relative shadow-xl shadow-brand-200/30 reveal" data-delay="100">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-semibold px-4 py-1 rounded-full">Popular</div>
+                    <h3 class="text-lg font-semibold text-brand-900">Completo</h3>
+                    <div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900 plan-price" data-gtq="350"></span></div>
+                    <ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo básico</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Reparación hardware</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Garantía 30 días</li></ul>
+                    <a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Completo*" target="_blank" class="ripple-effect block text-center py-3 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-full">Solicitar</a>
+                </div>
+                <div class="card-hover border border-brand-100 rounded-2xl p-8 bg-white reveal" data-delay="200">
+                    <h3 class="text-lg font-semibold text-brand-900">Empresarial</h3>
+                    <div class="mt-6 mb-6"><span class="text-4xl font-bold text-brand-900 plan-price" data-gtq="800"></span></div>
+                    <ul class="space-y-2 mb-8 text-sm text-brand-700"><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Todo lo completo</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Hasta 5 equipos</li><li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-600"></i>Soporte prioritario</li></ul>
+                    <a href="https://wa.me/50258415734?text=Hola%2C%20estoy%20interesado%20en%20el%20plan%20*Empresarial*" target="_blank" class="ripple-effect block text-center py-3 border-2 border-brand-200 text-brand-700 font-medium rounded-full hover:bg-brand-50">Solicitar</a>
+                </div>
             </div>
         </div>
     </section>
@@ -502,7 +532,6 @@
             <div class="text-center mb-12 reveal">
                 <span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Testimonios</span>
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Lo que dicen nuestros clientes</h2>
-                <p class="text-brand-600 mt-3 max-w-2xl mx-auto">Tu opinión importa. Comparte tu experiencia con Ramazzini.</p>
             </div>
             <div class="bg-surface-50 border border-brand-100 rounded-2xl p-6 md:p-8 mb-12 reveal">
                 <h3 class="text-lg font-bold text-brand-900 mb-4 flex items-center gap-2"><i data-lucide="message-square-plus" class="w-5 h-5 text-brand-600"></i>Deja tu reseña</h3>
@@ -525,11 +554,8 @@
             <div class="text-center mb-12 reveal">
                 <span class="text-xs font-semibold uppercase tracking-widest text-brand-600">Dudas frecuentes</span>
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900 mt-3">Preguntas Frecuentes</h2>
-                <p class="text-brand-600 mt-3">Todo lo que necesitas saber sobre nuestros servicios.</p>
             </div>
-            <div id="faqContainer" class="reveal">
-                <!-- FAQ items rendered by JS -->
-            </div>
+            <div id="faqContainer" class="reveal"></div>
         </div>
     </section>
 
@@ -545,7 +571,7 @@
         </div>
     </section>
 
-    <!-- FOOTER MEJORADO -->
+    <!-- FOOTER -->
     <footer class="bg-brand-900 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-10 mb-12">
@@ -564,7 +590,6 @@
                         <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Eliminación Virus</a></li>
                         <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Mantenimiento</a></li>
                         <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Recuperación de Datos</a></li>
-                        <li><a href="#servicios-section" class="text-brand-400 hover:text-white text-sm transition-colors">Redes y WiFi</a></li>
                     </ul>
                 </div>
                 <div>
@@ -574,7 +599,6 @@
                         <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Discos SSD / HDD</a></li>
                         <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Fuentes de Poder</a></li>
                         <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Ventilación y Coolers</a></li>
-                        <li><a href="#tienda" class="text-brand-400 hover:text-white text-sm transition-colors">Cables y Tarjetas</a></li>
                     </ul>
                 </div>
                 <div>
@@ -583,7 +607,6 @@
                         <li><a href="#planes" class="text-brand-400 hover:text-white text-sm transition-colors">Nuestros Planes</a></li>
                         <li><a href="#resenas" class="text-brand-400 hover:text-white text-sm transition-colors">Reseñas</a></li>
                         <li><a href="#faq-section" class="text-brand-400 hover:text-white text-sm transition-colors">Preguntas Frecuentes</a></li>
-                        <li><a href="#video" class="text-brand-400 hover:text-white text-sm transition-colors">Cómo Trabajamos</a></li>
                     </ul>
                     <div class="mt-6">
                         <h4 class="text-white font-semibold text-sm mb-3 uppercase tracking-widest">Horarios</h4>
@@ -594,9 +617,7 @@
             <div class="border-t border-brand-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
                 <p class="text-brand-500 text-sm">© 2025 Ramazzini Soporte Técnico · Guatemala</p>
                 <div class="flex items-center gap-4">
-                    <button onclick="toggleDark()" class="text-brand-400 hover:text-white text-xs transition-colors flex items-center gap-1.5">
-                        <i data-lucide="moon" class="w-3.5 h-3.5"></i>Modo oscuro
-                    </button>
+                    <button onclick="toggleDark()" class="text-brand-400 hover:text-white text-xs transition-colors flex items-center gap-1.5"><i data-lucide="moon" class="w-3.5 h-3.5"></i>Modo oscuro</button>
                     <span class="text-brand-700">·</span>
                     <span class="text-brand-500 text-xs">Confianza · Lógica · Solución</span>
                 </div>
@@ -634,7 +655,7 @@
     <!-- SUCCESS MODAL -->
     <div id="successModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/50"><div class="bg-white rounded-3xl shadow-2xl max-w-md w-full mx-4 animate-slide-up text-center p-8"><div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4"><i data-lucide="check-circle" class="w-8 h-8 text-green-600"></i></div><h3 class="text-xl font-bold text-brand-900 mb-2">¡Pedido confirmado!</h3><p class="text-brand-600 text-sm mb-6">Tu pedido fue pagado y registrado exitosamente. Te contactaremos pronto.</p><button onclick="closeSuccessModal()" class="ripple-effect w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-full">Entendido</button></div></div>
 
-    <!-- LOGIN ADMIN MODAL -->
+    <!-- LOGIN ADMIN -->
     <div id="loginAdminModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4"><div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 animate-slide-up text-center"><div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="lock" class="w-8 h-8 text-brand-600"></i></div><h3 class="text-xl font-bold text-brand-900 mb-1">Acceso Restringido</h3><p class="text-brand-500 text-sm mb-6">Ingresa tus credenciales de administrador</p><div class="space-y-4"><input type="text" id="adminUser" placeholder="Usuario" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"><input type="password" id="adminPass" placeholder="Contraseña" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" onkeydown="if(event.key==='Enter')checkAdminLogin()"><button onclick="checkAdminLogin()" class="ripple-effect w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all">Entrar al Panel</button><button onclick="closeAdminLogin()" class="text-brand-400 text-xs hover:text-brand-600 underline">Cancelar</button></div><div id="loginError" class="hidden mt-4 text-red-500 text-xs font-bold">Credenciales incorrectas</div></div></div>
 
     <!-- PANEL ADMIN -->
@@ -649,7 +670,7 @@
 
     <!-- CHATBOT -->
     <button onclick="toggleChat()" class="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-brand-600 hover:bg-brand-700 shadow-xl shadow-brand-600/30 flex items-center justify-center transition-all duration-300 hover:scale-110 group"><i data-lucide="message-circle" class="w-7 h-7 text-white" id="chatIconOpen"></i><i data-lucide="x" class="w-7 h-7 text-white hidden" id="chatIconClose"></i><span id="chatNotification" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full border-2 border-white flex items-center justify-center"><span class="text-[10px] text-white font-bold">1</span></span><span class="absolute inset-0 rounded-full bg-brand-400 pulse-ring"></span></button>
-    <div id="chatWindow" class="chatbot-window hidden-chat fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] bg-white rounded-3xl shadow-2xl border border-brand-100 overflow-hidden flex flex-col" style="height:560px;max-height:calc(100vh - 140px)"><div class="bg-gradient-to-r from-brand-600 to-brand-500 px-5 py-3 flex items-center gap-3 shrink-0"><img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Ramazzini" class="w-9 h-9 rounded-full bg-white/20 object-contain p-0.5"><div class="flex-1"><p class="text-sm font-semibold text-white">Ramazzini</p><p class="text-xs text-brand-100">Centro de ayuda</p></div><button onclick="toggleChat()" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center"><i data-lucide="minus" class="w-4 h-4 text-white"></i></button></div><div id="chatMessages" class="flex-1 overflow-y-auto px-5 py-4 space-y-4 bg-surface-50"></div><div id="menuButtons" class="px-4 py-3 bg-white border-t border-brand-100 shrink-0"></div></div>
+    <div id="chatWindow" class="chatbot-window hidden-chat fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] bg-white rounded-3xl shadow-2xl border border-brand-100 overflow-hidden flex flex-col" style="height:560px;max-height:calc(100vh - 140px)"><div class="bg-gradient-to-r from-brand-600 to-brand-500 px-5 py-3 flex items-center gap-3 shrink-0"><img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Ramazzini" class="w-12 h-12 rounded-full bg-white/20 object-contain p-0.5"><div class="flex-1"><p class="text-sm font-semibold text-white">Ramazzini</p><p class="text-xs text-brand-100">Centro de ayuda</p></div><button onclick="toggleChat()" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center"><i data-lucide="minus" class="w-4 h-4 text-white"></i></button></div><div id="chatMessages" class="flex-1 overflow-y-auto px-5 py-4 space-y-4 bg-surface-50"></div><div id="menuButtons" class="px-4 py-3 bg-white border-t border-brand-100 shrink-0"></div></div>
 
     <script>
     // ===== SUPABASE CONFIG =====
@@ -657,13 +678,93 @@
     const SUPABASE_KEY = 'sb_publishable_IgLkVunJS69mzZCG1MQwtQ_ZLKXotn7';
     const { createClient } = supabase;
     const db = createClient(SUPABASE_URL, SUPABASE_KEY);
-
     lucide.createIcons();
     const L='https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8';
 
+    // ===================================================
+    // ===== CURRENCY SYSTEM =====
+    // ===================================================
+    // Base currency is GTQ. All prices stored in GTQ.
+    // Rates approximate as of 2025 — update anytime.
+    const CURRENCIES = {
+        GTQ: { symbol: 'Q',   prefix: 'Q',    flag: '🇬🇹', name: 'Quetzal guatemalteco',   rate: 1,      decimals: 2, locale: 'es-GT' },
+        USD: { symbol: '$',   prefix: '$',    flag: '🇺🇸', name: 'Dólar estadounidense',   rate: 0.13,   decimals: 2, locale: 'en-US' },
+        MXN: { symbol: 'MX$', prefix: 'MX$', flag: '🇲🇽', name: 'Peso mexicano',           rate: 2.20,   decimals: 2, locale: 'es-MX' }
+    };
+
+    let activeCurrency = 'GTQ';
+
+    function formatPrice(gtqAmount) {
+        const cur = CURRENCIES[activeCurrency];
+        const converted = gtqAmount * cur.rate;
+        return cur.prefix + converted.toFixed(cur.decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function getCurrencySymbol() {
+        return CURRENCIES[activeCurrency].prefix;
+    }
+
+    function toggleCurrencyDropdown(e) {
+        e.stopPropagation();
+        document.getElementById('currencyDropdown').classList.toggle('open');
+    }
+
+    function setCurrency(code) {
+        activeCurrency = code;
+        const cur = CURRENCIES[code];
+
+        // Update navbar button
+        document.getElementById('currencyFlagMain').textContent = cur.flag;
+        document.getElementById('currencyLabelMain').textContent = code;
+
+        // Update dropdown selected state
+        document.querySelectorAll('.currency-option').forEach(opt => {
+            opt.classList.toggle('selected', opt.dataset.currency === code);
+        });
+
+        // Update rate info text
+        const rateText = code === 'GTQ'
+            ? '1 GTQ = referencia base'
+            : `1 GTQ ≈ ${(cur.rate).toFixed(4)} ${code}`;
+        document.getElementById('rateInfoText').textContent = rateText;
+
+        // Close dropdown
+        document.getElementById('currencyDropdown').classList.remove('open');
+
+        // Update all prices on page
+        updateAllPrices();
+
+        // Show toast
+        showToast(`Moneda cambiada a ${cur.name} (${cur.prefix})`, cur.flag);
+    }
+
+    function updateAllPrices() {
+        // Update service prices (.srv-price)
+        document.querySelectorAll('.srv-price[data-gtq]').forEach(el => {
+            el.textContent = formatPrice(parseFloat(el.dataset.gtq));
+        });
+
+        // Update plan prices (.plan-price)
+        document.querySelectorAll('.plan-price[data-gtq]').forEach(el => {
+            el.textContent = formatPrice(parseFloat(el.dataset.gtq));
+        });
+
+        // Re-render products grid
+        renderProducts(currentFilter, currentSearch);
+
+        // Re-render cart
+        updateCartUI();
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', e => {
+        if (!document.getElementById('currencySelector').contains(e.target)) {
+            document.getElementById('currencyDropdown').classList.remove('open');
+        }
+    });
+
     // ===== LOADING SCREEN =====
     const loadingTexts = ['Iniciando sistema...','Cargando productos...','Conectando base de datos...','¡Listo!'];
-    let loadProgress = 0;
     function advanceLoading(pct, textIdx) {
         document.getElementById('loadingBar').style.width = pct + '%';
         document.getElementById('loadingText').textContent = loadingTexts[textIdx] || '';
@@ -672,24 +773,20 @@
     setTimeout(() => advanceLoading(55, 1), 400);
     setTimeout(() => advanceLoading(80, 2), 900);
     setTimeout(() => advanceLoading(100, 3), 1400);
-    setTimeout(() => {
-        document.getElementById('loadingScreen').classList.add('fade-out');
-    }, 1900);
+    setTimeout(() => { document.getElementById('loadingScreen').classList.add('fade-out'); }, 1900);
 
-    // ===== SCROLL PROGRESS BAR =====
+    // ===== SCROLL PROGRESS =====
     window.addEventListener('scroll', () => {
         const scrollEl = document.documentElement;
         const pct = (scrollEl.scrollTop / (scrollEl.scrollHeight - scrollEl.clientHeight)) * 100;
         document.getElementById('scrollProgress').style.width = pct + '%';
-        // Back to top visibility
         document.getElementById('backToTop').classList.toggle('visible', scrollEl.scrollTop > 400);
     });
 
     // ===== CURSOR GLOW =====
     document.addEventListener('mousemove', e => {
         const g = document.getElementById('cursorGlow');
-        g.style.left = e.clientX + 'px';
-        g.style.top = e.clientY + 'px';
+        g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px';
     });
 
     // ===== DARK MODE =====
@@ -697,8 +794,7 @@
     function toggleDark() {
         darkMode = !darkMode;
         document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-        const icon = document.getElementById('darkIcon');
-        icon.setAttribute('data-lucide', darkMode ? 'sun' : 'moon');
+        document.getElementById('darkIcon').setAttribute('data-lucide', darkMode ? 'sun' : 'moon');
         lucide.createIcons();
     }
 
@@ -706,7 +802,7 @@
     function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
     function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
 
-    // ===== RIPPLE EFFECT =====
+    // ===== RIPPLE =====
     document.addEventListener('click', e => {
         const btn = e.target.closest('.ripple-effect');
         if (!btn) return;
@@ -731,7 +827,6 @@
             }
         });
     }, { threshold: 0.1 });
-
     function initReveal() {
         document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
     }
@@ -755,7 +850,7 @@
         setTimeout(typewrite, twDeleting ? 60 : 110);
     }
 
-    // ===== COUNTER ANIMATION =====
+    // ===== COUNTER =====
     function animateCounter(el) {
         const target = parseInt(el.dataset.target);
         const suffix = el.dataset.suffix || '';
@@ -770,52 +865,34 @@
         }
         requestAnimationFrame(update);
     }
-
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                counterObserver.unobserve(entry.target);
-            }
+            if (entry.isIntersecting) { animateCounter(entry.target); counterObserver.unobserve(entry.target); }
         });
     }, { threshold: 0.5 });
 
-    // ===== HERO CANVAS PARTICLES =====
+    // ===== HERO PARTICLES =====
     function initParticles() {
         const canvas = document.getElementById('heroCanvas');
         const ctx = canvas.getContext('2d');
         let W, H, particles = [];
         function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
-        resize();
-        window.addEventListener('resize', resize);
+        resize(); window.addEventListener('resize', resize);
         for (let i = 0; i < 55; i++) {
-            particles.push({
-                x: Math.random() * 1920, y: Math.random() * 900,
-                vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4,
-                r: Math.random() * 2 + .5, a: Math.random() * .5 + .1
-            });
+            particles.push({ x: Math.random()*1920, y: Math.random()*900, vx:(Math.random()-.5)*.4, vy:(Math.random()-.5)*.4, r:Math.random()*2+.5, a:Math.random()*.5+.1 });
         }
         function draw() {
-            ctx.clearRect(0, 0, W, H);
+            ctx.clearRect(0,0,W,H);
             particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > W) p.vx *= -1;
-                if (p.y < 0 || p.y > H) p.vy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(147,197,253,${p.a})`;
-                ctx.fill();
+                p.x+=p.vx; p.y+=p.vy;
+                if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+                ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+                ctx.fillStyle=`rgba(147,197,253,${p.a})`; ctx.fill();
             });
-            particles.forEach((p, i) => {
+            particles.forEach((p,i) => {
                 particles.slice(i+1).forEach(q => {
-                    const d = Math.hypot(p.x-q.x, p.y-q.y);
-                    if (d < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-                        ctx.strokeStyle = `rgba(147,197,253,${.15 * (1 - d/120)})`;
-                        ctx.lineWidth = .6;
-                        ctx.stroke();
-                    }
+                    const d = Math.hypot(p.x-q.x,p.y-q.y);
+                    if(d<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=`rgba(147,197,253,${.15*(1-d/120)})`;ctx.lineWidth=.6;ctx.stroke();}
                 });
             });
             requestAnimationFrame(draw);
@@ -823,7 +900,7 @@
         draw();
     }
 
-    // ===== TOAST NOTIFICATIONS =====
+    // ===== TOAST =====
     function showToast(msg, icon = '🛒') {
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');
@@ -839,42 +916,34 @@
     // ===== FAQ =====
     const faqs = [
         {q:'¿Cuánto tiempo tarda una reparación?', a:'La mayoría de reparaciones se completan en 1-3 días hábiles. Para equipos con daños severos puede tomar hasta 5 días. Te mantenemos informado por WhatsApp en todo momento.'},
-        {q:'¿Ofrecen garantía en sus reparaciones?', a:'Sí, todas nuestras reparaciones incluyen garantía. El plan Básico tiene 15 días, el Completo 30 días y el Empresarial 60 días. La garantía cubre el mismo problema reparado.'},
+        {q:'¿Ofrecen garantía en sus reparaciones?', a:'Sí, todas nuestras reparaciones incluyen garantía. El plan Básico tiene 15 días, el Completo 30 días y el Empresarial 60 días.'},
         {q:'¿Hacen diagnóstico gratuito?', a:'¡Sí! El diagnóstico inicial es completamente gratuito. Solo pagas si decides proceder con la reparación o adquirir algún componente.'},
-        {q:'¿Reparan todas las marcas?', a:'Trabajamos con todas las marcas principales: HP, Dell, Lenovo, Asus, Acer, Samsung, Apple y más. Nuestros técnicos tienen experiencia con una amplia variedad de modelos.'},
-        {q:'¿Puedo llevar mi equipo o hacen servicio a domicilio?', a:'Ambas opciones están disponibles. Puedes traer tu equipo a nuestro taller o solicitar visita a domicilio. Contáctanos por WhatsApp para coordinar.'},
-        {q:'¿Los productos de la tienda tienen garantía?', a:'Todos los componentes vendidos en nuestra tienda incluyen garantía del fabricante. La garantía varía por producto, generalmente entre 1 y 3 años.'},
-        {q:'¿Cuáles son los métodos de pago?', a:'Aceptamos tarjetas de crédito/débito (Visa, Mastercard), efectivo en el taller, y transferencias bancarias. Para pedidos online usamos pago seguro con tarjeta.'},
-        {q:'¿Atienden emergencias fuera del horario?', a:'Sí, para situaciones urgentes puedes contactarnos por WhatsApp las 24 horas. Evaluamos cada caso y coordinamos la atención lo antes posible.'},
+        {q:'¿Reparan todas las marcas?', a:'Trabajamos con todas las marcas principales: HP, Dell, Lenovo, Asus, Acer, Samsung, Apple y más.'},
+        {q:'¿Puedo llevar mi equipo o hacen servicio a domicilio?', a:'Ambas opciones están disponibles. Puedes traer tu equipo a nuestro taller o solicitar visita a domicilio.'},
+        {q:'¿Los productos de la tienda tienen garantía?', a:'Todos los componentes vendidos en nuestra tienda incluyen garantía del fabricante, generalmente entre 1 y 3 años.'},
+        {q:'¿Cuáles son los métodos de pago?', a:'Aceptamos tarjetas de crédito/débito (Visa, Mastercard), efectivo en el taller, y transferencias bancarias.'},
+        {q:'¿Atienden emergencias fuera del horario?', a:'Sí, para situaciones urgentes puedes contactarnos por WhatsApp las 24 horas.'},
     ];
-
     function renderFAQ() {
-        const container = document.getElementById('faqContainer');
-        container.innerHTML = faqs.map((faq, i) => `
+        document.getElementById('faqContainer').innerHTML = faqs.map((faq, i) => `
             <div class="faq-item">
                 <div class="faq-question text-brand-900" onclick="toggleFAQ(${i})">
                     <span>${faq.q}</span>
                     <svg id="faq-icon-${i}" class="faq-icon w-5 h-5 text-brand-400 shrink-0 ml-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </div>
                 <div class="faq-answer text-brand-600" id="faq-answer-${i}">${faq.a}</div>
-            </div>
-        `).join('');
+            </div>`).join('');
     }
-
     function toggleFAQ(i) {
-        const answer = document.getElementById('faq-answer-' + i);
-        const icon = document.getElementById('faq-icon-' + i);
+        const answer = document.getElementById('faq-answer-'+i);
+        const icon = document.getElementById('faq-icon-'+i);
         const isOpen = answer.classList.contains('open');
-        // Close all
-        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-        document.querySelectorAll('.faq-icon').forEach(ic => ic.classList.remove('open'));
-        if (!isOpen) {
-            answer.classList.add('open');
-            icon.classList.add('open');
-        }
+        document.querySelectorAll('.faq-answer').forEach(a=>a.classList.remove('open'));
+        document.querySelectorAll('.faq-icon').forEach(ic=>ic.classList.remove('open'));
+        if(!isOpen){answer.classList.add('open');icon.classList.add('open');}
     }
 
-    // ===== PRODUCTOS =====
+    // ===== PRODUCTOS (precios en GTQ) =====
     const products=[
         {id:1,name:'Memoria RAM DDR4 8GB 2666MHz',category:'ram',price:275,oldPrice:350,image:'https://cdn.kemik.gt/2023/03/CT8G4SFRA266-MEMORIA-RAM-DDR4-1200X1200-1-1-526x526.-500x500.jpg',badge:'Popular',stock:25},
         {id:2,name:'Memoria RAM DDR4 16GB 3200MHz',category:'ram',price:475,oldPrice:null,image:'https://cdn.kemik.gt/2023/11/BRDDR4PC832NTB-BROCS-1200x1200-01.-500x500.jpg',badge:null,stock:18},
@@ -908,45 +977,68 @@
         {id:30,name:'Tarjeta de Red Ethernet PCIe Gigabit',category:'tarjeta',price:125,oldPrice:null,image:'https://cdn.kemik.gt/2023/04/image_33_-526x526.-500x500.jpg',badge:null,stock:30}
     ];
 
-    function getProductImage(p){if(p.image)return p.image;return`https://placehold.co/400x300/EBF5FF/2B7DE9?text=${encodeURIComponent(p.name.split(' ').slice(0,3).join(' '))}`}
+    function getProductImage(p){return p.image||`https://placehold.co/400x300/EBF5FF/2B7DE9?text=${encodeURIComponent(p.name.split(' ').slice(0,3).join(' '))}`}
 
     let cart=[];let currentFilter='all';let currentSearch='';
 
     function renderProducts(filter='all', search=''){
         const grid=document.getElementById('productsGrid');
         let filtered = filter==='all' ? products : products.filter(p=>p.category===filter);
-        if(search.trim()) {
-            const q = search.toLowerCase();
-            filtered = filtered.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q));
-        }
-        if(filtered.length === 0) {
-            grid.innerHTML = `<div class="col-span-full text-center py-16"><p class="text-brand-400 text-lg">No se encontraron productos para "<strong>${search}</strong>"</p></div>`;
-            return;
-        }
-        grid.innerHTML=filtered.map(p=>{const inCart=cart.find(c=>c.id===p.id);const qty=inCart?inCart.qty:0;return`<div class="product-card bg-white border border-brand-100 rounded-2xl overflow-hidden" id="product-${p.id}"><div class="relative bg-surface-50 overflow-hidden h-48 flex items-center justify-center p-3"><img src="${getProductImage(p)}" alt="${p.name}" class="max-w-full max-h-full object-contain">${p.badge?`<span class="absolute top-4 left-4 z-10 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${p.badge==='Oferta'?'bg-red-500 text-white':p.badge==='Nuevo'?'bg-emerald-500 text-white':p.badge==='Premium'||p.badge==='Pro'?'bg-yellow-500 text-white':p.badge==='Económico'?'bg-teal-500 text-white':'bg-brand-600 text-white'}">${p.badge}</span>`:''}${qty>0?`<span class="absolute top-4 right-4 z-10 w-7 h-7 bg-brand-600 text-white text-xs font-bold rounded-full flex items-center justify-center">${qty}</span>`:''}</div><div class="p-4"><h3 class="text-sm font-semibold text-brand-900 mb-2 leading-snug min-h-[2.5rem]">${p.name}</h3><div class="flex items-center gap-2 mb-3"><span class="text-lg font-bold text-brand-900">Q${p.price.toFixed(2)}</span>${p.oldPrice?`<span class="text-sm text-brand-400 line-through">Q${p.oldPrice.toFixed(2)}</span>`:''}</div><div class="flex items-center justify-between"><span class="text-xs ${p.stock>10?'text-green-600':p.stock>0?'text-yellow-600':'text-red-500'}">${p.stock>10?'En stock':p.stock>0?'¡Solo '+p.stock+'!':'Agotado'}</span><button onclick="addToCart(${p.id})" class="ripple-effect flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-full transition-all ${p.stock===0?'opacity-50 pointer-events-none':''}">Agregar</button></div></div></div>`}).join('')
+        if(search.trim()){const q=search.toLowerCase();filtered=filtered.filter(p=>p.name.toLowerCase().includes(q)||p.category.includes(q));}
+        if(filtered.length===0){grid.innerHTML=`<div class="col-span-full text-center py-16"><p class="text-brand-400 text-lg">No se encontraron productos para "<strong>${search}</strong>"</p></div>`;return;}
+        grid.innerHTML=filtered.map(p=>{
+            const inCart=cart.find(c=>c.id===p.id);const qty=inCart?inCart.qty:0;
+            const displayPrice = formatPrice(p.price);
+            const displayOld = p.oldPrice ? formatPrice(p.oldPrice) : null;
+            return`<div class="product-card bg-white border border-brand-100 rounded-2xl overflow-hidden" id="product-${p.id}">
+                <div class="relative bg-surface-50 overflow-hidden h-48 flex items-center justify-center p-3">
+                    <img src="${getProductImage(p)}" alt="${p.name}" class="max-w-full max-h-full object-contain">
+                    ${p.badge?`<span class="absolute top-4 left-4 z-10 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${p.badge==='Oferta'?'bg-red-500 text-white':p.badge==='Nuevo'?'bg-emerald-500 text-white':p.badge==='Premium'||p.badge==='Pro'?'bg-yellow-500 text-white':p.badge==='Económico'?'bg-teal-500 text-white':'bg-brand-600 text-white'}">${p.badge}</span>`:''}
+                    ${qty>0?`<span class="absolute top-4 right-4 z-10 w-7 h-7 bg-brand-600 text-white text-xs font-bold rounded-full flex items-center justify-center">${qty}</span>`:''}
+                </div>
+                <div class="p-4">
+                    <h3 class="text-sm font-semibold text-brand-900 mb-2 leading-snug min-h-[2.5rem]">${p.name}</h3>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-lg font-bold text-brand-900">${displayPrice}</span>
+                        ${displayOld?`<span class="text-sm text-brand-400 line-through">${displayOld}</span>`:''}
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs ${p.stock>10?'text-green-600':p.stock>0?'text-yellow-600':'text-red-500'}">${p.stock>10?'En stock':p.stock>0?'¡Solo '+p.stock+'!':'Agotado'}</span>
+                        <button onclick="addToCart(${p.id})" class="ripple-effect flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-full transition-all ${p.stock===0?'opacity-50 pointer-events-none':''}">Agregar</button>
+                    </div>
+                </div>
+            </div>`
+        }).join('');
     }
 
-    function filterProducts(cat){currentFilter=cat;currentSearch='';document.getElementById('searchInput').value='';document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('active-filter');if(b.dataset.cat===cat)b.classList.add('active-filter')});renderProducts(cat)}
-
-    function searchProducts(val) {
-        currentSearch = val;
-        renderProducts(currentFilter, val);
-    }
+    function filterProducts(cat){currentFilter=cat;currentSearch='';document.getElementById('searchInput').value='';document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('active-filter');if(b.dataset.cat===cat)b.classList.add('active-filter')});renderProducts(cat);}
+    function searchProducts(val){currentSearch=val;renderProducts(currentFilter,val);}
 
     function addToCart(id){
         const p=products.find(x=>x.id===id);
         const e=cart.find(x=>x.id===id);
         if(e){if(e.qty<p.stock)e.qty++}else{cart.push({id,qty:1})}
-        updateCartUI();
-        renderProducts(currentFilter, currentSearch);
+        updateCartUI();renderProducts(currentFilter,currentSearch);
         const el=document.getElementById('product-'+id);
         if(el){el.classList.add('added-flash');setTimeout(()=>el.classList.remove('added-flash'),600)}
-        showToast(`${p.name.split(' ').slice(0,3).join(' ')} agregado`, '✅');
+        showToast(`${p.name.split(' ').slice(0,3).join(' ')} agregado`,'✅');
     }
-    function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCartUI();renderProducts(currentFilter, currentSearch)}
-    function changeQty(id,d){const i=cart.find(c=>c.id===id);const p=products.find(x=>x.id===id);if(!i)return;i.qty+=d;if(i.qty<=0){removeFromCart(id);return}if(i.qty>p.stock)i.qty=p.stock;updateCartUI();renderProducts(currentFilter, currentSearch)}
+    function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCartUI();renderProducts(currentFilter,currentSearch);}
+    function changeQty(id,d){const i=cart.find(c=>c.id===id);const p=products.find(x=>x.id===id);if(!i)return;i.qty+=d;if(i.qty<=0){removeFromCart(id);return}if(i.qty>p.stock)i.qty=p.stock;updateCartUI();renderProducts(currentFilter,currentSearch);}
 
-    function updateCartUI(){const badge=document.getElementById('cartBadge'),count=document.getElementById('cartCount'),pCount=document.getElementById('cartPanelCount'),items=document.getElementById('cartItems'),footer=document.getElementById('cartFooter'),total=document.getElementById('cartTotal');const tI=cart.reduce((s,c)=>s+c.qty,0),tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);if(tI>0){badge.classList.remove('hidden');badge.classList.add('flex')}else{badge.classList.add('hidden');badge.classList.remove('flex')}count.textContent=tI;pCount.textContent=tI;total.textContent=`Q${tP.toFixed(2)}`;if(cart.length===0){items.innerHTML='<div class="text-center py-10"><p class="text-brand-400 text-sm">Tu carrito está vacío</p></div>';footer.classList.add('hidden')}else{items.innerHTML=cart.map(c=>{const p=products.find(x=>x.id===c.id);return`<div class="flex items-center gap-3 bg-surface-50 rounded-xl p-3"><img src="${getProductImage(p)}" alt="${p.name}" class="w-14 h-14 rounded-lg object-contain shrink-0 bg-white p-1"><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-brand-900 truncate">${p.name}</p><p class="text-sm font-bold text-brand-600">Q${(p.price*c.qty).toFixed(2)}</p></div><div class="flex items-center gap-1 shrink-0"><button onclick="changeQty(${p.id},-1)" class="w-7 h-7 rounded-full bg-brand-100 hover:bg-brand-200 flex items-center justify-center text-brand-700 font-bold text-sm">-</button><span class="w-7 text-center text-sm font-bold">${c.qty}</span><button onclick="changeQty(${p.id},1)" class="w-7 h-7 rounded-full bg-brand-100 hover:bg-brand-200 flex items-center justify-center text-brand-700 font-bold text-sm">+</button></div><button onclick="removeFromCart(${p.id})" class="text-red-400 hover:text-red-600 shrink-0 text-lg leading-none">&times;</button></div>`}).join('');footer.classList.remove('hidden')}}
+    function updateCartUI(){
+        const badge=document.getElementById('cartBadge'),count=document.getElementById('cartCount'),pCount=document.getElementById('cartPanelCount'),items=document.getElementById('cartItems'),footer=document.getElementById('cartFooter'),total=document.getElementById('cartTotal');
+        const tI=cart.reduce((s,c)=>s+c.qty,0);
+        const tP_gtq=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);
+        if(tI>0){badge.classList.remove('hidden');badge.classList.add('flex')}else{badge.classList.add('hidden');badge.classList.remove('flex')}
+        count.textContent=tI;pCount.textContent=tI;
+        total.textContent=formatPrice(tP_gtq);
+        if(cart.length===0){items.innerHTML='<div class="text-center py-10"><p class="text-brand-400 text-sm">Tu carrito está vacío</p></div>';footer.classList.add('hidden');}
+        else{
+            items.innerHTML=cart.map(c=>{const p=products.find(x=>x.id===c.id);return`<div class="flex items-center gap-3 bg-surface-50 rounded-xl p-3"><img src="${getProductImage(p)}" alt="${p.name}" class="w-14 h-14 rounded-lg object-contain shrink-0 bg-white p-1"><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-brand-900 truncate">${p.name}</p><p class="text-sm font-bold text-brand-600">${formatPrice(p.price*c.qty)}</p></div><div class="flex items-center gap-1 shrink-0"><button onclick="changeQty(${p.id},-1)" class="w-7 h-7 rounded-full bg-brand-100 hover:bg-brand-200 flex items-center justify-center text-brand-700 font-bold text-sm">-</button><span class="w-7 text-center text-sm font-bold">${c.qty}</span><button onclick="changeQty(${p.id},1)" class="w-7 h-7 rounded-full bg-brand-100 hover:bg-brand-200 flex items-center justify-center text-brand-700 font-bold text-sm">+</button></div><button onclick="removeFromCart(${p.id})" class="text-red-400 hover:text-red-600 shrink-0 text-lg leading-none">&times;</button></div>`}).join('');
+            footer.classList.remove('hidden');
+        }
+    }
 
     let cartOpen=false;
     function toggleCart(){cartOpen=!cartOpen;const p=document.getElementById('cartPanel'),o=document.getElementById('cartOverlay');if(cartOpen){p.classList.remove('hidden-cart');p.classList.add('visible-cart');o.classList.remove('hidden')}else{p.classList.add('hidden-cart');p.classList.remove('visible-cart');o.classList.add('hidden')}}
@@ -954,57 +1046,90 @@
     function formatCardNumber(input){let v=input.value.replace(/\D/g,'');v=v.substring(0,16);input.value=v.replace(/(\d{4})(?=\d)/g,'$1 ')}
     function formatExpiry(input){let v=input.value.replace(/\D/g,'');v=v.substring(0,4);if(v.length>=3)v=v.substring(0,2)+'/'+v.substring(2);input.value=v}
 
-    function validateCheckout(){const nombre=document.getElementById('custName').value.trim();const telefono=document.getElementById('custPhone').value.trim();const direccion=document.getElementById('custAddress').value.trim();const cardName=document.getElementById('cardName').value.trim();const cardNumber=document.getElementById('cardNumber').value.replace(/\s/g,'');const cardExpiry=document.getElementById('cardExpiry').value.trim();const cardCVV=document.getElementById('cardCVV').value.trim();const allFilled=nombre&&telefono&&direccion&&cardName&&cardNumber.length>=13&&cardExpiry.length>=5&&cardCVV.length>=3;const btn=document.getElementById('submitBtn');if(allFilled){btn.classList.remove('btn-confirm-disabled');btn.classList.add('bg-accent-500','hover:bg-accent-600')}else{btn.classList.add('btn-confirm-disabled');btn.classList.remove('bg-accent-500','hover:bg-accent-600')}}
+    function validateCheckout(){const n=document.getElementById('custName').value.trim(),t=document.getElementById('custPhone').value.trim(),d=document.getElementById('custAddress').value.trim(),cn=document.getElementById('cardName').value.trim(),cnum=document.getElementById('cardNumber').value.replace(/\s/g,''),ce=document.getElementById('cardExpiry').value.trim(),cv=document.getElementById('cardCVV').value.trim();const allFilled=n&&t&&d&&cn&&cnum.length>=13&&ce.length>=5&&cv.length>=3;const btn=document.getElementById('submitBtn');if(allFilled){btn.classList.remove('btn-confirm-disabled');btn.classList.add('bg-accent-500','hover:bg-accent-600')}else{btn.classList.add('btn-confirm-disabled');btn.classList.remove('bg-accent-500','hover:bg-accent-600')}}
 
-    function openCheckoutModal(){if(!cart.length)return;toggleCart();const tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);document.getElementById('checkoutSummary').innerHTML=cart.map(c=>{const p=products.find(x=>x.id===c.id);return`<div class="flex justify-between"><span class="text-brand-600">${p.name} x${c.qty}</span><span class="font-semibold">Q${(p.price*c.qty).toFixed(2)}</span></div>`}).join('')+`<div class="border-t border-brand-200 mt-2 pt-2 flex justify-between font-bold text-brand-900"><span>Total</span><span>Q${tP.toFixed(2)}</span></div>`;const m=document.getElementById('checkoutModal');m.classList.remove('hidden');m.classList.add('flex');document.getElementById('cardName').value='';document.getElementById('cardNumber').value='';document.getElementById('cardExpiry').value='';document.getElementById('cardCVV').value='';validateCheckout();lucide.createIcons()}
-    function closeCheckoutModal(){document.getElementById('checkoutModal').classList.add('hidden');document.getElementById('checkoutModal').classList.remove('flex');document.getElementById('checkoutError').classList.add('hidden')}
+    function openCheckoutModal(){
+        if(!cart.length)return;toggleCart();
+        const tP_gtq=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);
+        document.getElementById('checkoutSummary').innerHTML=cart.map(c=>{const p=products.find(x=>x.id===c.id);return`<div class="flex justify-between"><span class="text-brand-600">${p.name} x${c.qty}</span><span class="font-semibold">${formatPrice(p.price*c.qty)}</span></div>`}).join('')+`<div class="border-t border-brand-200 mt-2 pt-2 flex justify-between font-bold text-brand-900"><span>Total</span><span>${formatPrice(tP_gtq)}</span></div>`;
+        const m=document.getElementById('checkoutModal');m.classList.remove('hidden');m.classList.add('flex');
+        document.getElementById('cardName').value='';document.getElementById('cardNumber').value='';document.getElementById('cardExpiry').value='';document.getElementById('cardCVV').value='';
+        validateCheckout();lucide.createIcons();
+    }
+    function closeCheckoutModal(){document.getElementById('checkoutModal').classList.add('hidden');document.getElementById('checkoutModal').classList.remove('flex');document.getElementById('checkoutError').classList.add('hidden');}
 
     async function submitOrder(){const errEl=document.getElementById('checkoutError');const nombre=document.getElementById('custName').value.trim();const telefono=document.getElementById('custPhone').value.trim();const email=document.getElementById('custEmail').value.trim();const direccion=document.getElementById('custAddress').value.trim();const cardName=document.getElementById('cardName').value.trim();const cardNumber=document.getElementById('cardNumber').value.replace(/\s/g,'');const cardExpiry=document.getElementById('cardExpiry').value.trim();const cardCVV=document.getElementById('cardCVV').value.trim();if(!nombre||!telefono||!direccion){errEl.textContent='Completa los campos obligatorios.';errEl.classList.remove('hidden');return}if(!cardName||cardNumber.length<13||cardExpiry.length<5||cardCVV.length<3){errEl.textContent='Completa todos los datos de la tarjeta.';errEl.classList.remove('hidden');return}errEl.classList.add('hidden');const submitBtn=document.getElementById('submitBtn');const submitBtnText=document.getElementById('submitBtnText');submitBtn.disabled=true;submitBtnText.textContent='Procesando pago...';const pedidoId='PED-'+Date.now();const tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);const last4=cardNumber.slice(-4);try{const pedidoData={pedido_id:pedidoId,nombre:nombre,telefono:telefono,direccion:direccion,metodo_pago:'Tarjeta',tarjeta_nombre:cardName,tarjeta_last4:last4,total:tP,estado:'pagado'};if(email)pedidoData.email=email;const{error:pedidoError}=await db.from('pedidos').insert(pedidoData);if(pedidoError)throw pedidoError;const items=cart.map(c=>{const p=products.find(x=>x.id===c.id);return{pedido_id:pedidoId,producto:p.name,categoria:p.category,cantidad:c.qty,precio:p.price,subtotal:p.price*c.qty}});const{error:itemsError}=await db.from('pedido_items').insert(items);if(itemsError)throw itemsError;const formData=new FormData();formData.append('_subject',`🛒 Nuevo Pedido ${pedidoId} — Ramazzini`);formData.append('pedido_id',pedidoId);formData.append('nombre',nombre);formData.append('telefono',telefono);formData.append('email',email);formData.append('direccion',direccion);formData.append('metodo_pago','Tarjeta ****'+last4+' — '+cardName);formData.append('total','Q'+tP.toFixed(2));formData.append('productos',cart.map(c=>{const p=products.find(x=>x.id===c.id);return`• ${p.name} x${c.qty} = Q${(p.price*c.qty).toFixed(2)}`}).join('\n'));fetch('https://formspree.io/f/xjglqkdw',{method:'POST',body:formData,headers:{'Accept':'application/json'}}).catch(()=>{});closeCheckoutModal();cart=[];updateCartUI();renderProducts(currentFilter, currentSearch);const s=document.getElementById('successModal');s.classList.remove('hidden');s.classList.add('flex');lucide.createIcons()}catch(err){console.error('Error Supabase:',err);errEl.textContent='Error: '+err.message;errEl.classList.remove('hidden')}finally{submitBtn.disabled=false;submitBtnText.textContent='Confirmar Pedido'}}
 
-    function closeSuccessModal(){document.getElementById('successModal').classList.add('hidden');document.getElementById('successModal').classList.remove('flex')}
+    
+    function closeSuccessModal(){document.getElementById('successModal').classList.add('hidden');document.getElementById('successModal').classList.remove('flex');}
 
     // ===== RESEÑAS =====
-    let selectedStars = 0;
-    function setStars(n){selectedStars=n;document.querySelectorAll('#starInput .star-btn').forEach(btn=>{const s=parseInt(btn.dataset.star);if(s<=n){btn.classList.remove('text-brand-200');btn.classList.add('text-yellow-400')}else{btn.classList.remove('text-yellow-400');btn.classList.add('text-brand-200')}});const labels=['','Malo','Regular','Bueno','Muy bueno','Excelente'];document.getElementById('starLabel').textContent=labels[n]||''}
+    let selectedStars=0;
+    function setStars(n){selectedStars=n;document.querySelectorAll('#starInput .star-btn').forEach(btn=>{const s=parseInt(btn.dataset.star);btn.classList.toggle('text-yellow-400',s<=n);btn.classList.toggle('text-brand-200',s>n)});const labels=['','Malo','Regular','Bueno','Muy bueno','Excelente'];document.getElementById('starLabel').textContent=labels[n]||'';}
+    async function submitResena(){const errEl=document.getElementById('resenaError'),successEl=document.getElementById('resenaSuccess'),nombre=document.getElementById('resenaNombre').value.trim(),comentario=document.getElementById('resenaComentario').value.trim();errEl.classList.add('hidden');successEl.classList.add('hidden');if(!nombre){errEl.textContent='Ingresa tu nombre.';errEl.classList.remove('hidden');return}if(selectedStars===0){errEl.textContent='Selecciona una calificación.';errEl.classList.remove('hidden');return}if(!comentario){errEl.textContent='Escribe un comentario.';errEl.classList.remove('hidden');return}const btn=document.getElementById('resenaBtn');btn.disabled=true;btn.textContent='Enviando...';try{const{error}=await db.from('resenas').insert({nombre,comentario,estrellas:selectedStars});if(error)throw error;successEl.classList.remove('hidden');document.getElementById('resenaNombre').value='';document.getElementById('resenaComentario').value='';setStars(0);document.getElementById('starLabel').textContent='Selecciona';loadResenas();setTimeout(()=>successEl.classList.add('hidden'),4000)}catch(err){errEl.textContent='Error: '+err.message;errEl.classList.remove('hidden');}finally{btn.disabled=false;btn.innerHTML='<i data-lucide="send" class="w-4 h-4"></i>Publicar reseña';lucide.createIcons();}}
+    async function loadResenas(){const grid=document.getElementById('resenasGrid');try{const{data,error}=await db.from('resenas').select('*').order('fecha',{ascending:false});if(error)throw error;if(!data||data.length===0){grid.innerHTML='<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">Sé el primero en dejar una reseña ⭐</p></div>';return}const prom=data.reduce((s,r)=>s+(r.estrellas||0),0)/data.length;grid.innerHTML=`<div class="col-span-full flex items-center gap-4 mb-4 bg-brand-50 border border-brand-100 rounded-2xl p-5"><div class="text-center"><p class="text-4xl font-bold text-brand-900">${prom.toFixed(1)}</p><div class="flex items-center gap-0.5 justify-center mt-1">${renderStarsHTML(Math.round(prom))}</div><p class="text-xs text-brand-500 mt-1">${data.length} reseña${data.length!==1?'s':''}</p></div><div class="flex-1 space-y-1">${[5,4,3,2,1].map(n=>{const count=data.filter(r=>(r.estrellas||0)===n).length;const pct=data.length>0?(count/data.length*100):0;return`<div class="flex items-center gap-2"><span class="text-xs text-brand-600 w-6">${n}★</span><div class="flex-1 bg-brand-100 rounded-full h-2"><div class="bg-yellow-400 h-2 rounded-full" style="width:${pct}%"></div></div><span class="text-xs text-brand-400 w-6">${count}</span></div>`}).join('')}</div></div>`+data.map(r=>{const inicial=(r.nombre||'A').charAt(0).toUpperCase();const fecha=r.fecha?new Date(r.fecha).toLocaleDateString('es-GT',{year:'numeric',month:'short',day:'numeric'}):'';return`<div class="review-card bg-white border border-brand-100 rounded-2xl p-5"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-sm">${inicial}</div><div class="flex-1"><p class="text-sm font-semibold text-brand-900">${r.nombre}</p><p class="text-xs text-brand-400">${fecha}</p></div></div><div class="flex items-center gap-0.5 mb-2">${renderStarsHTML(r.estrellas||0)}</div><p class="text-sm text-brand-700 leading-relaxed">${r.comentario}</p></div>`}).join('')}catch(err){grid.innerHTML=`<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">No se pudieron cargar las reseñas.</p></div>`;}}
+    function renderStarsHTML(n){let html='';for(let i=1;i<=5;i++){html+=`<svg class="w-4 h-4 ${i<=n?'text-yellow-400':'text-brand-200'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`}return html;}
 
-    async function submitResena(){const errEl=document.getElementById('resenaError');const successEl=document.getElementById('resenaSuccess');const nombre=document.getElementById('resenaNombre').value.trim();const comentario=document.getElementById('resenaComentario').value.trim();errEl.classList.add('hidden');successEl.classList.add('hidden');if(!nombre){errEl.textContent='Ingresa tu nombre.';errEl.classList.remove('hidden');return}if(selectedStars===0){errEl.textContent='Selecciona una calificación.';errEl.classList.remove('hidden');return}if(!comentario){errEl.textContent='Escribe un comentario.';errEl.classList.remove('hidden');return}const btn=document.getElementById('resenaBtn');btn.disabled=true;btn.textContent='Enviando...';try{const{error}=await db.from('resenas').insert({nombre:nombre,comentario:comentario,estrellas:selectedStars});if(error)throw error;successEl.classList.remove('hidden');document.getElementById('resenaNombre').value='';document.getElementById('resenaComentario').value='';setStars(0);document.getElementById('starLabel').textContent='Selecciona';loadResenas();setTimeout(()=>successEl.classList.add('hidden'),4000)}catch(err){console.error('Error reseña:',err);errEl.textContent='Error al enviar: '+err.message;errEl.classList.remove('hidden')}finally{btn.disabled=false;btn.innerHTML='<i data-lucide="send" class="w-4 h-4"></i>Publicar reseña';lucide.createIcons()}}
-
-    async function loadResenas(){const grid=document.getElementById('resenasGrid');try{const{data,error}=await db.from('resenas').select('*').order('fecha',{ascending:false});if(error)throw error;if(!data||data.length===0){grid.innerHTML='<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">Sé el primero en dejar una reseña ⭐</p></div>';return}const promedio=data.reduce((s,r)=>s+(r.estrellas||0),0)/data.length;grid.innerHTML=`<div class="col-span-full flex items-center gap-4 mb-4 bg-brand-50 border border-brand-100 rounded-2xl p-5"><div class="text-center"><p class="text-4xl font-bold text-brand-900">${promedio.toFixed(1)}</p><div class="flex items-center gap-0.5 justify-center mt-1">${renderStarsHTML(Math.round(promedio))}</div><p class="text-xs text-brand-500 mt-1">${data.length} reseña${data.length!==1?'s':''}</p></div><div class="flex-1 space-y-1">${[5,4,3,2,1].map(n=>{const count=data.filter(r=>(r.estrellas||0)===n).length;const pct=data.length>0?(count/data.length*100):0;return`<div class="flex items-center gap-2"><span class="text-xs text-brand-600 w-6">${n}★</span><div class="flex-1 bg-brand-100 rounded-full h-2"><div class="bg-yellow-400 h-2 rounded-full" style="width:${pct}%"></div></div><span class="text-xs text-brand-400 w-6">${count}</span></div>`}).join('')}</div></div>`+data.map(r=>{const inicial=(r.nombre||'A').charAt(0).toUpperCase();const fecha=r.fecha?new Date(r.fecha).toLocaleDateString('es-GT',{year:'numeric',month:'short',day:'numeric'}):'';return`<div class="review-card bg-white border border-brand-100 rounded-2xl p-5"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-sm">${inicial}</div><div class="flex-1"><p class="text-sm font-semibold text-brand-900">${r.nombre}</p><p class="text-xs text-brand-400">${fecha}</p></div></div><div class="flex items-center gap-0.5 mb-2">${renderStarsHTML(r.estrellas||0)}</div><p class="text-sm text-brand-700 leading-relaxed">${r.comentario}</p></div>`}).join('')}catch(err){console.error('Error cargando reseñas:',err);grid.innerHTML=`<div class="col-span-full text-center py-8"><p class="text-brand-400 text-sm">No se pudieron cargar las reseñas.</p></div>`}}
-
-    function renderStarsHTML(n){let html='';for(let i=1;i<=5;i++){html+=`<svg class="w-4 h-4 ${i<=n?'text-yellow-400':'text-brand-200'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`}return html}
-
-    // ===== LOGIN ADMIN =====
-    function toggleAdmin(){const m=document.getElementById('loginAdminModal');m.classList.remove('hidden');m.classList.add('flex');lucide.createIcons()}
-    function closeAdminLogin(){document.getElementById('loginAdminModal').classList.add('hidden');document.getElementById('loginAdminModal').classList.remove('flex');document.getElementById('loginError').classList.add('hidden');document.getElementById('adminUser').value='';document.getElementById('adminPass').value=''}
-    function checkAdminLogin(){const user=document.getElementById('adminUser').value;const pass=document.getElementById('adminPass').value;const errorMsg=document.getElementById('loginError');const loginBox=document.querySelector('#loginAdminModal > div');if(user==='Ramazzini'&&pass==='chuy502'){closeAdminLogin();const m=document.getElementById('adminModal');m.classList.remove('hidden');m.classList.add('flex');lucide.createIcons();loadAdminData()}else{errorMsg.classList.remove('hidden');document.getElementById('adminPass').value='';loginBox.classList.add('shake');setTimeout(()=>loginBox.classList.remove('shake'),400)}}
-
-    // ===== PANEL ADMIN =====
+    // ===== ADMIN =====
+    function toggleAdmin(){const m=document.getElementById('loginAdminModal');m.classList.remove('hidden');m.classList.add('flex');lucide.createIcons();}
+    function closeAdminLogin(){document.getElementById('loginAdminModal').classList.add('hidden');document.getElementById('loginAdminModal').classList.remove('flex');document.getElementById('loginError').classList.add('hidden');document.getElementById('adminUser').value='';document.getElementById('adminPass').value='';}
+    function checkAdminLogin(){const user=document.getElementById('adminUser').value,pass=document.getElementById('adminPass').value,errMsg=document.getElementById('loginError'),loginBox=document.querySelector('#loginAdminModal > div');if(user==='Ramazzini'&&pass==='chuy502'){closeAdminLogin();const m=document.getElementById('adminModal');m.classList.remove('hidden');m.classList.add('flex');lucide.createIcons();loadAdminData();}else{errMsg.classList.remove('hidden');document.getElementById('adminPass').value='';loginBox.classList.add('shake');setTimeout(()=>loginBox.classList.remove('shake'),400);}}
     let adminTabActive='orders';let allOrders=[];let allItems=[];
-    function closeAdmin(){document.getElementById('adminModal').classList.add('hidden');document.getElementById('adminModal').classList.remove('flex')}
-    async function loadAdminData(){document.getElementById('adminContent').innerHTML=`<div class="flex items-center justify-center h-40"><div class="text-center"><div class="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-3"></div><p class="text-brand-400 text-sm">Conectando con Supabase...</p></div></div>`;try{const{data:orders,error:e1}=await db.from('pedidos').select('*').order('fecha',{ascending:false});if(e1)throw e1;allOrders=orders||[];const{data:items,error:e2}=await db.from('pedido_items').select('*');if(e2)throw e2;allItems=items||[];const totalRev=allOrders.reduce((s,o)=>s+parseFloat(o.total||0),0);const totalUnits=allItems.reduce((s,i)=>s+parseInt(i.cantidad||0),0);const avgTicket=allOrders.length>0?totalRev/allOrders.length:0;document.getElementById('adminTotalOrders').textContent=allOrders.length;document.getElementById('adminRevenue').textContent='Q'+totalRev.toFixed(0);document.getElementById('adminUnits').textContent=totalUnits;document.getElementById('adminAvg').textContent='Q'+avgTicket.toFixed(0);renderAdminTab(adminTabActive)}catch(err){document.getElementById('adminContent').innerHTML=`<div class="text-center py-12"><p class="text-red-600 font-semibold">Error al conectar</p><p class="text-brand-400 text-sm mt-1">${err.message}</p></div>`}}
-    function switchAdminTab(tab){adminTabActive=tab;document.querySelectorAll('.admin-tab').forEach((t,i)=>{const tabs=['orders','products','sql'];t.classList.remove('active','text-brand-500');if(tabs[i]===tab){t.classList.add('active')}else{t.classList.add('text-brand-500')}});renderAdminTab(tab)}
-    function renderAdminTab(tab){const c=document.getElementById('adminContent');if(tab==='orders')renderOrdersTab(c);else if(tab==='products')renderProductsTab(c);else renderSQLTab(c)}
-    function renderOrdersTab(c){if(allOrders.length===0){c.innerHTML='<p class="text-center text-brand-400 py-12">No hay pedidos aún.</p>';return}c.innerHTML=`<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left border-b border-brand-100"><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Pedido</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Cliente</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Teléfono</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Tarjeta</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Total</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Estado</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Fecha</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Acción</th></tr></thead><tbody>${allOrders.map(o=>{const estado=o.estado||'pagado';let badgeClass='bg-blue-100 text-blue-700';let badgeIcon='💳';if(estado==='entregado'){badgeClass='bg-green-100 text-green-700';badgeIcon='✅'}const isDelivered=estado==='entregado';const cardInfo=o.tarjeta_nombre||o.tarjeta_last4?`<span class="font-medium">${o.tarjeta_nombre||'—'}</span><br><span class="text-xs font-mono text-brand-400">****${o.tarjeta_last4||'—'}</span>`:'—';return`<tr class="border-b border-brand-50 hover:bg-surface-50"><td class="py-3 pr-3 font-mono text-xs text-brand-500">${o.pedido_id}</td><td class="py-3 pr-3 font-medium">${o.nombre||'—'}</td><td class="py-3 pr-3 text-brand-600">${o.telefono||'—'}</td><td class="py-3 pr-3 text-xs leading-snug">${cardInfo}</td><td class="py-3 pr-3 font-bold text-brand-900">Q${parseFloat(o.total||0).toFixed(2)}</td><td class="py-3 pr-3"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${badgeIcon} ${estado}</span></td><td class="py-3 text-xs text-brand-400 pr-3">${o.fecha?new Date(o.fecha).toLocaleString('es-GT'):'—'}</td><td class="py-3">${isDelivered?`<span class="text-xs text-green-600 font-medium">✓ Entregado</span>`:`<button onclick="markDelivered('${o.pedido_id}')" class="text-xs font-semibold bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-full transition-all flex items-center gap-1"><i data-lucide="truck" class="w-3 h-3"></i>Entregado</button>`}</td></tr>`}).join('')}</tbody></table></div>`;lucide.createIcons()}
-    async function markDelivered(pedidoId){try{const{error}=await db.from('pedidos').update({estado:'entregado'}).eq('pedido_id',pedidoId);if(error)throw error;const order=allOrders.find(o=>o.pedido_id===pedidoId);if(order)order.estado='entregado';renderOrdersTab(document.getElementById('adminContent'))}catch(err){alert('Error al actualizar: '+err.message)}}
-    function renderProductsTab(c){const productMap={};allItems.forEach(i=>{if(!productMap[i.producto])productMap[i.producto]={producto:i.producto,categoria:i.categoria,cantidad:0,subtotal:0};productMap[i.producto].cantidad+=parseInt(i.cantidad||0);productMap[i.producto].subtotal+=parseFloat(i.subtotal||0)});const sorted=Object.values(productMap).sort((a,b)=>b.cantidad-a.cantidad);if(sorted.length===0){c.innerHTML='<p class="text-center text-brand-400 py-12">No hay items vendidos aún.</p>';return}const maxQ=sorted[0].cantidad;const catColors={ram:'bg-blue-100 text-blue-700',disco:'bg-green-100 text-green-700',fuente:'bg-yellow-100 text-yellow-700',ventilador:'bg-purple-100 text-purple-700',cable:'bg-teal-100 text-teal-700',tarjeta:'bg-pink-100 text-pink-700'};c.innerHTML=`<table class="w-full text-sm"><thead><tr class="text-left border-b border-brand-100"><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">#</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Producto</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Categoría</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Unidades</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Ingresos</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold w-40">Popularidad</th></tr></thead><tbody>${sorted.map((p,i)=>`<tr class="border-b border-brand-50 hover:bg-surface-50"><td class="py-3 text-brand-300 text-xs w-8">${i+1}</td><td class="py-3 font-medium text-brand-900 max-w-[200px] truncate">${p.producto}</td><td class="py-3"><span class="px-2 py-1 rounded-full text-xs font-medium ${catColors[p.categoria]||'bg-gray-100 text-gray-600'}">${p.categoria||'—'}</span></td><td class="py-3 font-bold">${p.cantidad}</td><td class="py-3 font-bold text-brand-700">Q${p.subtotal.toFixed(2)}</td><td class="py-3"><div class="bg-brand-100 rounded-full h-2"><div class="bg-brand-600 h-2 rounded-full" style="width:${Math.round((p.cantidad/maxQ)*100)}%"></div></div></td></tr>`).join('')}</tbody></table>`}
-    function renderSQLTab(c){c.innerHTML=`<div><p class="text-sm text-brand-500 mb-3">Ejecuta consultas SQL directamente:</p><div class="flex gap-2 flex-wrap mb-3">${[["Top productos","SELECT producto, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY producto ORDER BY unidades DESC LIMIT 10"],["Ventas por categoría","SELECT categoria, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY categoria ORDER BY ingresos DESC"],["Pedidos pagados","SELECT pedido_id, nombre, telefono, total FROM pedidos WHERE estado = 'pagado' ORDER BY fecha DESC"],["Reseñas","SELECT nombre, estrellas, comentario FROM resenas ORDER BY fecha DESC LIMIT 20"]].map(([label,q])=>`<button onclick="setQuery(${JSON.stringify(q)})" class="text-xs bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 px-3 py-1.5 rounded-full transition-all">${label}</button>`).join('')}</div><textarea id="sqlInput" rows="3" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 resize-none mb-3" placeholder="SELECT * FROM pedidos ORDER BY fecha DESC LIMIT 10"></textarea><button onclick="runSQL()" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-2.5 rounded-full mb-4 transition-all">▶ Ejecutar</button><div id="sqlResult"></div></div>`}
-    function setQuery(q){const el=document.getElementById('sqlInput');if(el)el.value=q}
-    async function runSQL(){const q=document.getElementById('sqlInput').value.trim();if(!q)return;const res=document.getElementById('sqlResult');res.innerHTML='<p class="text-brand-400 text-sm animate-pulse">Ejecutando...</p>';try{const{data,error}=await db.rpc('run_query',{query_text:q}).catch(()=>({data:null,error:{message:'La función run_query no existe. Usa el SQL Editor de Supabase.'}}));if(error)throw error;if(!data||data.length===0){res.innerHTML='<p class="text-brand-400 text-sm">Sin resultados.</p>';return}const cols=Object.keys(data[0]);res.innerHTML=`<div class="overflow-x-auto"><table class="w-full text-xs border border-brand-100 rounded-xl overflow-hidden"><thead class="bg-brand-50"><tr>${cols.map(c=>`<th class="px-3 py-2 text-left text-brand-600 font-semibold">${c}</th>`).join('')}</tr></thead><tbody>${data.map(row=>`<tr class="border-t border-brand-50 hover:bg-surface-50">${cols.map(c=>`<td class="px-3 py-2">${row[c]??'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}catch(err){res.innerHTML=`<div class="bg-brand-50 border border-brand-200 rounded-xl p-4"><p class="text-sm text-brand-600">${err.message}</p></div>`}}
-    async function exportCSV(){const{data:orders}=await db.from('pedidos').select('*').order('fecha',{ascending:false});const{data:items}=await db.from('pedido_items').select('*');if(!orders||orders.length===0){alert('No hay datos para exportar.');return}const rows=[['Pedido ID','Fecha','Cliente','Teléfono','Email','Dirección','Tarjeta Nombre','Tarjeta Last4','Estado','Producto','Categoría','Cantidad','Precio','Subtotal','Total Pedido']];orders.forEach(o=>{const oi=(items||[]).filter(i=>i.pedido_id===o.pedido_id);if(oi.length===0){rows.push([o.pedido_id,o.fecha,o.nombre,o.telefono,o.email,o.direccion,o.tarjeta_nombre||'',o.tarjeta_last4||'',o.estado,'','','','','',o.total])}else oi.forEach(i=>rows.push([o.pedido_id,o.fecha,o.nombre,o.telefono,o.email,o.direccion,o.tarjeta_nombre||'',o.tarjeta_last4||'',o.estado,i.producto,i.categoria,i.cantidad,i.precio,i.subtotal,o.total]))});const csv=rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='ramazzini_ventas_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
+    function closeAdmin(){document.getElementById('adminModal').classList.add('hidden');document.getElementById('adminModal').classList.remove('flex');}
+    async function loadAdminData(){document.getElementById('adminContent').innerHTML=`<div class="flex items-center justify-center h-40"><div class="text-center"><div class="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-3"></div><p class="text-brand-400 text-sm">Cargando...</p></div></div>`;try{const{data:orders,error:e1}=await db.from('pedidos').select('*').order('fecha',{ascending:false});if(e1)throw e1;allOrders=orders||[];const{data:items,error:e2}=await db.from('pedido_items').select('*');if(e2)throw e2;allItems=items||[];const totalRev=allOrders.reduce((s,o)=>s+parseFloat(o.total||0),0),totalUnits=allItems.reduce((s,i)=>s+parseInt(i.cantidad||0),0),avgTicket=allOrders.length>0?totalRev/allOrders.length:0;document.getElementById('adminTotalOrders').textContent=allOrders.length;document.getElementById('adminRevenue').textContent='Q'+totalRev.toFixed(0);document.getElementById('adminUnits').textContent=totalUnits;document.getElementById('adminAvg').textContent='Q'+avgTicket.toFixed(0);renderAdminTab(adminTabActive);}catch(err){document.getElementById('adminContent').innerHTML=`<div class="text-center py-12"><p class="text-red-600 font-semibold">Error al conectar</p><p class="text-brand-400 text-sm mt-1">${err.message}</p></div>`;}}
+    function switchAdminTab(tab){adminTabActive=tab;document.querySelectorAll('.admin-tab').forEach((t,i)=>{const tabs=['orders','products','sql'];t.classList.remove('active','text-brand-500');if(tabs[i]===tab)t.classList.add('active');else t.classList.add('text-brand-500');});renderAdminTab(tab);}
+    function renderAdminTab(tab){const c=document.getElementById('adminContent');if(tab==='orders')renderOrdersTab(c);else if(tab==='products')renderProductsTab(c);else renderSQLTab(c);}
+    function renderOrdersTab(c){if(allOrders.length===0){c.innerHTML='<p class="text-center text-brand-400 py-12">No hay pedidos aún.</p>';return}c.innerHTML=`<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left border-b border-brand-100"><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Pedido</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Cliente</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Teléfono</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Tarjeta</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Total</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Estado</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold pr-3">Fecha</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Acción</th></tr></thead><tbody>${allOrders.map(o=>{const estado=o.estado||'pagado';let badgeClass='bg-blue-100 text-blue-700';let badgeIcon='💳';if(estado==='entregado'){badgeClass='bg-green-100 text-green-700';badgeIcon='✅'}const isDelivered=estado==='entregado';const cardInfo=o.tarjeta_nombre||o.tarjeta_last4?`<span class="font-medium">${o.tarjeta_nombre||'—'}</span><br><span class="text-xs font-mono text-brand-400">****${o.tarjeta_last4||'—'}</span>`:'—';return`<tr class="border-b border-brand-50 hover:bg-surface-50"><td class="py-3 pr-3 font-mono text-xs text-brand-500">${o.pedido_id}</td><td class="py-3 pr-3 font-medium">${o.nombre||'—'}</td><td class="py-3 pr-3 text-brand-600">${o.telefono||'—'}</td><td class="py-3 pr-3 text-xs leading-snug">${cardInfo}</td><td class="py-3 pr-3 font-bold text-brand-900">Q${parseFloat(o.total||0).toFixed(2)}</td><td class="py-3 pr-3"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${badgeIcon} ${estado}</span></td><td class="py-3 text-xs text-brand-400 pr-3">${o.fecha?new Date(o.fecha).toLocaleString('es-GT'):'—'}</td><td class="py-3">${isDelivered?`<span class="text-xs text-green-600 font-medium">✓ Entregado</span>`:`<button onclick="markDelivered('${o.pedido_id}')" class="text-xs font-semibold bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-full transition-all flex items-center gap-1"><i data-lucide="truck" class="w-3 h-3"></i>Entregado</button>`}</td></tr>`}).join('')}</tbody></table></div>`;lucide.createIcons();}
+    async function markDelivered(pedidoId){try{const{error}=await db.from('pedidos').update({estado:'entregado'}).eq('pedido_id',pedidoId);if(error)throw error;const order=allOrders.find(o=>o.pedido_id===pedidoId);if(order)order.estado='entregado';renderOrdersTab(document.getElementById('adminContent'));}catch(err){alert('Error: '+err.message);}}
+    function renderProductsTab(c){const productMap={};allItems.forEach(i=>{if(!productMap[i.producto])productMap[i.producto]={producto:i.producto,categoria:i.categoria,cantidad:0,subtotal:0};productMap[i.producto].cantidad+=parseInt(i.cantidad||0);productMap[i.producto].subtotal+=parseFloat(i.subtotal||0)});const sorted=Object.values(productMap).sort((a,b)=>b.cantidad-a.cantidad);if(sorted.length===0){c.innerHTML='<p class="text-center text-brand-400 py-12">No hay items vendidos aún.</p>';return}const maxQ=sorted[0].cantidad;const catColors={ram:'bg-blue-100 text-blue-700',disco:'bg-green-100 text-green-700',fuente:'bg-yellow-100 text-yellow-700',ventilador:'bg-purple-100 text-purple-700',cable:'bg-teal-100 text-teal-700',tarjeta:'bg-pink-100 text-pink-700'};c.innerHTML=`<table class="w-full text-sm"><thead><tr class="text-left border-b border-brand-100"><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">#</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Producto</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Categoría</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Unidades</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold">Ingresos (GTQ)</th><th class="pb-3 text-xs uppercase text-brand-400 font-semibold w-40">Popularidad</th></tr></thead><tbody>${sorted.map((p,i)=>`<tr class="border-b border-brand-50 hover:bg-surface-50"><td class="py-3 text-brand-300 text-xs w-8">${i+1}</td><td class="py-3 font-medium text-brand-900 max-w-[200px] truncate">${p.producto}</td><td class="py-3"><span class="px-2 py-1 rounded-full text-xs font-medium ${catColors[p.categoria]||'bg-gray-100 text-gray-600'}">${p.categoria||'—'}</span></td><td class="py-3 font-bold">${p.cantidad}</td><td class="py-3 font-bold text-brand-700">Q${p.subtotal.toFixed(2)}</td><td class="py-3"><div class="bg-brand-100 rounded-full h-2"><div class="bg-brand-600 h-2 rounded-full" style="width:${Math.round((p.cantidad/maxQ)*100)}%"></div></div></td></tr>`).join('')}</tbody></table>`;}
+    function renderSQLTab(c){c.innerHTML=`<div><p class="text-sm text-brand-500 mb-3">Ejecuta consultas SQL directamente:</p><div class="flex gap-2 flex-wrap mb-3">${[["Top productos","SELECT producto, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY producto ORDER BY unidades DESC LIMIT 10"],["Ventas por categoría","SELECT categoria, SUM(cantidad) as unidades, SUM(subtotal) as ingresos FROM pedido_items GROUP BY categoria ORDER BY ingresos DESC"],["Pedidos pagados","SELECT pedido_id, nombre, telefono, total FROM pedidos WHERE estado = 'pagado' ORDER BY fecha DESC"],["Reseñas","SELECT nombre, estrellas, comentario FROM resenas ORDER BY fecha DESC LIMIT 20"]].map(([label,q])=>`<button onclick="setQuery(${JSON.stringify(q)})" class="text-xs bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 px-3 py-1.5 rounded-full transition-all">${label}</button>`).join('')}</div><textarea id="sqlInput" rows="3" class="w-full border border-brand-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 resize-none mb-3" placeholder="SELECT * FROM pedidos ORDER BY fecha DESC LIMIT 10"></textarea><button onclick="runSQL()" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-2.5 rounded-full mb-4 transition-all">▶ Ejecutar</button><div id="sqlResult"></div></div>`;}
+    function setQuery(q){const el=document.getElementById('sqlInput');if(el)el.value=q;}
+    async function runSQL(){const q=document.getElementById('sqlInput').value.trim();if(!q)return;const res=document.getElementById('sqlResult');res.innerHTML='<p class="text-brand-400 text-sm animate-pulse">Ejecutando...</p>';try{const{data,error}=await db.rpc('run_query',{query_text:q}).catch(()=>({data:null,error:{message:'La función run_query no existe. Usa el SQL Editor de Supabase.'}}));if(error)throw error;if(!data||data.length===0){res.innerHTML='<p class="text-brand-400 text-sm">Sin resultados.</p>';return}const cols=Object.keys(data[0]);res.innerHTML=`<div class="overflow-x-auto"><table class="w-full text-xs border border-brand-100 rounded-xl overflow-hidden"><thead class="bg-brand-50"><tr>${cols.map(c=>`<th class="px-3 py-2 text-left text-brand-600 font-semibold">${c}</th>`).join('')}</tr></thead><tbody>${data.map(row=>`<tr class="border-t border-brand-50 hover:bg-surface-50">${cols.map(c=>`<td class="px-3 py-2">${row[c]??'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}catch(err){res.innerHTML=`<div class="bg-brand-50 border border-brand-200 rounded-xl p-4"><p class="text-sm text-brand-600">${err.message}</p></div>`;}}
+    async function exportCSV(){const{data:orders}=await db.from('pedidos').select('*').order('fecha',{ascending:false});const{data:items}=await db.from('pedido_items').select('*');if(!orders||orders.length===0){alert('No hay datos para exportar.');return}const rows=[['Pedido ID','Fecha','Cliente','Teléfono','Email','Dirección','Tarjeta Nombre','Tarjeta Last4','Estado','Producto','Categoría','Cantidad','Precio GTQ','Subtotal GTQ','Total GTQ']];orders.forEach(o=>{const oi=(items||[]).filter(i=>i.pedido_id===o.pedido_id);if(oi.length===0){rows.push([o.pedido_id,o.fecha,o.nombre,o.telefono,o.email,o.direccion,o.tarjeta_nombre||'',o.tarjeta_last4||'',o.estado,'','','','','',o.total])}else oi.forEach(i=>rows.push([o.pedido_id,o.fecha,o.nombre,o.telefono,o.email,o.direccion,o.tarjeta_nombre||'',o.tarjeta_last4||'',o.estado,i.producto,i.categoria,i.cantidad,i.precio,i.subtotal,o.total]))});const csv=rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='ramazzini_ventas_'+new Date().toISOString().slice(0,10)+'.csv';a.click();}
 
-    // ===== CHATBOT =====
-    const menus={main:{msg:'¡Bienvenido a Ramazzini! 👋\n\nSelecciona una opción:',options:[{id:'servicios',label:'🔧 Servicios'},{id:'tienda_info',label:'🛒 Tienda'},{id:'precios',label:'💰 Precios'},{id:'problema',label:'⚠️ Tengo un problema'}]},servicios:{msg:'🔧 Servicios:',options:[{id:'srv_hardware',label:'🔩 Reparación Hardware'},{id:'srv_virus',label:'🛡️ Eliminación Virus'},{id:'srv_mantenimiento',label:'⚙️ Mantenimiento'},{id:'main',label:'⬅️ Volver'}]},srv_hardware:{msg:'🔩 Reparación Hardware\n• Pantallas • Teclados • Baterías\n• Discos • RAM • Placas\n⏱ 1-3 días | 💰 Desde Q350',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},srv_virus:{msg:'🛡️ Eliminación Virus\n• Malware y ransomware\n• Instalación antivirus\n⏱ 2-4 horas | 💰 Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},srv_mantenimiento:{msg:'⚙️ Mantenimiento\n• Limpieza interna\n• Pasta térmica • Optimización\n⏱ 2-3 horas | 💰 Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},tienda_info:{msg:'🛒 ¿Qué categoría buscas?',options:[{id:'tienda_ram',label:'📦 Memoria RAM'},{id:'tienda_discos',label:'💾 Discos'},{id:'tienda_fuentes',label:'⚡ Fuentes de Poder'},{id:'tienda_ventiladores',label:'🌀 Ventilación'},{id:'tienda_cables',label:'🔌 Cables'},{id:'tienda_tarjetas',label:'🖥️ Tarjetas'},{id:'tienda_ir',label:'🛍️ Ir a la tienda'},{id:'main',label:'⬅️ Volver'}]},tienda_ram:{msg:'📦 Memoria RAM disponible:\n\n• DDR4 4GB 2400MHz — Q145\n• DDR4 8GB 2666MHz — Q275 ⭐\n• DDR4 16GB 3200MHz — Q475\n• DDR5 16GB 5600MHz — Q675 🔥\n• DDR5 32GB 4800MHz — Q875 🆕',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_discos:{msg:'💾 Discos disponibles:\n\n• SSD SATA 240GB — Q175\n• SSD SATA 480GB — Q295\n• NVMe M.2 512GB — Q425\n• NVMe M.2 1TB — Q595 🔥\n• HDD WD Blue 1TB — Q225\n• HDD Seagate 2TB — Q395',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_fuentes:{msg:'⚡ Fuentes de Poder:\n\n• 500W 80+ White — Q395\n• 600W 80+ — Q525\n• 800W Modular — Q795 ⭐\n• 1000W 80+ Gold — Q1,195 🏆',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_ventiladores:{msg:'🌀 Ventilación:\n\n• Cooler 92mm — Q115\n• Cooler 120mm — Q155\n• Kit RGB 3x120mm — Q345 ⭐\n• AIO Líquido 240mm — Q695 🆕',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_cables:{msg:'🔌 Cables disponibles:\n\n• Cable Poder AC 1.5m — Q45\n• SATA III Pack x3 — Q55 🔥\n• VGA HD15 1.8m — Q55\n• USB-C a USB-C — Q65\n• HDMI 2.1 2m — Q75\n• DisplayPort 1.4 — Q95',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_tarjetas:{msg:'🖥️ Tarjetas disponibles:\n\n• Red Ethernet Gigabit — Q125\n• Red WiFi 6 PCIe — Q235 🆕\n• Sonido 7.1 PCIe — Q275\n• Video RTX 5090 32GB — Q43,789\n• Video RX 6600 8GB — Q2,195 🔥',options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},tienda_ir:{msg:'🛍️ Ve a la tienda para agregar al carrito.',options:[{id:'goto_tienda',label:'🛍️ Ir ahora'},{id:'main',label:'⬅️ Volver'}]},precios:{msg:'💰 Precios:\n🔹 Básico — Q150\n🔹 Completo — Q350\n🔹 Empresarial — Q800/mes\n✅ Diagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Solicitar'},{id:'main',label:'⬅️ Volver'}]},problema:{msg:'⚠️ ¿Cuál es el problema?',options:[{id:'prob_lento',label:'🐢 PC lenta'},{id:'prob_virus',label:'🦠 Virus'},{id:'prob_no',label:'🔌 No enciende'},{id:'prob_bsod',label:'💀 Pantalla azul'},{id:'main',label:'⬅️ Volver'}]},prob_lento:{msg:'🐢 PC lenta:\n1️⃣ Mantenimiento — Q150\n2️⃣ Más RAM — desde Q145\n3️⃣ Cambiar a SSD — desde Q175',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_virus:{msg:'🦠 Virus:\n• No abras archivos raros\n• Desconéctate de internet\nLimpieza: Q150',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_no:{msg:'🔌 No enciende:\n• Verificar cables\n• Probar otro enchufe\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},prob_bsod:{msg:'💀 Pantalla azul:\n• Drivers, RAM o disco\n• Anota el código\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]}};
+    // ===== CHATBOT (prices use formatPrice) =====
+    function buildMenus(){
+        const fp=(gtq)=>formatPrice(gtq);
+        return {
+            main:{msg:'¡Bienvenido a Ramazzini! 👋\n\nSelecciona una opción:',options:[{id:'servicios',label:'🔧 Servicios'},{id:'tienda_info',label:'🛒 Tienda'},{id:'precios',label:'💰 Precios'},{id:'problema',label:'⚠️ Tengo un problema'}]},
+            servicios:{msg:'🔧 Servicios:',options:[{id:'srv_hardware',label:'🔩 Reparación Hardware'},{id:'srv_virus',label:'🛡️ Eliminación Virus'},{id:'srv_mantenimiento',label:'⚙️ Mantenimiento'},{id:'main',label:'⬅️ Volver'}]},
+            srv_hardware:{msg:`🔩 Reparación Hardware\n• Pantallas • Teclados • Baterías\n• Discos • RAM • Placas\n⏱ 1-3 días | 💰 Desde ${fp(350)}`,options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},
+            srv_virus:{msg:`🛡️ Eliminación Virus\n• Malware y ransomware\n• Instalación antivirus\n⏱ 2-4 horas | 💰 ${fp(150)}`,options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},
+            srv_mantenimiento:{msg:`⚙️ Mantenimiento\n• Limpieza interna\n• Pasta térmica • Optimización\n⏱ 2-3 horas | 💰 ${fp(150)}`,options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},
+            tienda_info:{msg:'🛒 ¿Qué categoría buscas?',options:[{id:'tienda_ram',label:'📦 Memoria RAM'},{id:'tienda_discos',label:'💾 Discos'},{id:'tienda_fuentes',label:'⚡ Fuentes de Poder'},{id:'tienda_ventiladores',label:'🌀 Ventilación'},{id:'tienda_cables',label:'🔌 Cables'},{id:'tienda_tarjetas',label:'🖥️ Tarjetas'},{id:'tienda_ir',label:'🛍️ Ir a la tienda'},{id:'main',label:'⬅️ Volver'}]},
+            tienda_ram:{msg:`📦 Memoria RAM:\n\n• DDR4 4GB 2400MHz — ${fp(145)}\n• DDR4 8GB 2666MHz — ${fp(275)} ⭐\n• DDR4 16GB 3200MHz — ${fp(475)}\n• DDR5 16GB 5600MHz — ${fp(675)} 🔥\n• DDR5 32GB 4800MHz — ${fp(875)} 🆕`,options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},
+            tienda_discos:{msg:`💾 Discos:\n\n• SSD SATA 240GB — ${fp(175)}\n• SSD SATA 480GB — ${fp(295)}\n• NVMe M.2 512GB — ${fp(425)}\n• NVMe M.2 1TB — ${fp(595)} 🔥\n• HDD WD Blue 1TB — ${fp(225)}\n• HDD Seagate 2TB — ${fp(395)}`,options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},
+            tienda_fuentes:{msg:`⚡ Fuentes de Poder:\n\n• 500W 80+ White — ${fp(395)}\n• 600W 80+ — ${fp(525)}\n• 800W Modular — ${fp(795)} ⭐\n• 1000W 80+ Gold — ${fp(1195)} 🏆`,options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},
+            tienda_ventiladores:{msg:`🌀 Ventilación:\n\n• Cooler 92mm — ${fp(115)}\n• Cooler 120mm — ${fp(155)}\n• Kit RGB 3x120mm — ${fp(345)} ⭐\n• AIO Líquido 240mm — ${fp(695)} 🆕`,options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},
+            tienda_cables:{msg:`🔌 Cables:\n\n• Cable Poder AC 1.5m — ${fp(45)}\n• SATA III Pack x3 — ${fp(55)} 🔥\n• VGA HD15 1.8m — ${fp(55)}\n• USB-C a USB-C — ${fp(65)}\n• HDMI 2.1 2m — ${fp(75)}\n• DisplayPort 1.4 — ${fp(95)}`,options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},
+            tienda_tarjetas:{msg:`🖥️ Tarjetas:\n\n• Red Ethernet Gigabit — ${fp(125)}\n• Red WiFi 6 PCIe — ${fp(235)} 🆕\n• Sonido 7.1 PCIe — ${fp(275)}\n• Video RX 6600 8GB — ${fp(2195)} 🔥\n• Video RTX 5090 32GB — ${fp(43789)}`,options:[{id:'tienda_ir',label:'🛍️ Ver tienda'},{id:'tienda_info',label:'⬅️ Volver'}]},
+            tienda_ir:{msg:'🛍️ Ve a la tienda para agregar al carrito.',options:[{id:'goto_tienda',label:'🛍️ Ir ahora'},{id:'main',label:'⬅️ Volver'}]},
+            precios:{msg:`💰 Planes:\n🔹 Básico — ${fp(150)}\n🔹 Completo — ${fp(350)}\n🔹 Empresarial — ${fp(800)}/mes\n✅ Diagnóstico GRATIS`,options:[{id:'agendar_wa',label:'📱 Solicitar'},{id:'main',label:'⬅️ Volver'}]},
+            problema:{msg:'⚠️ ¿Cuál es el problema?',options:[{id:'prob_lento',label:'🐢 PC lenta'},{id:'prob_virus',label:'🦠 Virus'},{id:'prob_no',label:'🔌 No enciende'},{id:'prob_bsod',label:'💀 Pantalla azul'},{id:'main',label:'⬅️ Volver'}]},
+            prob_lento:{msg:`🐢 PC lenta:\n1️⃣ Mantenimiento — ${fp(150)}\n2️⃣ Más RAM — desde ${fp(145)}\n3️⃣ Cambiar a SSD — desde ${fp(175)}`,options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},
+            prob_virus:{msg:`🦠 Virus:\n• No abras archivos raros\n• Desconéctate de internet\nLimpieza: ${fp(150)}`,options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},
+            prob_no:{msg:'🔌 No enciende:\n• Verificar cables\n• Probar otro enchufe\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},
+            prob_bsod:{msg:'💀 Pantalla azul:\n• Drivers, RAM o disco\n• Anota el código\nDiagnóstico GRATIS',options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'problema',label:'⬅️ Volver'}]},
+        };
+    }
 
-    function addBot(t){const c=document.getElementById('chatMessages');const d=document.createElement('div');d.className='flex justify-start animate-slide-up';let f=t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');d.innerHTML=`<div class="flex gap-2 max-w-[90%]"><img src="${L}" class="w-7 h-7 rounded-full bg-brand-100 shrink-0 mt-1 object-contain p-0.5"><div class="chat-bubble-bot px-4 py-3"><p class="text-sm leading-relaxed">${f}</p></div></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight}
-    function addUser(t){const c=document.getElementById('chatMessages');const d=document.createElement('div');d.className='flex justify-end animate-slide-up';d.innerHTML=`<div class="chat-bubble-user px-4 py-3 max-w-[80%]"><p class="text-sm leading-relaxed">${t}</p></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight}
-    function renderMenu(id){const m=menus[id];if(!m)return;addBot(m.msg);const c=document.getElementById('menuButtons');c.innerHTML='';const g=document.createElement('div');g.className='grid grid-cols-2 gap-2';m.options.forEach(o=>{const b=document.createElement('button');b.className='menu-btn text-left text-xs font-medium px-3 py-2.5 rounded-xl bg-brand-50 text-brand-800 hover:bg-brand-100 border border-brand-100 transition-all truncate';b.textContent=o.label;b.onclick=()=>handleMenu(o.id,o.label);g.appendChild(b)});c.appendChild(g)}
-    function handleMenu(id,label){addUser(label);if(id==='open_whatsapp'||id==='agendar_wa'){window.open('https://wa.me/50258415734','_blank');return}if(id==='goto_tienda'){toggleChat();setTimeout(()=>{document.getElementById('tienda').scrollIntoView({behavior:'smooth'})},400);return}const m=menus[id];if(m)setTimeout(()=>renderMenu(id),300)}
+    function addBot(t){const c=document.getElementById('chatMessages');const d=document.createElement('div');d.className='flex justify-start animate-slide-up';let f=t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');d.innerHTML=`<div class="flex gap-2 max-w-[90%]"><img src="${L}" class="w-7 h-7 rounded-full bg-brand-100 shrink-0 mt-1 object-contain p-0.5"><div class="chat-bubble-bot px-4 py-3"><p class="text-sm leading-relaxed">${f}</p></div></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+    function addUser(t){const c=document.getElementById('chatMessages');const d=document.createElement('div');d.className='flex justify-end animate-slide-up';d.innerHTML=`<div class="chat-bubble-user px-4 py-3 max-w-[80%]"><p class="text-sm leading-relaxed">${t}</p></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+    function renderMenu(id){
+        const menus=buildMenus();
+        const m=menus[id];if(!m)return;addBot(m.msg);
+        const c=document.getElementById('menuButtons');c.innerHTML='';
+        const g=document.createElement('div');g.className='grid grid-cols-2 gap-2';
+        m.options.forEach(o=>{const b=document.createElement('button');b.className='menu-btn text-left text-xs font-medium px-3 py-2.5 rounded-xl bg-brand-50 text-brand-800 hover:bg-brand-100 border border-brand-100 transition-all truncate';b.textContent=o.label;b.onclick=()=>handleMenu(o.id,o.label);g.appendChild(b);});
+        c.appendChild(g);
+    }
+    function handleMenu(id,label){addUser(label);if(id==='open_whatsapp'||id==='agendar_wa'){window.open('https://wa.me/50258415734','_blank');return}if(id==='goto_tienda'){toggleChat();setTimeout(()=>{document.getElementById('tienda').scrollIntoView({behavior:'smooth'})},400);return}const menus=buildMenus();if(menus[id])setTimeout(()=>renderMenu(id),300);}
 
     let chatOpen=false;
-    function toggleChat(){chatOpen=!chatOpen;const w=document.getElementById('chatWindow'),o=document.getElementById('chatIconOpen'),c=document.getElementById('chatIconClose'),n=document.getElementById('chatNotification');if(chatOpen){w.classList.remove('hidden-chat');w.classList.add('visible-chat');o.classList.add('hidden');c.classList.remove('hidden');n.classList.add('hidden')}else{w.classList.add('hidden-chat');w.classList.remove('visible-chat');o.classList.remove('hidden');c.classList.add('hidden')}lucide.createIcons()}
+    function toggleChat(){chatOpen=!chatOpen;const w=document.getElementById('chatWindow'),o=document.getElementById('chatIconOpen'),c=document.getElementById('chatIconClose'),n=document.getElementById('chatNotification');if(chatOpen){w.classList.remove('hidden-chat');w.classList.add('visible-chat');o.classList.add('hidden');c.classList.remove('hidden');n.classList.add('hidden');}else{w.classList.add('hidden-chat');w.classList.remove('visible-chat');o.classList.remove('hidden');c.classList.add('hidden');}lucide.createIcons();}
 
     // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});});
 
     // ===== INIT =====
     window.addEventListener('load', () => {
@@ -1015,9 +1140,10 @@
         initReveal();
         setTimeout(() => typewrite(), 2000);
         setTimeout(() => renderMenu('main'), 600);
-
         // Init counters
         document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+        // Init service & plan prices
+        updateAllPrices();
     });
     </script>
 </body>
