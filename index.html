@@ -396,11 +396,12 @@
     </nav>
 <!-- servicio a domicilio banda  -->
 
-<section class="py-1 bg-white border-y border-brand-100 overflow-hidden">
+<section class="py-0.5 bg-white border-y border-brand-100 overflow-hidden">
     <div class="delivery-banner">
         <div class="delivery-track">
             <span class="delivery-item">
-                🏍️ CONTAMOS CON SERVICIO DE ENTREGA PROPIO 📦
+                📦 CONTAMOS CON SERVICIO DE ENTREGA PROPIO
+                <span class="moto">🏍️</span>
             </span>
         </div>
     </div>
@@ -425,6 +426,14 @@
     font-weight:700;
     color:#2563eb;
     animation:moverMoto 10s linear infinite;
+}
+
+.moto{
+    display:inline-block;
+    transform:scaleX(-1);
+    font-size:2.5rem; /* moto más grande */
+    vertical-align:middle;
+    margin-left:5px;
 }
 
 @keyframes moverMoto{
