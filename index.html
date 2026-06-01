@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
 <head>
@@ -794,8 +793,6 @@
     // ===================================================
     // ===== CURRENCY SYSTEM =====
     // ===================================================
-    // Base currency is GTQ. All prices stored in GTQ.
-    // Rates approximate as of 2025 — update anytime.
     const CURRENCIES = {
         GTQ: { symbol: 'Q',   prefix: 'Q',    flag: '🇬🇹', name: 'Quetzal guatemalteco',   rate: 1,      decimals: 2, locale: 'es-GT' },
         USD: { symbol: '$',   prefix: '$',    flag: '🇺🇸', name: 'Dólar estadounidense',   rate: 0.13,   decimals: 2, locale: 'en-US' },
@@ -822,51 +819,31 @@
     function setCurrency(code) {
         activeCurrency = code;
         const cur = CURRENCIES[code];
-
-        // Update navbar button
         document.getElementById('currencyFlagMain').textContent = cur.flag;
         document.getElementById('currencyLabelMain').textContent = code;
-
-        // Update dropdown selected state
         document.querySelectorAll('.currency-option').forEach(opt => {
             opt.classList.toggle('selected', opt.dataset.currency === code);
         });
-
-        // Update rate info text
         const rateText = code === 'GTQ'
             ? '1 GTQ = referencia base'
             : `1 GTQ ≈ ${(cur.rate).toFixed(4)} ${code}`;
         document.getElementById('rateInfoText').textContent = rateText;
-
-        // Close dropdown
         document.getElementById('currencyDropdown').classList.remove('open');
-
-        // Update all prices on page
         updateAllPrices();
-
-        // Show toast
         showToast(`Moneda cambiada a ${cur.name} (${cur.prefix})`, cur.flag);
     }
 
     function updateAllPrices() {
-        // Update service prices (.srv-price)
         document.querySelectorAll('.srv-price[data-gtq]').forEach(el => {
             el.textContent = formatPrice(parseFloat(el.dataset.gtq));
         });
-
-        // Update plan prices (.plan-price)
         document.querySelectorAll('.plan-price[data-gtq]').forEach(el => {
             el.textContent = formatPrice(parseFloat(el.dataset.gtq));
         });
-
-        // Re-render products grid
         renderProducts(currentFilter, currentSearch);
-
-        // Re-render cart
         updateCartUI();
     }
 
-    // Close dropdown when clicking outside
     document.addEventListener('click', e => {
         if (!document.getElementById('currencySelector').contains(e.target)) {
             document.getElementById('currencyDropdown').classList.remove('open');
@@ -1057,7 +1034,7 @@
     const products=[
         {id:1,name:'Memoria RAM DDR4 8GB 2666MHz',category:'ram',price:275,oldPrice:350,image:'https://cdn.kemik.gt/2023/03/CT8G4SFRA266-MEMORIA-RAM-DDR4-1200X1200-1-1-526x526.-500x500.jpg',badge:'Popular',stock:25},
         {id:2,name:'Memoria RAM DDR4 16GB 3200MHz',category:'ram',price:475,oldPrice:null,image:'https://cdn.kemik.gt/2023/11/BRDDR4PC832NTB-BROCS-1200x1200-01.-500x500.jpg',badge:null,stock:18},
-        {id:3,name:'Memoria RAM DDR5 32GB 4800MHz',category:'ram',price:875,oldPrice:1100,image:'https://cdn.kemik.gt/2023/08/AD5S480032G-S-1200x1200-1.-500x500.jpg',badge:'Nuevo',stock:10},
+        {id:3,name:'Memoria RAM DDR5 32GB 4800MHz',category:'ram',price:875,oldPrice:1100,image:'https://cdn.kemik.gt/2023/08/AD5S480032G-S-1200x1200-1.-500x500.jpg',badge:'Nuevo',stock:25},
         {id:4,name:'Memoria RAM DDR4 4GB 2400MHz',category:'ram',price:145,oldPrice:null,image:'https://www.360.gt/wp-content/uploads/2018/08/01-HYNIX-4GB-2400MHZ.jpg',badge:null,stock:35},
         {id:5,name:'Memoria RAM DDR5 16GB 5600MHz',category:'ram',price:675,oldPrice:800,image:'https://www.intelaf.com/images/productos/gran/NOT-DR5KN1648FI.jpg',badge:'Oferta',stock:14},
         {id:6,name:'SSD SATA 480GB 2.5" 7mm',category:'disco',price:295,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/B09TN1VKZL.jpg',badge:null,stock:30},
@@ -1067,27 +1044,41 @@
         {id:10,name:'SSD NVMe M.2 512GB PCIe Gen3',category:'disco',price:425,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsYa6ePr2UssMluDygcNqEpvEK1Fquv4FUgg&s',badge:null,stock:20},
         {id:11,name:'HDD WD Blue 1TB 7200RPM',category:'disco',price:225,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTteMkmYnmrL58UhmyvslNnw7JBjxzgUjQf_Q&s',badge:null,stock:28},
         {id:12,name:'Fuente de Poder 600W 80+',category:'fuente',price:525,oldPrice:650,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYM8--8vs4VG3DbfGv7KJlQzxuWonAEpnDww&s',badge:null,stock:12},
-        {id:13,name:'Fuente de Poder 800W Modular',category:'fuente',price:795,oldPrice:null,image:'https://cdn.kemik.gt/2023/07/200-GE-0800-V1-FUENTE-DE-PODER-EVGA-1200X1200-1.-500x500.jpg',badge:'Premium',stock:8},
+        {id:13,name:'Fuente de Poder 800W Modular',category:'fuente',price:795,oldPrice:null,image:'https://cdn.kemik.gt/2023/07/200-GE-0800-V1-FUENTE-DE-PODER-EVGA-1200X1200-1.-500x500.jpg',badge:'Premium',stock:25},
         {id:14,name:'Fuente de Poder 500W 80+ White',category:'fuente',price:395,oldPrice:480,image:'https://cdn.kemik.gt/2019/04/image-1-1-526x526.jpg',badge:'Económico',stock:18},
-        {id:15,name:'Fuente de Poder 1000W 80+ Gold',category:'fuente',price:1195,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsU-L4iJLDfYVdnEvJS_6-QnhA1rJhg0iLUg&s',badge:'Pro',stock:5},
+        {id:15,name:'Fuente de Poder 1000W 80+ Gold',category:'fuente',price:1195,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsU-L4iJLDfYVdnEvJS_6-QnhA1rJhg0iLUg&s',badge:'Pro',stock:75},
         {id:16,name:'Ventilador CPU Cooler 120mm',category:'ventilador',price:155,oldPrice:195,image:'https://i.ebayimg.com/images/g/iC8AAeSwZU5p4EcW/s-l1200.webp',badge:null,stock:40},
         {id:17,name:'Kit Ventiladores RGB 3x 120mm',category:'ventilador',price:345,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/B0C64WLQSK.jpg',badge:'Popular',stock:20},
         {id:18,name:'Ventilador CPU Cooler 92mm',category:'ventilador',price:115,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr9uKafFRorTiymJqeGZ3zZBZdEBB-MDdpYw&s',badge:null,stock:30},
-        {id:19,name:'Disipador Líquido AIO 240mm RGB',category:'ventilador',price:695,oldPrice:850,image:'https://www.macrosistemas.com/wp-content/uploads/1298-1-1.jpg',badge:'Nuevo',stock:7},
+        {id:19,name:'Disipador Líquido AIO 240mm RGB',category:'ventilador',price:695,oldPrice:850,image:'https://www.macrosistemas.com/wp-content/uploads/1298-1-1.jpg',badge:'Nuevo',stock:77},
         {id:20,name:'Cable HDMI 2.1 Ultra High Speed 2m',category:'cable',price:75,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9DDEzrIh32kbK5-FuW_4531tKa86gnuiIZg&s',badge:null,stock:50},
         {id:21,name:'Cable SATA III 6Gbps Pack x3',category:'cable',price:55,oldPrice:85,image:'https://m.media-amazon.com/images/I/71i09gfheyL.jpg',badge:'Oferta',stock:60},
         {id:22,name:'Cable DisplayPort 1.4 8K 2m',category:'cable',price:95,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/B08CZ8JXKV.jpg',badge:null,stock:45},
         {id:23,name:'Cable USB-C a USB-C 100W 1m',category:'cable',price:65,oldPrice:null,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1VwikhUqTKH448tGCMHeonkk-ddN8ro0aUQ&s',badge:null,stock:55},
         {id:24,name:'Cable de Poder AC 1.5m',category:'cable',price:45,oldPrice:null,image:'https://tecno-center.minegocio-go.com/web/image/product.template/15719/image',badge:null,stock:70},
         {id:25,name:'Cable VGA HD15 1.8m',category:'cable',price:55,oldPrice:75,image:'https://cdn.kemik.gt/2026/04/230750-etouch-1200x1200-1.-500x500.jpg',badge:'Económico',stock:40},
-        {id:26,name:'Tarjeta de Video RX 6600 8GB',category:'tarjeta',price:2195,oldPrice:2495,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjpD50L0FmOEwVu4CUGytJpZQtUypuHMvxUQ&s',badge:'Oferta',stock:5},
+        {id:26,name:'Tarjeta de Video RX 6600 8GB',category:'tarjeta',price:2195,oldPrice:2495,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjpD50L0FmOEwVu4CUGytJpZQtUypuHMvxUQ&s',badge:'Oferta',stock:45},
         {id:27,name:'Tarjeta de Red WiFi 6 PCIe',category:'tarjeta',price:235,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/B0B1NRGDQ4.jpg',badge:'Nuevo',stock:35},
         {id:28,name:'Tarjeta de Sonido 7.1 PCIe',category:'tarjeta',price:275,oldPrice:350,image:'https://cdn.kemik.gt/2021/03/PEXSOUND7CH-STARTECH.COM-1200x1200-1-1-526x526.jpg',badge:null,stock:15},
-        {id:29,name:'Tarjeta de Video RTX 5090 32GB',category:'tarjeta',price:43789,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/OTEwYjI0Zj.jpg',badge:null,stock:8},
+        {id:29,name:'Tarjeta de Video RTX 5090 32GB',category:'tarjeta',price:43789,oldPrice:null,image:'https://img.pacifiko.com/PROD/resize/1/500x500/OTEwYjI0Zj.jpg',badge:null,stock:48},
         {id:30,name:'Tarjeta de Red Ethernet PCIe Gigabit',category:'tarjeta',price:125,oldPrice:null,image:'https://cdn.kemik.gt/2023/04/image_33_-526x526.-500x500.jpg',badge:null,stock:30}
     ];
 
     function getProductImage(p){return p.image||`https://placehold.co/400x300/EBF5FF/2B7DE9?text=${encodeURIComponent(p.name.split(' ').slice(0,3).join(' '))}`}
+
+    // ===== STOCK DESDE SUPABASE =====
+    async function loadStock() {
+        try {
+            const { data, error } = await db.from('productos').select('id, stock');
+            if (error) throw error;
+            data.forEach(row => {
+                const p = products.find(x => x.id === row.id);
+                if (p) p.stock = row.stock;
+            });
+        } catch(err) {
+            console.warn('No se pudo cargar stock:', err.message);
+        }
+    }
 
     let cart=[];let currentFilter='all';let currentSearch='';
 
@@ -1168,7 +1159,18 @@
     }
     function closeCheckoutModal(){document.getElementById('checkoutModal').classList.add('hidden');document.getElementById('checkoutModal').classList.remove('flex');document.getElementById('checkoutError').classList.add('hidden');}
 
-    async function submitOrder(){const errEl=document.getElementById('checkoutError');const nombre=document.getElementById('custName').value.trim();const telefono=document.getElementById('custPhone').value.trim();const email=document.getElementById('custEmail').value.trim();const direccion=document.getElementById('custAddress').value.trim();const cardName=document.getElementById('cardName').value.trim();const cardNumber=document.getElementById('cardNumber').value.replace(/\s/g,'');const cardExpiry=document.getElementById('cardExpiry').value.trim();const cardCVV=document.getElementById('cardCVV').value.trim();if(!nombre||!telefono||!direccion){errEl.textContent='Completa los campos obligatorios.';errEl.classList.remove('hidden');return}if(!cardName||cardNumber.length<13||cardExpiry.length<5||cardCVV.length<3){errEl.textContent='Completa todos los datos de la tarjeta.';errEl.classList.remove('hidden');return}errEl.classList.add('hidden');const submitBtn=document.getElementById('submitBtn');const submitBtnText=document.getElementById('submitBtnText');submitBtn.disabled=true;submitBtnText.textContent='Procesando pago...';const pedidoId='PED-'+Date.now();const tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);const last4=cardNumber.slice(-4);try{const pedidoData={pedido_id:pedidoId,nombre:nombre,telefono:telefono,direccion:direccion,metodo_pago:'Tarjeta',tarjeta_nombre:cardName,tarjeta_last4:last4,total:tP,estado:'pagado'};if(email)pedidoData.email=email;const{error:pedidoError}=await db.from('pedidos').insert(pedidoData);if(pedidoError)throw pedidoError;const items=cart.map(c=>{const p=products.find(x=>x.id===c.id);return{pedido_id:pedidoId,producto:p.name,categoria:p.category,cantidad:c.qty,precio:p.price,subtotal:p.price*c.qty}});const{error:itemsError}=await db.from('pedido_items').insert(items);if(itemsError)throw itemsError;const formData=new FormData();formData.append('_subject',`🛒 Nuevo Pedido ${pedidoId} — Ramazzini`);formData.append('pedido_id',pedidoId);formData.append('nombre',nombre);formData.append('telefono',telefono);formData.append('email',email);formData.append('direccion',direccion);formData.append('metodo_pago','Tarjeta ****'+last4+' — '+cardName);formData.append('total','Q'+tP.toFixed(2));formData.append('productos',cart.map(c=>{const p=products.find(x=>x.id===c.id);return`• ${p.name} x${c.qty} = Q${(p.price*c.qty).toFixed(2)}`}).join('\n'));fetch('https://formspree.io/f/xjglqkdw',{method:'POST',body:formData,headers:{'Accept':'application/json'}}).catch(()=>{});closeCheckoutModal();cart=[];updateCartUI();renderProducts(currentFilter, currentSearch);const s=document.getElementById('successModal');s.classList.remove('hidden');s.classList.add('flex');lucide.createIcons()}catch(err){console.error('Error Supabase:',err);errEl.textContent='Error: '+err.message;errEl.classList.remove('hidden')}finally{submitBtn.disabled=false;submitBtnText.textContent='Confirmar Pedido'}}
+    async function submitOrder(){const errEl=document.getElementById('checkoutError');const nombre=document.getElementById('custName').value.trim();const telefono=document.getElementById('custPhone').value.trim();const email=document.getElementById('custEmail').value.trim();const direccion=document.getElementById('custAddress').value.trim();const cardName=document.getElementById('cardName').value.trim();const cardNumber=document.getElementById('cardNumber').value.replace(/\s/g,'');const cardExpiry=document.getElementById('cardExpiry').value.trim();const cardCVV=document.getElementById('cardCVV').value.trim();if(!nombre||!telefono||!direccion){errEl.textContent='Completa los campos obligatorios.';errEl.classList.remove('hidden');return}if(!cardName||cardNumber.length<13||cardExpiry.length<5||cardCVV.length<3){errEl.textContent='Completa todos los datos de la tarjeta.';errEl.classList.remove('hidden');return}errEl.classList.add('hidden');const submitBtn=document.getElementById('submitBtn');const submitBtnText=document.getElementById('submitBtnText');submitBtn.disabled=true;submitBtnText.textContent='Procesando pago...';const pedidoId='PED-'+Date.now();const tP=cart.reduce((s,c)=>{const p=products.find(x=>x.id===c.id);return s+(p.price*c.qty)},0);const last4=cardNumber.slice(-4);try{const pedidoData={pedido_id:pedidoId,nombre:nombre,telefono:telefono,direccion:direccion,metodo_pago:'Tarjeta',tarjeta_nombre:cardName,tarjeta_last4:last4,total:tP,estado:'pagado'};if(email)pedidoData.email=email;const{error:pedidoError}=await db.from('pedidos').insert(pedidoData);if(pedidoError)throw pedidoError;const items=cart.map(c=>{const p=products.find(x=>x.id===c.id);return{pedido_id:pedidoId,producto:p.name,categoria:p.category,cantidad:c.qty,precio:p.price,subtotal:p.price*c.qty}});const{error:itemsError}=await db.from('pedido_items').insert(items);if(itemsError)throw itemsError;
+
+        // Descontar stock en Supabase
+        for (const c of cart) {
+            const p = products.find(x => x.id === c.id);
+            if (!p) continue;
+            const nuevoStock = Math.max(0, p.stock - c.qty);
+            await db.from('productos').update({ stock: nuevoStock }).eq('id', p.id);
+            p.stock = nuevoStock;
+        }
+
+        const formData=new FormData();formData.append('_subject',`🛒 Nuevo Pedido ${pedidoId} — Ramazzini`);formData.append('pedido_id',pedidoId);formData.append('nombre',nombre);formData.append('telefono',telefono);formData.append('email',email);formData.append('direccion',direccion);formData.append('metodo_pago','Tarjeta ****'+last4+' — '+cardName);formData.append('total','Q'+tP.toFixed(2));formData.append('productos',cart.map(c=>{const p=products.find(x=>x.id===c.id);return`• ${p.name} x${c.qty} = Q${(p.price*c.qty).toFixed(2)}`}).join('\n'));fetch('https://formspree.io/f/xjglqkdw',{method:'POST',body:formData,headers:{'Accept':'application/json'}}).catch(()=>{});closeCheckoutModal();cart=[];updateCartUI();renderProducts(currentFilter, currentSearch);const s=document.getElementById('successModal');s.classList.remove('hidden');s.classList.add('flex');lucide.createIcons()}catch(err){console.error('Error Supabase:',err);errEl.textContent='Error: '+err.message;errEl.classList.remove('hidden')}finally{submitBtn.disabled=false;submitBtnText.textContent='Confirmar Pedido'}}
 
     
     function closeSuccessModal(){document.getElementById('successModal').classList.add('hidden');document.getElementById('successModal').classList.remove('flex');}
@@ -1201,7 +1203,7 @@
     function buildMenus(){
         const fp=(gtq)=>formatPrice(gtq);
         return {
-            main:{msg:'¡Bienvenido a Ramazzini! 👋\n\nSelecciona una opción:',options:[{id:'servicios',label:'🔧 Servicios'},{id:'tienda_info',label:'🛒 Tienda'},{id:'precios',label:'💰 Precios'},{id:'problema',label:'⚠️ Tengo un problema'}]},
+            main:{msg:'¡Bienvenido a Ramatec! 👋\n\nSelecciona una opción:',options:[{id:'servicios',label:'🔧 Servicios'},{id:'tienda_info',label:'🛒 Tienda'},{id:'precios',label:'💰 Precios'},{id:'problema',label:'⚠️ Tengo un problema'}]},
             servicios:{msg:'🔧 Servicios:',options:[{id:'srv_hardware',label:'🔩 Reparación Hardware'},{id:'srv_virus',label:'🛡️ Eliminación Virus'},{id:'srv_mantenimiento',label:'⚙️ Mantenimiento'},{id:'main',label:'⬅️ Volver'}]},
             srv_hardware:{msg:`🔩 Reparación Hardware\n• Pantallas • Teclados • Baterías\n• Discos • RAM • Placas\n⏱ 1-3 días | 💰 Desde ${fp(350)}`,options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},
             srv_virus:{msg:`🛡️ Eliminación Virus\n• Malware y ransomware\n• Instalación antivirus\n⏱ 2-4 horas | 💰 ${fp(150)}`,options:[{id:'agendar_wa',label:'📱 Agendar'},{id:'servicios',label:'⬅️ Volver'}]},
@@ -1242,7 +1244,8 @@
     document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});});
 
     // ===== INIT =====
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
+        await loadStock();
         renderProducts();
         loadResenas();
         renderFAQ();
