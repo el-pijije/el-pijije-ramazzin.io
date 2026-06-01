@@ -440,29 +440,94 @@
 
 </div>
     <!-- HERO -->
-    <section id="inicio" class="hero-bg min-h-[90vh] flex items-center relative overflow-hidden">
-        <canvas id="heroCanvas"></canvas>
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-3xl"></div>
-        <div class="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10 py-20">
-            <div class="reveal-left">
-                <h1 class="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight text-white leading-[1.1] mb-6">
-                    Reparación y Mantenimiento de <br>
-                    <span id="typewriterText" class="typewriter-cursor text-brand-300"></span>
-                </h1>
-                <p class="text-lg text-brand-200 leading-relaxed mb-8 max-w-xl"><strong class="text-white">Confianza · Lógica · Solución · Eficacia</strong></p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="https://wa.me/50258415734" target="_blank" class="ripple-effect inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-7 py-3.5 rounded-full transition-all">Solicitar servicio</a>
-                    <a href="#tienda" class="ripple-effect inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-7 py-3.5 rounded-full transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i>Ver tienda</a>
-                </div>
-            </div>
-            <div class="flex justify-center lg:justify-end reveal-right">
-                <div class="relative">
-                    <div class="absolute inset-0 bg-brand-400/20 rounded-full blur-3xl scale-75"></div>
-                    <img src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8" alt="Asistente" class="w-72 md:w-80 relative z-10 animate-float drop-shadow-2xl">
-                </div>
+   <section id="inicio" class="hero-bg min-h-[90vh] flex items-center relative overflow-hidden">
+
+    <canvas id="heroCanvas"></canvas>
+
+    <!-- Efectos de fondo -->
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10 py-20">
+
+        <!-- Texto -->
+        <div class="reveal-left">
+            <h1 class="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight text-white leading-[1.1] mb-6">
+                Reparación y Mantenimiento de <br>
+                <span id="typewriterText" class="typewriter-cursor text-brand-300"></span>
+            </h1>
+
+            <p class="text-lg text-brand-200 leading-relaxed mb-8 max-w-xl">
+                <strong class="text-white">Confianza · Lógica · Solución · Eficacia</strong>
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+                <a href="https://wa.me/50258415734"
+                   target="_blank"
+                   class="ripple-effect inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105">
+                    Solicitar servicio
+                </a>
+
+                <a href="#tienda"
+                   class="ripple-effect inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Ver tienda
+                </a>
             </div>
         </div>
-    </section>
+
+        <!-- Imagen + Video -->
+        <div class="flex justify-center lg:justify-end reveal-right">
+            <div class="relative w-full max-w-xl">
+
+                <!-- Brillo decorativo -->
+                <div class="absolute inset-0 bg-brand-400/20 rounded-full blur-3xl scale-75"></div>
+
+                <!-- Tarjeta -->
+                <div class="relative z-10 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 shadow-2xl">
+
+                    <!-- Imagen -->
+                    <div class="flex justify-center mb-6">
+                        <img
+                            src="https://z-cdn-media.chatglm.cn/files/e91ee27d-42dd-4a02-b571-86fb1ca069c7.png?auth_key=1878721737-611f94ca45ca482b9c8f80992bd09479-0-0d21749fbe9c1ca0045e797e095feec8"
+                            alt="Asistente Virtual"
+                            class="w-64 md:w-80 animate-float drop-shadow-2xl"
+                        >
+                    </div>
+
+                    <!-- Video -->
+                    <div class="relative rounded-2xl overflow-hidden shadow-xl border border-brand-200/20 aspect-video">
+                        <video
+                            controls
+                            preload="metadata"
+                            class="absolute inset-0 w-full h-full object-cover bg-black">
+                            <source src="Video_presentacion.mp4" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+</style>
 
     <!-- MARQUEE -->
     <section class="py-8 bg-white border-y border-brand-100 overflow-hidden">
